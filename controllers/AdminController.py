@@ -3,6 +3,7 @@ from flask_admin.contrib.sqla import ModelView
 from flask_ckeditor import CKEditor, CKEditorField
 from werkzeug.security import generate_password_hash
 from datetime import datetime
+import warnings
 
 from config import admin, db
 
@@ -60,16 +61,20 @@ class CuratorView(ModelView):
         model.updated_at = now
 
 
+
+
 def init():
     admin.name = 'کتابچ'
-
-    admin.add_view(UserView(Users, db.session))
-    admin.add_view(BookView(Books, db.session))
+    with warnings.catch_warnings():
+        warnings.filterwarnings('ignore', 'Fields missing from ruleset', UserWarning)
+        admin.add_view(UserView(Users, db.session))
+        admin.add_view(BookView(Books, db.session))
+        admin.add_view(CollectionView(Collections, db.session))
+        admin.add_view(CuratorView(Curators, db.session))
+        
     admin.add_view(ModelView(Ideas, db.session))
     admin.add_view(ModelView(Audios, db.session))
-    admin.add_view(CollectionView(Collections, db.session))
     admin.add_view(ModelView(Categories, db.session))
     admin.add_view(ModelView(Topics, db.session))
     admin.add_view(ModelView(Authors, db.session))
-    admin.add_view(CuratorView(Curators, db.session))
     admin.add_view(ModelView(Bookmarks, db.session))
