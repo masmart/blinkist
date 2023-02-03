@@ -14,9 +14,7 @@ from routes.api_bp import api_bp
 
 import os
 
-def create_app():
-    app = Flask('__name__')
-    
+app = Flask('__name__')
 app.config.from_pyfile('config.py')
 db.init_app(app)
 login_manager.init_app(app)
