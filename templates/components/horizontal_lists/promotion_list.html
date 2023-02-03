@@ -1,0 +1,8 @@
+<div class="mx-4 mb-12 m:mb-16">
+    <div class="text-midnight mb-6 font-bold text-h35">
+      انتخاب شده برای شما
+    </div>
+    {% with item = promoted %}
+    {% include 'components/items/promotion_item.html' %}
+    {% endwith %}
+</div>

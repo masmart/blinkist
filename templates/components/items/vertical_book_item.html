@@ -1,0 +1,12 @@
+<div class="snap-start lg:snap-none first:ml-4 last:mr-4 m:first:ml-0 m:last:mr-0 ">
+    <a href="/book/{{ item.slug }}" aria-label="{{ item.title }}" class="flex rounded font-cera-pro flex-col w-44 p-2 box-content lg:hover:bg-pale-mint-grey hover:cursor-pointer" mobile-layout="vertical">
+        <img src="{{ item.cover_image }}" alt="{{ item.title }}" loading="lazy" class="object-contain flex-shrink-0 rounded w-44 h-44">
+        <div class="w-full flex flex-col relative mt-2">
+            <!---->
+            <div class="text-midnight line-clamp-2 font-bold text-h5" data-test-id="title" title="{{ item.title }}">{{ item.title }}</div>
+            <div data-test-id="subtitle" title="{{ item.id }}" class="text-mid-grey text-caption line-clamp-2 mt-1">{{ item.authors[0].name }}</div>
+            <div data-test-id="description" title="{{ item.tagline }}" class="text-dark-grey text-caption line-clamp-3 mt-2">{{ item.tagline }}</div>
+            <!---->
+        </div>
+    </a>
+</div>

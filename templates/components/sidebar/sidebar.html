@@ -1,0 +1,124 @@
+<aside locale="en" class="bg-white m:bg-light-pale-mint-grey flex flex-col m:w-40 l:w-64 overflow-y-auto flex-shrink-0 m:w-auto absolute m:static top-0 h-full right-0 z-50 w-3/4 transition duration-500 ease-in-out scrollbar translate-x-full m:translate-x-0" data-v-0079a2ce="">
+    <div class="w-full flex shrink-0 h-18.5 m:h-18 items-center pl-6 pr-4 justify-between">
+
+        <a href="#" aria-label="Blinkist logo with link to the homepage" class="mt-4">
+            <div class="flex flex-shrink-0 items-center px-4">
+                <img class="h-8 w-auto" src="{{ url_for('static', filename='images/logo.png') }}" alt="کتابچ">
+            </div>
+        </a>
+
+        <button type="button" aria-label="closeSidebarMenu" data-test-id="close">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="text-mid-grey m:hidden w-6 h-6">
+                <path d="M19.3 20.7l-6.8-6.8-6.8 6.8-1.4-1.4 6.8-6.8-6.8-6.8 1.4-1.4 6.8 6.8 6.8-6.8 1.4 1.4-6.8 6.8 6.8 6.8z" fill="currentColor"></path>
+            </svg>
+        </button>
+
+    </div>
+
+    <nav class="w-full text-midnight mt-12">
+
+        <div class="w-full mb-6">
+            <a href="{{ url_for('dashboard_bp.dashboard_view') }}" class="group cursor-pointer hover:text-blue flex items-center w-full h-10 pl-4 text-h5 m:text-caption {% if request.path == '/dashboard/' %} text-blue !font-bold {% else %} text-midnight {% endif %}">
+                <span class="group-hover:bg-green h-full w-1 ml-5 rounded-sm flex-shrink-0 {% if request.path == '/dashboard/' %} bg-green {% else %} bg-transparent {% endif %}"></span>
+                <div class="w-full flex items-center">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-4 shrink-0">
+                        <path d="M24 24h-9.172v-7.2c0-1.56-1.262-2.83-2.828-2.83a2.835 2.835 0 00-2.828 2.83V24H0V10.1L12 0l12 10.1V24zm-7.646-1.52h6.12V10.8L12 1.99 1.576 10.8l-.04 11.68h6.11V16.8c0-2.4 1.95-4.34 4.354-4.34s4.354 1.95 4.354 4.34v5.68z" fill="currentColor"></path>
+                    </svg>
+                    خانه
+                </div>
+            </a>
+            <div class="w-full"></div>
+        </div>
+
+        <div class="w-full mb-6">
+            <a href="{{ url_for('dashboard_bp.library_view') }}" class="group cursor-pointer hover:text-blue flex items-center w-full h-10 pl-4 text-h5 m:text-caption font-medium {% if request.path == '/dashboard/library' %} text-blue !font-bold {% else %} text-midnight {% endif %}">
+                <span class="group-hover:bg-green h-full w-1 ml-5 rounded-sm flex-shrink-0 {% if request.path == '/dashboard/library' %} bg-green {% else %} bg-transparent {% endif %}"></span>
+                <div class="w-full flex items-center">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-4 shrink-0">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M3.25.25h17.5v23.461l-8.717-8.034L3.25 23.7V.25zm1.5 1.5v18.549l7.288-6.658 7.212 6.648V1.75H4.75z" fill="currentColor"></path>
+                    </svg>
+                    کتابخانه
+                </div>
+            </a>
+            <div class="w-full"></div>
+        </div>
+
+        <div class="w-full mb-6">
+            <a href="{{ url_for('dashboard_bp.highlight_view') }}" class="group cursor-pointer hover:text-blue flex items-center w-full h-10 pl-4 text-h5 m:text-caption font-medium {% if request.path == '/dashboard/highlight' %} text-blue !font-bold {% else %} text-midnight {% endif %}">
+                <span class="group-hover:bg-green h-full w-1 ml-5 rounded-sm flex-shrink-0 {% if request.path == '/dashboard/highlight' %} bg-green {% else %} bg-transparent {% endif %}"></span>
+                <div class="w-full flex items-center">
+                    <svg viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-4 shrink-0">
+                        <path d="M23.12 4.032l-3.14-2.953a2.744 2.744 0 00-3.69-.071l-11.23 9.79a3.78 3.78 0 00-1.3 2.791c-.01.688.16 1.366.5 1.952l-2.3 2.488 1.25 1.173-3.21 3.5 4.55 1.628 1.91-2.073 1.25 1.173L10 20.942a3.7 3.7 0 001.62.374c.11 0 .23-.01.34-.02a3.714 3.714 0 002.66-1.517l8.84-12.046c.84-1.132.69-2.73-.34-3.701zm-18.96 18.7l-1.76-.627 1.81-1.962 1.25 1.183-1.3 1.406zm3.48-1.244l-3.75-3.53 1.25-1.355 3.75 3.53-1.25 1.355zM22.36 6.924L13.52 18.97a2.373 2.373 0 01-3.54.323L5.87 15.43a2.414 2.414 0 01-.76-1.81c.01-.688.31-1.335.83-1.78l11.24-9.79a1.397 1.397 0 011.88.04l3.14 2.953c.52.486.59 1.305.16 1.881z" fill="currentColor"></path>
+                    </svg>
+                    های‌لایت‌ها
+                </div>
+            </a>
+            <div class="w-full"></div>
+        </div>
+
+        <div class="w-full mb-6">
+            <a href="{{ url_for('dashboard_bp.explore_view') }}" class="group cursor-pointer hover:text-blue flex items-center w-full h-10 pl-4 text-h5 m:text-caption font-medium {% if request.path == '/dashboard/explore' %} text-blue !font-bold {% else %} text-midnight {% endif %}">
+                <span class="group-hover:bg-green h-full w-1 ml-5 rounded-sm flex-shrink-0 {% if request.path == '/dashboard/explore' %} bg-green {% else %} bg-transparent {% endif %}"></span>
+                <div class="w-full flex items-center">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-4 shrink-0">
+                        <path d="M22.1 21.4l-5.8-5.8c1.2-1.4 1.9-3.2 1.9-5.2 0-4.5-3.7-8.2-8.2-8.2-4.5 0-8.2 3.7-8.2 8.2 0 4.5 3.7 8.2 8.2 8.2 2 0 3.8-.7 5.2-1.9l5.8 5.8 1.1-1.1zm-18.7-11a6.7 6.7 0 1113.4.001 6.7 6.7 0 01-13.4 0z" fill="currentColor"></path>
+                    </svg>
+                    کاوش
+                </div>
+            </a>
+            <div class="w-full"></div>
+        </div>
+
+    </nav>
+    <div class="flex flex-col justify-between h-full" data-v-0079a2ce="">
+        <!---->
+
+        <hr class="border-t border-lightest-grey mx-2 my-4" data-v-0079a2ce="">
+
+        <div data-v-0079a2ce="">
+
+            <div class="w-full mb-4">
+                <a href="#" class="group cursor-pointer hover:text-blue flex items-center w-full h-10 pl-4 text-h5 m:text-caption font-medium text-midnight">
+                    <span class="group-hover:bg-green h-full w-1 ml-5 rounded-sm flex-shrink-0 bg-transparent"></span>
+                    <div class="w-full flex items-center">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-4 shrink-0">
+                            <path d="M15.152 24a1.399 1.399 0 01-1.29-.86l-.797-1.923a1.125 1.125 0 00-1.068-.714c-.483 0-.884.268-1.07.714l-.796 1.923c-.141.343-.41.61-.755.755a1.39 1.39 0 01-1.066 0l-2.117-.877a1.399 1.399 0 01-.755-1.822l.796-1.922a1.123 1.123 0 00-.25-1.259 1.128 1.128 0 00-1.258-.251l-1.922.796a1.39 1.39 0 01-1.067 0 1.381 1.381 0 01-.755-.755l-.877-2.117a1.397 1.397 0 01.756-1.822l1.922-.796c.446-.186.714-.584.714-1.069 0-.483-.268-.883-.714-1.069L.86 10.136a1.389 1.389 0 01-.756-.755 1.39 1.39 0 010-1.067l.877-2.117c.142-.343.41-.61.755-.755a1.39 1.39 0 011.067 0l1.922.797c.446.185.918.091 1.259-.25.34-.34.434-.812.251-1.259L5.44 2.808A1.397 1.397 0 016.195.986L8.312.11a1.394 1.394 0 011.822.755l.796 1.922c.186.447.584.714 1.069.714.483 0 .883-.267 1.069-.714l.796-1.922c.142-.343.41-.611.755-.755a1.39 1.39 0 011.067 0l2.119.874c.343.142.611.41.755.755a1.39 1.39 0 010 1.067l-.796 1.922c-.186.446-.092.918.25 1.259.34.34.812.435 1.258.252l1.922-.797a1.394 1.394 0 011.822.755l.877 2.117a1.394 1.394 0 01-.756 1.822l-1.922.796a1.125 1.125 0 00-.714 1.07c0 .482.268.882.714 1.068l1.922.796c.343.142.611.41.755.755a1.39 1.39 0 010 1.067l-.876 2.117a1.399 1.399 0 01-1.822.755l-1.922-.796a1.123 1.123 0 00-1.259.25 1.128 1.128 0 00-.252 1.258l.797 1.922a1.394 1.394 0 01-.755 1.822l-2.117.876a1.386 1.386 0 01-.534.108zM12 19.13c1.043 0 1.938.6 2.336 1.56l.797 1.923c.005.012.018.016.027.012l2.117-.877c.01-.005.016-.018.012-.027l-.797-1.923a2.49 2.49 0 01.55-2.755 2.486 2.486 0 012.755-.547l1.922.796c.012.005.023 0 .028-.011l.876-2.117c.005-.01-.002-.025-.011-.027l-1.922-.797a2.49 2.49 0 01-1.561-2.337 2.49 2.49 0 011.56-2.336l1.923-.797c.01-.004.016-.018.011-.027l-.876-2.117c-.005-.011-.016-.016-.028-.011l-1.922.796a2.49 2.49 0 01-2.755-.55 2.486 2.486 0 01-.547-2.755l.796-1.922c.005-.01-.002-.025-.011-.027l-2.117-.877c-.01-.005-.026.002-.028.011l-.796 1.923A2.487 2.487 0 0112 4.874a2.49 2.49 0 01-2.336-1.56L8.868 1.39c-.004-.009-.018-.016-.027-.011l-2.117.877c-.012.004-.016.018-.012.027l.797 1.922a2.49 2.49 0 01-.55 2.756 2.486 2.486 0 01-2.755.547l-1.922-.797c-.012-.004-.023 0-.028.012L1.378 8.84c-.005.009.002.025.011.027l1.923.797A2.49 2.49 0 014.872 12a2.49 2.49 0 01-1.56 2.337l-1.923.796c-.011.005-.016.018-.011.028l.876 2.117c.005.009.019.016.028.011l1.922-.796a2.49 2.49 0 012.756.549c.736.737.947 1.794.546 2.755l-.796 1.923c-.005.011 0 .023.012.027l2.116.877c.01.004.026-.003.028-.012l.796-1.922A2.487 2.487 0 0112 19.13z" fill="currentColor"></path>
+                            <path d="M11.999 16.848c-.63 0-1.257-.123-1.856-.37a4.816 4.816 0 01-2.623-2.623 4.826 4.826 0 010-3.71 4.816 4.816 0 012.623-2.623 4.826 4.826 0 013.71 0 4.824 4.824 0 012.622 2.623 4.826 4.826 0 010 3.71 4.809 4.809 0 01-2.622 2.622 4.837 4.837 0 01-1.854.371zm0-8.323c-.451 0-.9.089-1.33.265a3.446 3.446 0 00-1.879 1.88 3.45 3.45 0 000 2.656 3.453 3.453 0 001.88 1.879 3.45 3.45 0 002.656 0 3.453 3.453 0 001.88-1.879 3.45 3.45 0 000-2.657 3.446 3.446 0 00-1.88-1.879A3.47 3.47 0 0012 8.525z" fill="currentColor"></path>
+                        </svg>
+                        تنظیمات
+                    </div>
+                </a>
+                <div class="w-full"></div>
+            </div>
+
+            <div class="w-full mb-4">
+                <a href="https://support.blinkist.com/hc/en-us" class="group cursor-pointer hover:text-blue flex items-center w-full h-10 pl-4 text-h5 m:text-caption font-medium text-midnight">
+                    <span class="group-hover:bg-green h-full w-1 ml-5 rounded-sm flex-shrink-0 bg-transparent"></span>
+                    <div class="w-full flex items-center">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-4 shrink-0">
+                            <path d="M12 0a12 12 0 100 24 12 12 0 000-24zm0 22.63A10.63 10.63 0 1122.63 12 10.64 10.64 0 0112 22.63z" fill="currentColor"></path>
+                            <path d="M11.61 14.34a1.111 1.111 0 00-1.12 1.12 1.09 1.09 0 001.12 1.11 1.079 1.079 0 001.11-1.11 1.09 1.09 0 00-1.11-1.12zM11.76 6.79a2.68 2.68 0 00-2.71 2.08l1.26.54c.28-.82.76-1.23 1.4-1.23a1.13 1.13 0 011.16 1.17c0 .59-.33.89-1 1.48-.67.59-1.13 1-1.13 1.69.006.228.057.452.15.66h1.29a2.061 2.061 0 010-.38c0-.48.41-.82 1-1.35a2.999 2.999 0 001.28-2.23 2.5 2.5 0 00-2.7-2.43z" fill="currentColor"></path>
+                        </svg>
+                        پشتیبانی
+                    </div>
+                </a>
+                <div class="w-full"></div>
+            </div>
+
+            <div class="w-full mb-4">
+                <a href="{{ url_for('user_bp.logout_view') }}" class="group cursor-pointer hover:text-blue flex items-center w-full h-10 pl-4 text-h5 m:text-caption font-medium text-midnight">
+                    <span class="group-hover:bg-green h-full w-1 ml-5 rounded-sm flex-shrink-0 bg-transparent"></span>
+                    <div class="w-full flex items-center">
+                        <svg viewBox="0 0 22 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-4 shrink-0">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M21.27 7.61L17.46 3.9a.754.754 0 00-1.06.01c-.29.3-.28.77.01 1.06L19 7.5H8.5c-.41 0-.75.34-.75.75s.34.75.75.75h10.37l-2.37 2.43c-.29.3-.28.77.01 1.06.3.29.77.28 1.06-.01l3.71-3.81c.29-.3.28-.77-.01-1.06z" fill="currentColor"></path>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12.75 11.5c-.41 0-.75.34-.75.75V15H1.5V1.5H12v2.75c0 .41.34.75.75.75s.75-.34.75-.75V.75c0-.41-.34-.75-.75-.75h-12C.34 0 0 .34 0 .75v15c0 .41.34.75.75.75h12c.41 0 .75-.34.75-.75v-3.5c0-.41-.34-.75-.75-.75z" fill="currentColor"></path>
+                        </svg>
+                        خروج
+                    </div>
+                </a>
+                <div class="w-full"></div>
+            </div>
+
+        </div>
+    </div>
+</aside>

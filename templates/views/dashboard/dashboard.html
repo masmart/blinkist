@@ -1,0 +1,20 @@
+{% extends 'base/dashboard/base.html' %}
+
+{% block title %}کتابچ - خانه{% endblock %}
+
+{% block content %}
+<section class="flex flex-col w-full pt-6 m:pt-16 flex w-full max-w-[80rem] mx-auto m:px-12">
+{% with last_reads = last_reads %}
+{% include 'components/horizontal_lists/continue_reading_list.html' %}
+{% endwith %}
+{% with promoted = promoted %}
+{% include 'components/horizontal_lists/promotion_list.html' %}
+{% endwith %}
+{% with title='recommended', items=recommended %}
+{% include 'components/horizontal_lists/book_horizontal_list.html' %}
+{% endwith %}
+{% with collections=collections %}
+{% include 'components/horizontal_lists/collection_horizontal_list.html' %}
+{% endwith %}
+</section>
+{% endblock %}

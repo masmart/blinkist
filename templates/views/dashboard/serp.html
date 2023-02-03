@@ -1,0 +1,74 @@
+{% set referer = 'کتابخانه' %}
+{% if view == 'bookmark' %}
+    {% set page_title = 'شروع و ذخیره شده‌ها' %}
+{% elif view == 'finished' %}
+    {% set page_title = 'تمام شده‌ها' %}
+{% endif %}
+{% extends 'base/dashboard/base.html' %}
+
+{% block content %}
+
+    <section class="flex flex-col w-full pt-6 m:pt-16 m:pb-16 flex w-full max-w-[80rem] mx-auto m:px-12">
+        <div class="mx-4">
+
+            <!-- Breadcumb -->
+            <div class="text-blue text-caption mb-6">
+                {% include 'components/navigations/breadcrumb.html' %}
+            </div>
+
+            <!-- Page header -->
+            <div class="flex flex-row mb-8">
+
+                <!-- Page Icon -->
+                <div class="bg-pale-mint-grey w-12 h-12 flex items-center justify-center p-2 rounded ml-2">
+                    {% if view == 'bookmark' %}
+                        {% include 'components/icons/bookmark.html' %}
+                    {% elif view == 'finished' %}
+                        {% include 'components/icons/finished.html' %}
+                    {% endif %}
+                </div>
+
+                <!-- Page title & description -->
+                <div class="grow">
+                    <!-- Title -->
+                    <h3 class="text-midnight font-bold text-h35">
+                    {% if view == 'bookmark' %}
+                        شروع و ذخیره شده‌ها
+                    {% elif view == 'finished' %}
+                        تمام شده‌ها
+                    {% endif %}
+                    </h3>
+                    <!-- Description -->
+                    <p class="text-p1">
+                        {{ items.total }} عنوان
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Page results/items -->
+            <div class="mb-6 m:mb-12">
+
+                <div class="w-full overflow-hidden">
+                    <div class=" pb-8 -mb-8 overflow-x-auto overflow-y-hidden grid lg:grid-cols-[repeat(4,auto)] lg:gap-12 lg:grid-flow-row lg:justify-start  ">
+
+                        {% for item in items %}
+                            {% include 'components/items/vertical_editable_book_item.html' %}
+                        {% endfor %}
+
+                    </div>      
+                </div>
+
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex flex-row justify-center m:justify-end">
+
+            {% include 'components/navigations/pagination.html' %}
+
+            </div>
+            
+        </div>
+    </section>
+
+{% endblock %}

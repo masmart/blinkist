@@ -1,0 +1,40 @@
+<div class="mb-6">
+    <!-- Mobile -->
+    <div class="flex m:hidden items-center">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 ml-1.5 -rotate-90">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 14.879l-7.94-7.94a1.5 1.5 0 10-2.12 2.122l9 9a1.5 1.5 0 002.12 0l9-9a1.5 1.5 0 00-2.12-2.122L12 14.88z" fill="currentColor"></path>
+            <mask id="a" maskUnits="userSpaceOnUse" x="1" y="6" width="22" height="13">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 14.879l-7.94-7.94a1.5 1.5 0 10-2.12 2.122l9 9a1.5 1.5 0 002.12 0l9-9a1.5 1.5 0 00-2.12-2.122L12 14.88z" fill="#fff"></path>
+            </mask>
+        </svg>
+
+        <a href="{{ root_dir }}" class="cursor-pointer text-blue hover:text-blue-1">
+            {{ referer }}
+        </a>
+
+    </div>
+
+    <!-- Desktop -->
+    <div class="hidden m:flex">
+
+        <div class="flex items-center">
+            <!---->
+            <a href="{{ root_dir }}" class="cursor-pointer text-blue hover:text-blue-1">
+                {{ referer }}
+            </a>
+        </div>
+
+        <div class="flex items-center">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 mx-1.5 rotate-90">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 14.879l-7.94-7.94a1.5 1.5 0 10-2.12 2.122l9 9a1.5 1.5 0 002.12 0l9-9a1.5 1.5 0 00-2.12-2.122L12 14.88z" fill="currentColor"></path>
+                <mask id="a" maskUnits="userSpaceOnUse" x="1" y="6" width="22" height="13">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 14.879l-7.94-7.94a1.5 1.5 0 10-2.12 2.122l9 9a1.5 1.5 0 002.12 0l9-9a1.5 1.5 0 00-2.12-2.122L12 14.88z" fill="#fff"></path>
+                </mask>
+            </svg>
+            <div class="text-blue-1">
+                {{ page_title }}
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,33 @@
+{% extends 'base/dashboard/base.html' %}
+
+{% block title %}Some{% endblock %}
+
+{% block content %}
+<section class="flex-col text-midnight pb-12 m:pb-16 m:pt-8 l:pt-16  flex w-full max-w-[80rem] mx-auto m:px-12 px-4">
+  <div class="text-blue text-caption mb-6">
+    <div class="hidden m:flex">
+      <div class="flex items-center">
+        <div class="text-blue-1">
+          دسته‌بندی‌ها
+        </div>
+      </div>
+    </div>
+  </div>
+  <h1 class="mb-4 text-h2 font-bold">
+    دسته‌بندی‌ها
+  </h1>
+  <h2 class="mb-8">
+    در ۲۲ دسته‌بندی کاوش کنید
+  </h2>
+  <div data-test-id="category-list" class="grid grid-cols-1 gap-y-4 m:grid-cols-3 m:gap-y-6 m:gap-x-4 lg:gap-x-6 2xl:grid-cols-4">
+    
+    {% with staggered=False %}
+      {% for item in items %}
+        {% include 'components/items/category_desktop_item.html' %}
+      {% endfor %}
+    {% endwith %}
+
+  </div>
+</section>
+
+{% endblock %}

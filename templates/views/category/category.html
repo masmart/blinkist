@@ -1,0 +1,93 @@
+{% extends 'base/dashboard/base.html' %}
+
+{% block title %}کتابچ - {{ category.name }}{% endblock %}
+
+{% block content %}
+<div>
+    <section class="pt-2 m:pb-16 pt-6 m:pt-16 mb-8 flex flex-col flex w-full max-w-[80rem] mx-auto m:px-12 px-4">
+        
+        {% with referer='دسته‌بندی‌ها', page_title=category.name %}
+        {% include 'components/navigations/breadcrumb.html' %}  
+        {% endwith %}
+
+        <h1 class="flex items-center text-midnight mb-4 m:mb-6 font-bold text-h3 m:text-h2">
+            <svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-4 flex-shrink-0">
+                {{ category.icon | safe }}
+            </svg>
+            {{ category.name }}
+        </h1>
+
+        <p class="text-dark-grey text-p1">{{ category.description }}</p>
+    </section>
+
+    <section class="flex flex-col mb-12 m:mb-16  flex w-full max-w-[80rem] mx-auto m:px-12  ">
+        <h2 class="mb-4 m:mb-6 mx-4 m:mx-0 text-midnight font-bold text-h35">
+            موضوعات
+        </h2>
+
+        <div class="w-full overflow-hidden">
+            <div class=" pb-8 -mb-8 overflow-x-auto overflow-y-hidden flex gap-4 m:flex-wrap">
+                <button data-test-id="topic-chip-work-culture-en" disabled="disabled" class="font-cera-pro text-midnight flex w-max items-center py-3 border-2 border-solid rounded first:ml-4 last:mr-4 m:first:ml-0 m:last:mr-0 px-3 cursor-default m:hover:border-white border-white bg-pale-mint-grey">
+                    <!---->
+                    <span class="block whitespace-nowrap"> Work Culture </span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section apply-mobile-padding="true" class="flex flex-col mb-12 m:mb-16  flex w-full max-w-[80rem] mx-auto m:px-12  ">
+        <h2 class="mb-2 text-midnight px-4 m:px-0 font-bold text-h35">
+            <span>محبوب‌ها</span>
+        </h2>
+
+        <div class="mb-6 m:mb-8 text-dark-grey px-4 m:px-0">آنچه در دسته‌بندی {{ category.name }} مجبوب است</div>
+
+        <div class="w-full overflow-hidden">
+            <div class=" pb-8 -mb-8 overflow-x-auto overflow-y-hidden  grid lg:grid-cols-[repeat(4,auto)] lg:gap-12 lg:grid-flow-row lg:justify-start  grid-flow-col gap-x-12 auto-cols-auto justify-start snap-x snap-mandatory lg:snap-none scroll-pl-4  ">
+
+                {% for item in popular %}
+                {% include 'components/items/vertical_book_item.html' %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!---->
+
+    <!---->
+
+    <section apply-mobile-padding="true" class="flex flex-col mb-12 m:mb-16  flex w-full max-w-[80rem] mx-auto m:px-12  ">
+        <h2 class="mb-2 text-midnight px-4 m:px-0 font-bold text-h35">
+            <span>مجموعه‌ها</span>
+        </h2>
+
+        <div class="mb-6 m:mb-8 text-dark-grey px-4 m:px-0">برگزیده‌های ما</div>
+
+        <div class="w-full overflow-hidden">
+            <div class=" pb-8 -mb-8 overflow-x-auto overflow-y-hidden  grid lg:grid-cols-[repeat(4,auto)] lg:gap-12 lg:grid-flow-row lg:justify-start  grid-flow-col gap-x-12 auto-cols-auto justify-start snap-x snap-mandatory lg:snap-none scroll-pl-4  ">
+                {% for collection in collections %}
+                {% include 'components/items/collection_item.html' %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!---->
+
+    <section apply-mobile-padding="true" class="flex flex-col mb-12 m:mb-16  flex w-full max-w-[80rem] mx-auto m:px-12  ">
+        <h2 class="mb-2 text-midnight px-4 m:px-0 font-bold text-h35">
+            <span>عناوین پایه در {{ category.name }}</span>
+        </h2>
+
+        <div class="mb-6 m:mb-8 text-dark-grey px-4 m:px-0">عنواینی که باید در {{ category.name }} بدانید</div>
+
+        <div class="w-full overflow-hidden">
+            <div class=" pb-8 -mb-8 overflow-x-auto overflow-y-hidden  grid lg:grid-cols-[repeat(4,auto)] lg:gap-12 lg:grid-flow-row lg:justify-start  grid-flow-col gap-x-12 auto-cols-auto justify-start snap-x snap-mandatory lg:snap-none scroll-pl-4  ">
+                {% for item in classics %}
+                {% include 'components/items/vertical_book_item.html' %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

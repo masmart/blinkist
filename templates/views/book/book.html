@@ -1,0 +1,245 @@
+{% extends 'base/dashboard/base.html' %}
+
+{% block title %}کتابچ - {{ book.title }}{% endblock %}
+
+{% block content %}
+<div class="text-midnight">
+  <div class="pb-12 m:pb-16">
+    <section class=" flex w-full max-w-[80rem] mx-auto m:px-12  ">
+      <div class="flex flex-col mt-4 m:mt-16 w-full">
+        <div class="flex flex-col m:flex-row gap-6 w-full">
+          <div class="px-4 m:px-0 m:w-1/3 m:order-2 flex flex-col items-center">
+            <div class="relative max-w-[18rem]">
+              <img src="{{ book.cover_image }}" alt="{{ book.title }}" loading="lazy" class="object-contain">
+              <!---->
+            </div>
+          </div>
+          <div class="m:w-2/3 m:order-1">
+            <div class="mx-4">
+              <h1 name="book-title" class="text-h2 font-bold mb-2 m:mb-4">{{ book.title }}</h1>
+              <h2 class="text-h5 font-bold mb-4 m:mb-6">{{ book.authors[0].name }}</h2>
+              <p class="text-p0 mb-6">{{ book.tagline }}</p>
+            </div>
+            <div name="book-controls-mobile" class="m:hidden mx-4">
+              <div class="flex flex-row mb-4 gap-2 m:gap-4">
+                <a name="read-button" href="#" class="m:max-w-[9rem] basis-1/2 flex flex-row items-center justify-center gap-2 inline-block px-4 rounded border-none font-cera-pro font-medium text-base leading-5 text-center no-underline outline-none cursor-pointer disabled:cursor-not-allowed bg-midnight text-white hover:bg-deep-black hover:text-white py-3">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6">
+                    <path d="M23 24H2V0h21v24zM3.337 22.632h18.326V1.368H3.337v21.264z" fill="currentColor">
+                    </path>
+                    <path d="M18.313 8.647h-4.105v1.14h4.105v-1.14zM18.313 13.093H6.684v1.14h11.63v-1.14zM18.313 17.537H6.684v1.14h11.63v-1.14zM11.34 9.975h1.252L9.89 4.59H9.49l-2.7 5.386h1.252l.343-.684h2.612l.343.684zM8.958 8.151l.733-1.462.733 1.462H8.958z" fill="currentColor">
+                    </path>
+                  </svg>
+                  مطالعه
+                </a>
+
+                <a name="play-button" href="#" class="m:max-w-[9rem] basis-1/2 flex flex-row items-center justify-center gap-2 inline-block px-4 rounded border-none font-cera-pro font-medium text-base leading-5 text-center no-underline outline-none cursor-pointer disabled:cursor-not-allowed bg-midnight text-white hover:bg-deep-black hover:text-white py-3">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6">
+                    <path d="M20.253 13.625v-3.142C20.253 5.805 16.596 2 12.104 2c-4.492 0-8.149 3.805-8.149 8.483v3.131C1.768 13.656 0 15.52 0 17.804 0 20.119 1.808 22 4.03 22h4.413v-8.39h-3.21v-3.127c0-3.944 3.082-7.153 6.871-7.153 3.79 0 6.872 3.209 6.872 7.153v3.129h-3.419V22h4.413c2.222 0 4.03-1.883 4.03-4.195-.002-2.213-1.657-4.027-3.747-4.18zm-18.975 4.18c0-1.554 1.195-2.82 2.677-2.86v5.72c-1.482-.04-2.677-1.306-2.677-2.86zm5.887-2.865v5.73h-1.93v-5.73h1.93zm9.67 0h2.14v5.73h-2.14v-5.73zm3.418 5.714v-5.698c1.385.148 2.467 1.37 2.467 2.849 0 1.481-1.082 2.7-2.466 2.85z" fill="currentColor">
+                    </path>
+                  </svg>
+                  پخش
+                </a>
+              </div>
+              <div id="bookmark-section" class="mb-12 flex flex-row mx-4 m:mx-0 text-base font-bold text-blue justify-center m:justify-start">
+                {% if not bookmark %}
+                <a name="addToLibrary" href="{{ url_for('book_bp.bookmark_view', book_slug=book.slug) }}" class="flex flex-row items-center gap-2 font-bold hover:text-blue-1">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.25.25h17.5v23.461l-8.717-8.034L3.25 23.7V.25zm1.5 1.5v18.549l7.288-6.658 7.212 6.648V1.75H4.75z" fill="currentColor"></path>
+                  </svg>
+                  افزودن به کتابخانه
+                </a>
+                {% else %}
+                <a name="removeFromLibrary" href="{{ url_for('book_bp.bookmark_view', book_slug=book.slug) }}" class="flex flex-row items-center gap-2 font-bold hover:text-blue-1">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.25.25h17.5v23.461l-8.717-8.034L3.25 23.7V.25zm1.5 1.5v18.549l7.288-6.658 7.212 6.648V1.75H4.75z" fill="currentColor"></path>
+                  </svg>
+                  در کتابخانه ذخیره شده
+                </a>
+                {% endif %}
+              </div>
+            </div>
+            <div class="border-y border-lightest-grey mb-12 py-4 mx-4">
+              <div class="grid grid-cols-2 w-fit gap-y-4 gap-x-8 gap-y-4">
+                <div class="flex flex-row items-center gap-2">
+                  <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9.31 9.262l-6.198.947 4.49 4.602-1.04 6.382L12 18.186l5.439 3.007-1.041-6.382 4.49-4.602-6.198-.947L12 3.53 9.31 9.262zM8.292 7.9L0 9.167l6 6.15L4.584 24 12 19.9l7.417 4.1L18 15.317l6-6.15L15.708 7.9 12 0 8.292 7.9z">
+                    </path>
+                  </svg>
+                  <span>{{ book.rating }} ({{ book.total_rating }} امتیاز)</span>
+                </div>
+                <div class="flex flex-row items-center gap-2">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22.61C6.15 22.61 1.39 17.85 1.39 12 1.39 6.149 6.15 1.39 12 1.39S22.61 6.148 22.61 12c0 5.85-4.76 10.61-10.61 10.61zM12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z" fill="currentColor">
+                    </path>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 13.027a1.028 1.028 0 010-2.054 1.028 1.028 0 010 2.054zM14.416 12A2.419 2.419 0 0012 9.584c-.215 0-.422.03-.62.084L8.151 4.336l-1.189.719 3.234 5.342c-.38.427-.613.988-.613 1.603A2.42 2.42 0 0012 14.416c.719 0 1.364-.318 1.807-.818l3.572 1.647.582-1.261-3.571-1.647c.015-.11.026-.222.026-.337zM11.305 3.73h1.39V2.316h-1.39V3.73zM20.27 12.695h1.414v-1.39H20.27v1.39zM11.305 21.684h1.39V20.27h-1.39v1.414zM2.316 12.695H3.73v-1.39H2.316v1.39z" fill="currentColor">
+                    </path>
+                  </svg>
+                  <span>{{ book.read_time }} دقیقه</span>
+                </div>
+                <div class="flex flex-row items-center gap-2">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6">
+                    <g fill="currentColor">
+                      <path d="M12.6 3.8c-1.3-.1-2.5.1-3.7.6-1.1.5-2.1 1.3-2.9 2.3-.8 1-1.2 2.2-1.4 3.4-.2 1.2-.1 2.5.3 3.7.4 1.2 1.1 2.2 2 3.1V21.6h2c.1.6.5 1.1.9 1.6.6.6 1.4.9 2.2.9.8 0 1.6-.3 2.2-.9.5-.4.8-1 .9-1.6h2.3v-4.8c.7-.7 1.2-1.5 1.6-2.4.4-1 .6-2 .6-3.1 0-1.9-.7-3.7-2-5.1-1.3-1.4-3.1-2.3-5-2.4zm.6 18.2c-.3.3-.7.5-1.2.5-.4 0-.9-.2-1.2-.5-.1-.1-.3-.3-.3-.5h3c-.1.2-.2.4-.3.5zm2.7-1.9H8.4v-1.3h7.5v1.3zm2.2-8.8c0 .9-.2 1.7-.5 2.5s-.8 1.5-1.5 2.1l-.3.3.1.4v.6H8.4v-1l-.4-.4c-.7-.7-1.3-1.5-1.6-2.5-.3-1-.4-2-.3-3 .1-1 .5-1.9 1.1-2.7.6-.8 1.4-1.4 2.4-1.8.9-.4 1.9-.6 2.9-.5 1.5.1 2.9.8 4 1.9 1 1.1 1.6 2.6 1.6 4.1zM12.5 0H11v2.6h1.5V0zM4.978 1.68L3.914 2.738l1.834 1.844 1.064-1.058L4.978 1.68zM19.022 1.689l-1.833 1.843 1.063 1.058 1.834-1.843-1.064-1.058z">
+                      </path>
+                      <path d="M13.7 9.9c0-1-.8-1.7-1.7-1.7-.9 0-1.7.8-1.7 1.7 0 .5.2 1 .6 1.3l-.8 2.7h3.8l-.7-2.7c.3-.4.5-.8.5-1.3z">
+                      </path>
+                    </g>
+                  </svg>
+
+                  <span>{{ book.ideas }} ایده کلیدی</span>
+                </div>
+                <div class="flex flex-row items-center gap-2 row-start-2">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0h14.5v9.767c3.131.22 5.75 2.487 5.75 5.7V17.5h.26c1.925 0 3.49 1.457 3.49 3.25S22.435 24 20.51 24H17.5v-6.5h1.25v-2.034c0-2.384-2.051-4.216-4.75-4.216s-4.75 1.832-4.75 4.216V17.5h1.25V24H7.49C5.566 24 4 22.543 4 20.75c0-.644.202-1.245.55-1.75H0V0zm7.75 17.5v-2.034c0-3.04 2.345-5.233 5.25-5.646V1.5H1.5v16h6.25zM5.5 20.75c0-.866.79-1.75 1.99-1.75H9v3.5H7.49c-1.2 0-1.99-.884-1.99-1.75zM11.25 6h-8V4.5h8V6zm-8 3h8V7.5h-8V9zm4 3h-4v-1.5h4V12zm13.26 10.5H19V19h1.51c1.2 0 1.99.884 1.99 1.75s-.79 1.75-1.99 1.75z" fill="currentColor">
+                    </path>
+                  </svg>
+
+                  <span>{% if book.has_audio %}صوت و متن{% else %}متن{% endif %}</span>
+                </div>
+              </div>
+            </div>
+            <div name="book-controls-desktop" class="hidden m:block mx-4">
+              <div class="flex flex-row mb-4 gap-2 m:gap-4">
+                <a name="read-button" href="#" class="m:max-w-[9rem] basis-1/2 flex flex-row items-center justify-center gap-2 inline-block px-4 rounded border-none font-cera-pro font-medium text-base leading-5 text-center no-underline outline-none cursor-pointer disabled:cursor-not-allowed bg-midnight text-white hover:bg-deep-black hover:text-white py-3">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6">
+                    <path d="M23 24H2V0h21v24zM3.337 22.632h18.326V1.368H3.337v21.264z" fill="currentColor">
+                    </path>
+                    <path d="M18.313 8.647h-4.105v1.14h4.105v-1.14zM18.313 13.093H6.684v1.14h11.63v-1.14zM18.313 17.537H6.684v1.14h11.63v-1.14zM11.34 9.975h1.252L9.89 4.59H9.49l-2.7 5.386h1.252l.343-.684h2.612l.343.684zM8.958 8.151l.733-1.462.733 1.462H8.958z" fill="currentColor">
+                    </path>
+                  </svg>
+                  مطالعه
+                </a>
+                {% if book.has_audio %}
+                <a name="play-button" href="https://www.blinkist.com/en/nc/reader/outsmarting-the-crowd-en?play=1" class="m:max-w-[9rem] basis-1/2 flex flex-row items-center justify-center gap-2 inline-block px-4 rounded border-none font-cera-pro font-medium text-base leading-5 text-center no-underline outline-none cursor-pointer disabled:cursor-not-allowed bg-midnight text-white hover:bg-deep-black hover:text-white py-3">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6">
+                    <path d="M20.253 13.625v-3.142C20.253 5.805 16.596 2 12.104 2c-4.492 0-8.149 3.805-8.149 8.483v3.131C1.768 13.656 0 15.52 0 17.804 0 20.119 1.808 22 4.03 22h4.413v-8.39h-3.21v-3.127c0-3.944 3.082-7.153 6.871-7.153 3.79 0 6.872 3.209 6.872 7.153v3.129h-3.419V22h4.413c2.222 0 4.03-1.883 4.03-4.195-.002-2.213-1.657-4.027-3.747-4.18zm-18.975 4.18c0-1.554 1.195-2.82 2.677-2.86v5.72c-1.482-.04-2.677-1.306-2.677-2.86zm5.887-2.865v5.73h-1.93v-5.73h1.93zm9.67 0h2.14v5.73h-2.14v-5.73zm3.418 5.714v-5.698c1.385.148 2.467 1.37 2.467 2.849 0 1.481-1.082 2.7-2.466 2.85z" fill="currentColor">
+                    </path>
+                  </svg>
+                  پخش
+                </a>
+                {% endif %}
+              </div>
+              <div id="bookmark-section" class="mb-12 flex flex-row mx-4 m:mx-0 text-base font-bold text-blue justify-center m:justify-start">
+
+                <a name="addToLibrary" href="{{ url_for('book_bp.bookmark_view', book_slug=book.slug) }}" class="hidden flex flex-row items-center gap-2 font-bold hover:text-blue-1">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.25.25h17.5v23.461l-8.717-8.034L3.25 23.7V.25zm1.5 1.5v18.549l7.288-6.658 7.212 6.648V1.75H4.75z" fill="currentColor"></path>
+                  </svg>
+                  افزودن به کتابخانه
+                </a>
+                <a name="removeFromLibrary" href="{{ url_for('book_bp.bookmark_view', book_slug=book.slug) }}" class="flex flex-row items-center gap-2 font-bold hover:text-blue-1">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.25.25h17.5v23.461l-8.717-8.034L3.25 23.7V.25z" fill="currentColor"></path>
+                  </svg>
+                  در کتابخانه ذخیره شده
+                </a>
+                
+              </div>
+            </div>
+            <div>
+              <h4 class="font-bold text-h4 mb-4 mx-4">
+                این کتاب درباره چیست؟
+              </h4>
+              <div class="w-full overflow-hidden mb-6 m:mx-4">
+                <div class=" pb-8 -mb-8 overflow-x-auto overflow-y-hidden flex flex-row flex-nowrap m:flex-wrap gap-4">
+                  <a name="b-chip" href="/category/{{ book.categories[0].slug }}" class="font-cera-pro text-midnight flex w-max items-center py-3 border-2 border-solid rounded first:ml-4 last:ml-4 m:first:ml-0 m:last:mr-0 px-4 cursor-pointer m:hover:border-green border-white bg-pale-mint-grey">
+                    <svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class=" w-6 h-6 ml-2 text-midnight flex-shrink-0  ">
+                      {{ book.categories[0].icon|safe }}
+                    </svg>
+                    <span class="block whitespace-nowrap">{{ book.categories[0].name }}</span>
+                  </a>
+                </div>
+              </div>
+              <div class="mb-8 mx-4">
+                {{ book.description|safe }}
+              </div>
+              <h4 class="font-bold text-h4 mb-2 mx-4">
+                درباره نویسنده
+              </h4>
+              <div class="mx-4 border-b border-lightest-grey pb-6 m:pb-12">
+                {{ book.authors[0].bio|safe }}
+              </div>
+            </div>
+            <div class="flex flex-col m:flex-row gap-6 m:gap-8 text-blue mt-6 border-b border-lightest-grey pb-6 mx-4">
+              <button type="button" name="button" class="flex flex-row items-center gap-2 font-bold hover:text-blue-1">
+                <svg viewBox="0 0 18 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6">
+                  <path d="M8 2.87v12.38h1.5V2.87l2.22 2.22 1.06-1.06L8.75 0 4.72 4.03l1.06 1.06L8 2.87z" fill="currentColor">
+                  </path>
+                  <path d="M11.75 6.5V8H16v14.5H1.5V8h4.25V6.5H0V24h17.5V6.5h-5.75z" fill="currentColor">
+                  </path>
+                </svg>
+                اشتراک‌گذاری
+              </button>
+
+              <a name="b-link" href="{{ book.purchase_url }}" class="flex flex-row items-center gap-2 font-bold  cursor-pointer text-blue hover:text-blue-1">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6">
+                  <path d="M22.5 16.14L23.92 6l-18.8-.81L4.92 4A4.43 4.43 0 002.51.8L.58 0 0 1.39l1.88.78a2.88 2.88 0 011.56 2.11l2.5 14.86a2.54 2.54 0 103.57 3h5.93a2.54 2.54 0 100-1.5H9.52a2.53 2.53 0 00-2.1-1.79l-.31-1.83 15.39-.88zm-4.65 4.21a1 1 0 11-.1 1.997 1 1 0 01.1-1.997zm4.36-12.92l-1 7.29-14.33.84-1.51-8.85 16.84.72zM8.14 21.4a1 1 0 11-2 0 1 1 0 012 0z" fill="currentColor">
+                  </path>
+                </svg>
+                خرید از فیدیبو
+              </a>
+              <!---->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <section class="flex flex-col  flex w-full max-w-[80rem] mx-auto m:px-12  ">
+
+    {% with title='similar', items=similar_books %}
+    {% include 'components/horizontal_lists/book_horizontal_list.html' %}
+    {% endwith %}
+
+    {% with title='trending', items=trending_books %}
+    {% include 'components/horizontal_lists/book_horizontal_list.html' %}
+    {% endwith %}
+
+  </section>
+</div>
+</div>
+
+<script>
+
+  $(document).ready(function() {
+    var bookmark = "{{bookmark}}";
+
+    if (bookmark  == "True") {
+      $('[name="addToLibrary"]').addClass("hidden");
+      $('[name="removeFromLibrary"]').removeClass("hidden");
+    }
+    else {
+      $('[name="removeFromLibrary"]').addClass("hidden");
+      $('[name="addToLibrary"]').removeClass("hidden");
+    }
+
+  $('[name="addToLibrary"]').click(function (e) {
+    e.preventDefault();
+    $.ajax({
+      type: "GET",
+      url: "/book/bookmark/{{ book.slug }}",
+      success: function (result) {
+        $('[name="addToLibrary"]').addClass("hidden");
+        $('[name="removeFromLibrary"]').removeClass("hidden");
+      },
+      error: function (result) {
+      }
+    });
+  });
+
+  $('[name="removeFromLibrary"]').click(function (e) {
+    e.preventDefault();
+    $.ajax({
+      type: "GET",
+      url: "/book/bookmark/{{ book.slug }}",
+      success: function (result) {
+        $('[name="removeFromLibrary"]').addClass("hidden");
+        $('[name="addToLibrary"]').removeClass("hidden");
+      },
+      error: function (result) {
+      }
+    });
+  });
+});
+</script>
+{% endblock content %}

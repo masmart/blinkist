@@ -1,0 +1,25 @@
+<div class="flex-shrink-0 snap-start ">
+    <a href="/collection/{{ collection.slug }}" aria-label="{{ collection.name }}" class="flex rounded font-cera-pro first:ml-4 last:mr-4 flex-col w-44 p-2 box-content lg:hover:bg-pale-mint-grey hover:cursor-pointer" popup-classes="right-0" data-test-id="collection-card">
+      <img src="{{ collection.cover_image }}" alt="{{ collection.name }}" loading="lazy" class="object-contain flex-shrink-0 rounded w-44 h-44">
+      <div class="w-full flex flex-col relative mt-2">
+        <!---->
+        <div class="text-midnight line-clamp-2 font-bold text-h5" data-test-id="title" title="{{ collection.name }}">
+          {{ collection.name }}
+        </div>
+        <!---->
+        <div data-test-id="description" title="{{ collection.tagline }}" class="text-dark-grey text-caption line-clamp-3 mt-2">
+          {{ collection.tagline }}
+        </div>
+        <div class="text-mid-grey text-caption mt-2">
+          <div class="flex items-center gap-x-1">
+            <div class="rounded p-1 bg-background-blue">
+              <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M6.367 0H24v17.633h-2.939v2.939h-2.939V24H0V5.878h3.429v-2.94h2.938V0zm1.47 2.939H21.06v13.224h1.47V1.47H7.837v1.47zM4.898 5.878h13.224v13.224h1.47V4.408H4.898v1.47zM1.469 7.347V22.53h15.184V7.347H1.469z"></path>
+              </svg>
+            </div>
+            {{ collection.books|length }} عنوان
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>

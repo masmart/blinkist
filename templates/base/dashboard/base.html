@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html class="h-full">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dist/output.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <script src="{{ url_for('static', filename='js/jquery-3.6.3.min.js') }}"></script>
+
+    <style>
+        .h-tilted-background-horizontal {
+            height: calc(100% - 6.25rem);
+        }
+
+        .h-tilted-background-vertical {
+            height: calc(100% - 4rem);
+        }
+
+        .triangle-left {
+            -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%);
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%);
+        }
+    </style>
+</head>
+
+<body class="h-full">
+
+    <div class="flex w-full h-screen overflow-y-hidden">
+
+        {% include 'components/sidebar/sidebar.html' %}
+
+        <div class="m:w-0 h-full absolute z-40 bg-dark-grey m:hidden transition-opacity duration-500 ease-in-out b-transition-width opacity-0 w-0"></div>
+
+        <div class="flex w-full flex-col h-full overflow-y-auto">
+
+            <div class="m:hidden w-full flex gap-4 shrink-0 h-18.5 m:h-18 items-center justify-between border-b border-pale-mint-grey px-4">
+
+                <button>
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-7">
+                        <path d="M0 3h24v1.8H0V3zM0 11.1h24v1.8H0v-1.8zM0 19.2h24V21H0v-1.8z" fill="currentColor"></path>
+                    </svg>
+                </button>
+
+                <div data-test-id="mobile-search" class="m:relative m:h-full w-full flex items-center bg-white z-30 m:w-auto">
+                    <div class="relative w-full px-4">
+                        <span class="absolute h-10 left-6 pr-2 top-[2px] border-r-2 border-lightest-grey flex items-center">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-midnight">
+                                <path d="M22.1 21.4l-5.8-5.8c1.2-1.4 1.9-3.2 1.9-5.2 0-4.5-3.7-8.2-8.2-8.2-4.5 0-8.2 3.7-8.2 8.2 0 4.5 3.7 8.2 8.2 8.2 2 0 3.8-.7 5.2-1.9l5.8 5.8 1.1-1.1zm-18.7-11a6.7 6.7 0 1113.4.001 6.7 6.7 0 01-13.4 0z" fill="currentColor">
+                                </path>
+                            </svg>
+                        </span>
+
+                        <input refs="search" type="text" placeholder="کتاب، نویسنده یا پادکست" role="search" class="px-6 py-2 bg-pale-mint-grey m:w-[22rem] border-2 border-lightest-grey rounded-lg text-deep-black text-base m:text-sm w-full m:placeholder:text-mid-grey placeholder:text-pale-mint-grey">
+                    </div>
+
+                    <div class="w-screen m:w-[38rem] p-4 border-2 border-lightest-grey rounded-b bg-white absolute top-18 left-0 m:left-auto right-4 z-30" style="display:none;">
+                        <div class="flex flex-col divide-y divide-lightest-grey">
+
+                            <!---->
+                        </div>
+                    </div>
+                </div>
+
+                <svg viewBox="0 0 35 34" xmlns="http://www.w3.org/2000/svg" class="blinkist-logo w-10 h-10 shrink-0">
+                    <path d="m25.2051102.0058957-7.6622492 7.79322777-7.66224914-7.79322777c-5.84848983 2.89331356-9.88061186 8.99241264-9.88061186 16.0516261 0 9.8543636 7.85411695 17.842739 17.542861 17.842739 9.6884543 0 17.5425712-7.9883754 17.5425712-17.842739 0-7.05921346-4.032122-13.15831254-9.880322-16.0516261" fill="#2cde80"></path>
+                    <path d="m22.1946407 12.5304207-4.6517797-4.73129723-4.6520695 4.73129723c-2.5690576 2.6129732-2.5690576 6.8496214 0 9.4628893 2.5693475 2.6129732 6.7347916 2.6129732 9.3038492-.0002947 2.5690576-2.6129732 2.5690576-6.8493266 0-9.4625946" fill="#002f54"></path>
+                </svg>
+
+            </div>
+
+            <div class="flex flex-col">
+
+                <div class="w-full border-b border-lightest-grey hidden m:flex">
+                    <section class="flex w-full max-w-[80rem] mx-auto m:px-12 px-4">
+                        <div class="h-20 flex items-center justify-end w-full">
+                            
+                            <div data-test-id="desktop-search" class="m:relative m:h-full w-full flex items-center bg-white z-30 m:w-auto">
+                                <div class="relative w-full px-4">
+
+                                    <span class="absolute h-10 left-6 pr-2 top-[2px] border-r-2 border-lightest-grey flex items-center">
+                                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-midnight">
+                                            <path d="M22.1 21.4l-5.8-5.8c1.2-1.4 1.9-3.2 1.9-5.2 0-4.5-3.7-8.2-8.2-8.2-4.5 0-8.2 3.7-8.2 8.2 0 4.5 3.7 8.2 8.2 8.2 2 0 3.8-.7 5.2-1.9l5.8 5.8 1.1-1.1zm-18.7-11a6.7 6.7 0 1113.4.001 6.7 6.7 0 01-13.4 0z" fill="currentColor"></path>
+                                        </svg>
+                                    </span>
+
+                                    <input refs="search" type="text" placeholder="کتاب، نویسنده یا پادکست" role="search" class="px-6 py-2 bg-pale-mint-grey m:w-[22rem] border-2 border-lightest-grey rounded-lg text-deep-black text-base m:text-sm w-full m:placeholder:text-mid-grey placeholder:text-pale-mint-grey search-box">
+
+                                </div>
+
+                                <div class="hidden w-screen m:w-[38rem] p-4 border-2 border-lightest-grey rounded-b bg-white absolute top-18 left-0 m:left-auto right-4 z-30 result-parent" style="top: 80px !important; left: 0px !important; right: 15px !important; max-width: 400px;">
+                                    <div class="flex flex-col divide-y divide-lightest-grey results">
+
+                                        <!-- Search result is here -->
+
+                                    </div>
+                                </div>
+
+                                
+                            </div>
+                            
+                        </div>
+                    </section>
+                </div>
+
+                <div class="min-h-screen">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+
+                <div class="w-full bg-pale-mint-grey">
+                    <section class="flex w-full max-w-[80rem] mx-auto m:px-12 px-4">
+                        <footer class="bg-pale-mint-grey py-10 flex flex-col l:flex-row content-center w-full">
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 134 26" enable-background="new 0 0 134 26" class="blinkist-logo mr-8 w-[8.375rem] h-8 flex-0">
+                                <path fill="#2CE080" d="M19.8,0l-6,6l-6-6C3.1,2.2,0,6.9,0,12.3C0,19.9,6.1,26,13.7,26 c7.6,0,13.8-6.1,13.8-13.7C27.5,6.9,24.3,2.2,19.8,0z">
+                                </path>
+                                <path fill="#03314B" d="M17.4,9.6L13.7,6l-3.6,3.6c-2,2-2,5.3,0,7.3c2,2,5.3,2,7.3,0 C19.4,14.9,19.4,11.6,17.4,9.6z">
+                                </path>
+                                <path fill="#002F54" d="M44.1,16.7c0-1.1-0.8-1.7-1.9-1.7h-3.8v3.3h3.8 C43.4,18.3,44.1,17.8,44.1,16.7z M38.4,7.7V11h1.8c1.2,0,1.9-0.7,1.9-1.7c0-1-0.7-1.7-1.9-1.7H38.4z M49,16.9c0,3.3-2.8,5.7-6.5,5.7 h-8.9v-19h6.9c3.7,0,6.5,2.2,6.5,5.6c0,1.3-0.4,2.4-1.2,3.2C47.8,13.1,49,14.6,49,16.9z">
+                                </path>
+                                <path fill="#03314B" d="M51.4,22.5h5V0.9h-5V22.5z">
+                                </path>
+                                <path fill="#002F54" d="M59.6,22.5h5V8.1h-5V22.5z M65.2,3c0,1.6-1.4,2.9-3.1,2.9 c-1.7,0-3-1.3-3-2.9c0-1.7,1.4-2.9,3-2.9C63.8,0.1,65.2,1.3,65.2,3z">
+                                </path>
+                                <path fill="#03314B" d="M82,13.6v8.9h-5v-8.2c0-1.3-0.9-2.1-2.1-2.1 c-1.2,0-2.1,0.8-2.1,2.1v8.2h-5V8.1h4.5v1.2c1-0.9,2.4-1.5,4.1-1.5C79.9,7.8,82,10.1,82,13.6z">
+                                </path>
+                                <path fill="#03314B" d="M95.3,22.5l-5.2-7.6v7.6h-5V0.9h5v13l4.5-5.8h5.8l-5,6.4l5.3,8 H95.3z">
+                                </path>
+                                <path fill="#002F54" d="M102.4,22.5h5V8.1h-5V22.5z M107.9,3c0,1.6-1.4,2.9-3.1,2.9 c-1.7,0-3-1.3-3-2.9c0-1.7,1.4-2.9,3-2.9C106.5,0.1,107.9,1.3,107.9,3z">
+                                </path>
+                                <path fill="#03314B" d="M121.3,9.9l-2.3,3c-1-0.8-2-1.2-3.1-1.2c-0.6,0-1,0.1-1,0.5 c0,0.4,0.3,0.5,1,0.8l1.4,0.6c2.6,1,4.2,2.1,4.2,4.5c0,3-2.5,4.8-6,4.8c-2.6,0-4.9-1-6.2-2.8l2.3-2.9c1.2,1.2,2.6,1.8,4,1.8 c0.7,0,1.3-0.1,1.3-0.6c0-0.3-0.3-0.5-0.8-0.7l-1.6-0.7c-2.6-1.1-4.2-2.2-4.2-4.6c0-2.9,2.3-4.6,5.6-4.6 C118,7.7,119.9,8.4,121.3,9.9z">
+                                </path>
+                                <path fill="#03314B" d="M134,18.4v4.2c-0.8,0.2-1.8,0.3-2.9,0.3c-4,0-6.4-1.9-6.4-5.9v-4.8 h-2.2V8.1h2.2V4.6h5v3.5h3.9v4.2h-3.9v4.3c0,1.4,0.7,1.9,2.5,1.9C132.6,18.4,133.2,18.4,134,18.4z">
+                                </path>
+                            </svg>
+                            <ul class="flex text-dark-grey text-sm flex-wrap flex-1 pt-2 order-2 l:order-1">
+                                <li class="hover:text-blue-2"> © Blinkist 2023 <span class="inline-block mx-2">|</span>
+                                </li>
+                                <li>
+                                    <a href="/en/sitemap" target="_blank" class="hover:text-blue-2"> Sitemap </a>
+                                    <span class="inline-block mx-2">|</span>
+                                </li>
+                                <li>
+                                    <a href="/en/disclaimer" target="_blank" class="hover:text-blue-2"> Legal Notice </a>
+                                    <span class="inline-block mx-2">|</span>
+                                </li>
+                                <li>
+                                    <a href="/en/tos" target="_blank" class="hover:text-blue-2"> Terms of Service </a>
+                                    <span class="inline-block mx-2">|</span>
+                                </li>
+                                <li>
+                                    <a href="/en/privacy-overview" target="_blank" class="hover:text-blue-2"> Privacy Policies </a>
+                                    <!---->
+                                </li>
+                            </ul>
+                            <ul class-attr="text-mid-grey" class="flex order-1 l:order-2 my-4 l:my-0 text-mid-grey flex-0">
+                                <li class="flex items-center mr-2 last:mr-0">
+                                    <a data-test-id="facebook-link" href="https://www.facebook.com/blinkist" target="_blank" rel="noopener" aria-label="Blinkist on facebook" class="flex">
+                                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" alt="Facebook Logo" class="w-7.5 h-7.5">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm3.552 7.06h-1.678c-.592 0-.715.242-.715.854v1.48h2.392l-.23 2.599H13.16v7.76H10.06v-7.728H8.449v-2.63h1.611V7.321c0-1.944 1.04-2.959 3.346-2.959h2.145V7.06l.001.001z" fill="currentColor"></path>
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li class="flex items-center mr-2 last:mr-0">
+                                    <a data-test-id="twitter-link" href="https://twitter.com/blinkist" target="_blank" rel="noopener" aria-label="Blinkist on twitter" class="flex">
+                                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" alt="Twitter Logo" class="w-7.5 h-7.5">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.035 9.932c.176 3.915-2.744 8.28-7.911 8.28a7.878 7.878 0 01-4.266-1.252 5.598 5.598 0 004.12-1.152 2.786 2.786 0 01-2.6-1.934c.417.08.847.065 1.257-.047-1.338-.269-2.262-1.474-2.232-2.764.375.208.804.334 1.26.348a2.786 2.786 0 01-.86-3.715 7.9 7.9 0 005.735 2.908 2.787 2.787 0 014.744-2.538 5.573 5.573 0 001.768-.676 2.792 2.792 0 01-1.224 1.54 5.558 5.558 0 001.598-.438 5.652 5.652 0 01-1.389 1.44z" fill="currentColor"></path>
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li class="flex items-center mr-2 last:mr-0">
+                                    <a data-test-id="linkedin-link" href="https://www.linkedin.com/company/blinkist" target="_blank" rel="noopener" aria-label="Blinkist on linkedin" class="flex">
+                                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" alt="Linkedin Logo" class="w-7.5 h-7.5">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zM8.798 17.802H6.164V9.29h2.634v8.512zm-1.33-9.628a1.565 1.565 0 01-1.558-1.57c0-.867.698-1.57 1.559-1.57.86 0 1.557.703 1.557 1.57a1.564 1.564 0 01-1.557 1.57zm11.204 9.628H16.05v-4.468c0-1.226-.465-1.91-1.435-1.91-1.054 0-1.605.712-1.605 1.91v4.468h-2.527V9.29h2.527v1.146s.76-1.406 2.565-1.406 3.096 1.102 3.096 3.382l.001 5.39z" fill="currentColor"></path>
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li class="flex items-center mr-2 last:mr-0">
+                                    <a data-test-id="instagram-link" href="https://www.instagram.com/blinkist/" target="_blank" rel="noopener" aria-label="Blinkist on instagram" class="flex">
+                                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" alt="Instagram Logo" class="w-7.5 h-7.5">
+                                            <path d="M12 0C5.36 0 0 5.36 0 12s5.36 12 12 12 12-5.36 12-12S18.64 0 12 0zm6.72 14.8c-.08 2.48-1.52 3.84-3.92 3.92-.72 0-.96.08-2.8.08-1.84 0-2.08 0-2.8-.08-2.48-.08-3.84-1.52-3.92-3.92 0-.72-.08-.96-.08-2.8 0-1.84 0-2.08.08-2.8.08-2.48 1.52-3.84 3.92-3.92H12c1.84 0 2.08 0 2.8.08 2.48.08 3.84 1.52 3.92 3.92v2.8c.08 1.76.08 2 0 2.72z" fill="currentColor"></path>
+                                            <path d="M12 9.76c-1.28 0-2.24 1.04-2.24 2.24 0 1.28 1.04 2.24 2.24 2.24 1.28 0 2.24-1.04 2.24-2.24 0-1.2-.96-2.24-2.24-2.24z" fill="currentColor"></path>
+                                            <path d="M14.72 6.48H9.28c-1.84.08-2.72.96-2.8 2.8v5.44c.08 1.84.96 2.72 2.8 2.8h5.44c1.84-.08 2.72-.96 2.8-2.8V12 9.28c-.08-1.84-.96-2.72-2.8-2.8zM12 15.52c-1.92 0-3.52-1.6-3.52-3.52s1.6-3.52 3.52-3.52 3.52 1.6 3.52 3.52-1.6 3.52-3.52 3.52zm3.6-6.32c-.48 0-.8-.4-.8-.88 0-.4.32-.72.8-.8.48 0 .8.4.8.8 0 .48-.32.88-.8.88z" fill="currentColor"></path>
+                                        </svg>
+                                    </a>
+                                </li>
+                            </ul>
+                        </footer>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <!---->
+
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            let debauced;
+            $('.search-box').on('keydown', function (e) {
+                clearTimeout(debauced)
+                debauced = setTimeout(search,300)
+            })
+        })
+
+        function search() {
+            const query = $('.search-box').val();
+            if (query.length > 2) {
+                fetch('/api/search?q=' + query)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.length > 0){
+                            $('.results').empty()
+                            $('.result-parent').removeClass("hidden");
+                            for (let i = 0; i < data.length; i++) {
+                                $('.results').append(`
+                                <a href="${data[i]['url']}" aria-label="${data[i]['title']}" class="flex rounded font-cera-pro p-4 flex-row w-full px-2 lg:hover:bg-pale-mint-grey hover:cursor-pointer" is-premium-user="true">
+                                    <img src="${data[i]['image']}" alt="${data[i]['title']}" loading="lazy" class="object-contain flex-shrink-0 rounded w-20 h-20">
+                                    <div class="w-full flex flex-col relative ml-4">
+                                        <div class="text-midnight line-clamp-2 font-bold text-h5" data-test-id="title" title="${data[i]['title']}">
+                                            ${data[i]['title']}
+                                        </div>
+                                        <div data-test-id="subtitle" title="${data[i]['author']}" class="text-mid-grey text-caption line-clamp-2 mt-1">
+                                            ${data[i]['author']}
+                                        </div>
+                                        <!---->
+                                        <div class="text-mid-grey text-caption mt-2">
+                                            <div class="flex gap-x-2">
+                                                <div class="flex gap-x-1 items-center">
+                                                    <div class="rounded p-1 bg-green-8">
+                                                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4">
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0h14.5v10.5H13v-9H1.5v16h7V19H0V0z" fill="currentColor"></path>
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M11.25 6h-8V4.5h8V6zM11.25 9h-8V7.5h8V9zM7.25 12h-4v-1.5h4V12zM19 22.5h1.51c1.2 0 1.99-.884 1.99-1.75S21.71 19 20.51 19H19v3.5zm1.51 1.5c1.925 0 3.49-1.457 3.49-3.25s-1.565-3.25-3.49-3.25H17.5V24h3.01zM9 19H7.49c-1.2 0-1.99.884-1.99 1.75s.79 1.75 1.99 1.75H9V19zm-1.51-1.5C5.566 17.5 4 18.957 4 20.75S5.565 24 7.49 24h3.01v-6.5H7.49z" fill="currentColor"></path>
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M7.75 15.466c0-3.382 2.903-5.716 6.25-5.716s6.25 2.334 6.25 5.716V18h-1.5v-2.534c0-2.384-2.051-4.216-4.75-4.216s-4.75 1.832-4.75 4.216V18h-1.5v-2.534z" fill="currentColor"></path>
+                                                        </svg>
+                                                    </div>
+                                                    ${data[i]['read_time']} دقیقه
+                                                </div>
+                                                <div class="flex items-center gap-x-1">
+                                                    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4">
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M9.31 9.262l-6.198.947 4.49 4.602-1.04 6.382L12 18.186l5.439 3.007-1.041-6.382 4.49-4.602-6.198-.947L12 3.53 9.31 9.262zM8.292 7.9L0 9.167l6 6.15L4.584 24 12 19.9l7.417 4.1L18 15.317l6-6.15L15.708 7.9 12 0 8.292 7.9z"></path>
+                                                    </svg>
+                                                    ${data[i]['rating']}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                `)
+                            }
+                            $('.results').append(`
+                            <div class="pt-4">
+                                <a href="/dashboard/explore/search?q=" class="text-blue text-sm">
+                                    مشاهده تمام نتایج
+                                </a>
+                            </div>
+                            `)
+                        } else {
+                            $('.results').empty()
+                            $('.result-parent').addClass("hidden");
+                        }
+                    })
+            } else {
+                $('.results').empty()
+                $('.result-parent').addClass("hidden");
+            }
+        }
+    </script>
+</body>
+
+</html>

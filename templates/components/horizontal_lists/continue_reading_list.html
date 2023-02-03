@@ -1,0 +1,27 @@
+<div class="mx-4 text-midnight mb-12 m:mb-16">
+
+    <div class="flex flex-row mb-8 items-center">
+
+        <div class="bg-pale-mint-grey w-12 h-12 flex items-center justify-center p-2 rounded ml-2">
+            
+            {% include 'components/icons/history.html' %}
+            
+        </div>
+
+        <div class="grow">
+            <h3 class="text-midnight font-bold text-h35">
+            از جایی که رها کردی ادامه بده
+            </h3>
+        </div>
+
+    </div>
+
+    <div class="grid m:grid-cols-2 gap-6">
+
+        {% for item in last_reads %}
+            {% include 'components/items/continue_reading_item.html' %}
+        {% endfor %}
+
+    </div>
+    
+</div>

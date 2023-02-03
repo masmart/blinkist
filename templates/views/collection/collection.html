@@ -1,0 +1,204 @@
+{% extends 'base/dashboard/base.html' %}
+
+{% block title %}کتابج - {{ collection.name }}{% endblock %}
+
+{% block content %}
+<div>
+    <div class="text-dark-grey mb-12 m:mb-16">
+        <div data-test-id="hero-section" locale="en" class="text-dark-grey">
+            
+            <!-- Desktop -->
+            <div class="relative mb-4 l:mb-8">
+
+                <div class="absolute top-0 h-full w-full">
+                    <div class="bg-background-yellow w-full h-tilted-background-vertical l:h-tilted-background-horizontal"></div>
+                    <div class="bg-background-yellow h-12 l:h-16 w-full triangle-left">
+                    </div>
+                </div>
+
+                <div class="relative pt-4 l:pt-16">
+                    <section class="flex-col items-center  flex w-full max-w-[80rem] mx-auto m:px-12 px-4">
+
+                        <div class="text-blue text-caption mb-6 self-start">
+                            {% with referer=collection.categories[0].name, page_title=collection.name, root_dir='/category/' + collection.categories[0].slug %}
+                            {% include 'components/navigations/breadcrumb.html' %}  
+                            {% endwith %}
+                        </div>
+                        
+                        <div class="flex flex-col items-center l:flex-row l:items-start w-full">
+                            <h1 class="w-full text-right text-midnight mb-6 l:hidden font-bold text-h3 m:text-h2">
+                                {{ collection.name }}
+                            </h1>
+                            <img src="{{ collection.cover_image }}" alt="Cover Image for the collection '{{ collection.name }}'" loading="eager" class="object-contain w-50 h-50 flex-shrink-0 l:w-[16.5rem] l:h-[16.5rem] l:mr-12">
+                            <section class="flex-col w-full hidden l:block  flex w-full max-w-[80rem] mx-auto m:px-16 px-8">
+                                <h1 class="w-full text-right text-midnight mb-6 l:order-1 l:block l:text-left l:mb-4 hidden font-bold text-h3 m:text-h2">
+                                    {{ collection.name }}
+                                </h1>
+                                <div class="mb-4 text-right text-dark-grey l:text-left">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 inline align-[-0.1rem]">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M6.367 0H24v17.633h-2.939v2.939h-2.939V24H0V5.878h3.429v-2.94h2.938V0zm1.47 2.939H21.06v13.224h1.47V1.47H7.837v1.47zM4.898 5.878h13.224v13.224h1.47V4.408H4.898v1.47zM1.469 7.347V22.53h15.184V7.347H1.469z"></path>
+                                    </svg>
+                                    {{ collection.tagline }}
+                                </div>
+                                <div class="flex items-center mb-8 justify-center l:justify-start text-dark-grey">
+                                    توسط
+                                    {{ collection.curators.avatar|safe }}
+                                    <span class="text-midnight font-bold text-h5">
+                                        {{ collection.curators.name }}
+                                    </span>
+                                </div>
+                                <a data-test-id="hero-section-play-button" href="/book/{{ collection.books[0].slug }}" href-lang="en" class="mb-8 text-midnight !w-80 l:max-w-74 inline-block px-4 rounded border-none font-cera-pro font-medium text-base leading-5 text-right no-underline outline-none cursor-pointer disabled:cursor-not-allowed bg-green text-midnight hover:bg-green-2 hover:text-midnight py-2.5 w-max transition-opacity">
+                                    <div class="flex items-center justify-center text-right">
+                                        پخش اولین عنوان
+                                        <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 flex-shrink-0">
+                                            <path clip-rule="evenodd" d="M10 0C4.5 0 0 4.5 0 10s4.5 10 10 10 10-4.5 10-10S15.5 0 10 0zm4.3 10.2l-5.5 3.5c-.6.4-1.1.1-1.1-.6V6c0-.7.5-1 1.1-.6l5.5 3.5c.6.4.6 1 0 1.3z" fill="currentColor" fill-rule="evenodd"></path>
+                                        </svg>
+                                    </div>
+                                </a>
+                            </section>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            
+            <!-- Mobile -->
+            <section class="flex-col w-full l:hidden  flex w-full max-w-[80rem] mx-auto m:px-12 px-4 ">
+                <h1 class="w-full text-right text-midnight mb-6 l:order-1 l:block l:text-left l:mb-4 hidden font-bold text-h3 m:text-h2">
+                    {{ collection.name }}
+                </h1>
+                <div class="mb-4 text-right text-dark-grey l:text-left">
+                    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 inline align-[-0.1rem]">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M6.367 0H24v17.633h-2.939v2.939h-2.939V24H0V5.878h3.429v-2.94h2.938V0zm1.47 2.939H21.06v13.224h1.47V1.47H7.837v1.47zM4.898 5.878h13.224v13.224h1.47V4.408H4.898v1.47zM1.469 7.347V22.53h15.184V7.347H1.469z"></path>
+                    </svg>{{ collection.tagline }}
+                </div>
+                <div class="flex items-center mb-8 justify-center l:justify-start text-dark-grey">
+                    توسط
+                    {{ collection.curators.avatar|safe }}
+                    <span class="text-midnight font-bold text-h5">
+                        {{ collection.curators.name }}
+                    </span>
+                </div>
+                <a data-test-id="hero-section-play-button" href="/book/{{ collection.books[0].slug }}" href-lang="en" class="mb-8 text-midnight !w-full l:max-w-74 inline-block px-4 rounded border-none font-cera-pro font-medium text-base leading-5 text-right no-underline outline-none cursor-pointer disabled:cursor-not-allowed bg-green text-midnight hover:bg-green-2 hover:text-midnight py-2.5 w-max transition-opacity">
+                    <div class="flex items-center justify-center text-right">
+                        <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 flex-shrink-0">
+                            <path clip-rule="evenodd" d="M10 0C4.5 0 0 4.5 0 10s4.5 10 10 10 10-4.5 10-10S15.5 0 10 0zm4.3 10.2l-5.5 3.5c-.6.4-1.1.1-1.1-.6V6c0-.7.5-1 1.1-.6l5.5 3.5c.6.4.6 1 0 1.3z" fill="currentColor" fill-rule="evenodd"></path>
+                        </svg>
+                        پخش اولین عنوان
+                    </div>
+                </a>
+            </section>
+        </div>
+
+        <section class=" flex w-full max-w-[80rem] mx-auto m:px-12 px-4">
+            <div data-test-id="about-section" class="text-dark-grey w-full">
+                <h2 class="mb-4 text-midnight font-bold text-h6">
+                    این مجموعه درباره‌ چیست؟
+                </h2>
+                <div class="-mx-4 l:mx-0">
+                    <div class="w-full overflow-hidden">
+                        <div class=" pb-8 -mb-8 overflow-x-auto overflow-y-hidden flex flex-col">
+
+                            <div class="flex flex-row m:flex-wrap px-4 l:px-0 gap-2 mb-6">
+
+                                {% with staggered=True %}
+                                    {% for item in collection.categories %}
+                                        {% include 'components/items/category_desktop_item.html' %}
+                                    {% endfor %}
+                                {% endwith %}
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <p class="text-base leading-6 l:w-8/12">
+                    {{ collection.description }}
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <section class="mb-16  flex w-full max-w-[80rem] mx-auto m:px-12 px-4 ">
+        <section data-test-id="collection-items-section" class="w-full">
+            <h2 class="mb-2 text-midnight font-bold text-h35">
+                <span>{{ collection.name }}</span>
+            </h2>
+
+            <div class="mb-6 m:mb-8 text-dark-grey">{{ collection.tagline }}</div>
+
+            <div class="w-full overflow-hidden">
+                <div class=" pb-8 -mb-8 overflow-x-auto overflow-y-hidden  grid lg:grid-cols-[repeat(4,auto)] lg:gap-12 lg:grid-flow-row lg:justify-start  ">
+
+                    {% for book in collection.books %}
+                    <div class=" py-6 first:pt-0 lg:py-0 border-b border-solid border-lightest-grey lg:border-none ">
+                        <a href="/book/{{ book.slug }}" aria-label="{{ book.title }}" class="flex rounded font-cera-pro flex-row w-full px-2 lg:flex-col lg:w-44 lg:p-2 lg:box-content lg:hover:bg-pale-mint-grey hover:cursor-pointer">
+                            <img src="{{ book.cover_image }}" alt="{{ book.title }}" loading="lazy" class="object-contain flex-shrink-0 rounded w-20 h-20 lg:w-44 lg:h-44 ">
+                            <div class="w-full flex flex-col relative ml-4 lg:ml-0 lg:mt-2">
+                                <!---->
+                                <div class="text-midnight line-clamp-2 font-bold text-h5" data-test-id="title" title="{{ book.title }}">
+                                    {{ book.title }}
+                                </div>
+                                <div data-test-id="subtitle" title="{{ book.authors.name }}" class="text-mid-grey text-caption line-clamp-2 mt-1">
+                                    {{ book.authors[0].name }}
+                                </div>
+                                <div data-test-id="description" title="{{ book.tagline }}" class="text-dark-grey text-caption line-clamp-3 mt-2">
+                                    {{ book.tagline }}
+                                </div>
+                                <!---->
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <!---->
+
+    <section data-test-id="recommended-collections-section" class="flex flex-col mb-12 lg:mb-16  flex w-full max-w-[80rem] mx-auto m:px-12  ">
+        <h2 class="mb-2 text-midnight px-4 m:px-0 font-bold text-h35">
+            <span>مجموعه‌های مشابه</span>
+        </h2>
+
+        <div class="mb-6 m:mb-8 text-dark-grey px-4 m:px-0">مجموعه‌هایی که ممکن است دوست داشته باشید</div>
+
+        <div class="w-full overflow-hidden">
+            <div class=" pb-8 -mb-8 overflow-x-auto overflow-y-hidden  grid lg:grid-cols-[repeat(4,auto)] lg:gap-12 lg:grid-flow-row lg:justify-start  grid-flow-col gap-x-12 auto-cols-auto justify-start snap-x snap-mandatory lg:snap-none scroll-pl-4">
+                {% for collection in similar_collections %}
+                <div class="snap-start lg:snap-none first:ml-4 last:mr-4 m:first:ml-0 m:last:mr-0">
+                    <a href="/collection/{{ collection.slug }}" aria-label="{{ collection.name }}" class="flex rounded font-cera-pro flex-col w-44 p-2 box-content lg:hover:bg-pale-mint-grey hover:cursor-pointer">
+                        <img src="{{ collection.cover_image }}" alt="{{ collection.name }}" loading="lazy" class="object-contain flex-shrink-0 rounded w-44 h-44">
+                        <div class="w-full flex flex-col relative mt-2">
+
+                            <div class="text-midnight line-clamp-2 font-bold text-h5" data-test-id="title" title="{{ collection.name }}">
+                                {{ collection.name }}
+                            </div>
+
+                            <div data-test-id="description" title="{{ collection.tagline }}" class="text-dark-grey text-caption line-clamp-3 mt-2">
+                                {{ collection.tagline }}
+                            </div>
+                            <div class="text-mid-grey text-caption mt-2">
+                                <div class="flex items-center gap-x-1">
+                                    <div class="rounded p-1 bg-background-blue">
+                                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M6.367 0H24v17.633h-2.939v2.939h-2.939V24H0V5.878h3.429v-2.94h2.938V0zm1.47 2.939H21.06v13.224h1.47V1.47H7.837v1.47zM4.898 5.878h13.224v13.224h1.47V4.408H4.898v1.47zM1.469 7.347V22.53h15.184V7.347H1.469z"></path>
+                                        </svg>
+                                    </div>
+                                    {{ collection.books|length }} عنوان
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!---->
+
+    <!---->
+</div>
+{% endblock %}

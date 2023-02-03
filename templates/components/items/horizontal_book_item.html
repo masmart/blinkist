@@ -1,0 +1,40 @@
+<div class="flex-shrink-0 snap-start ">
+
+    <a href="/book/{{ item.slug }}" aria-label="{{ item.title }}" class="flex rounded font-cera-pro first:ml-4 last:mr-4 flex-col w-44 p-2 box-content lg:hover:bg-pale-mint-grey hover:cursor-pointer" is-premium-user="true" mobile-layout="vertical" data-test-id="item-card">
+      <img src="{{ item.cover_image }}" alt="{{ item.title }}" loading="lazy" class="object-contain flex-shrink-0 rounded w-44 h-44">
+      <div class="w-full flex flex-col relative mt-2">
+        <!---->
+        <div class="text-midnight line-clamp-2 font-bold text-h5" data-test-id="title" title="{{ item.title }}">
+          {{ item.title }}
+        </div>
+        <div data-test-id="subtitle" title="{{ item.authors[0].name }}" class="text-mid-grey text-caption line-clamp-2 mt-1">
+          {{ item.authors[0].name }}
+        </div>
+        <div data-test-id="description" title="Recognize Your Patterns, Heal from Your Past, and Create Your Self"
+          class="text-dark-grey text-caption line-clamp-3 mt-2">
+          {{ item.tagline }}
+        </div>
+        <div class="text-mid-grey text-caption mt-2">
+          <div class="flex gap-x-2">
+            <div class="flex gap-x-1 items-center">
+              <div class="rounded p-1 bg-green-8">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0h14.5v10.5H13v-9H1.5v16h7V19H0V0z" fill="currentColor"></path>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M11.25 6h-8V4.5h8V6zM11.25 9h-8V7.5h8V9zM7.25 12h-4v-1.5h4V12zM19 22.5h1.51c1.2 0 1.99-.884 1.99-1.75S21.71 19 20.51 19H19v3.5zm1.51 1.5c1.925 0 3.49-1.457 3.49-3.25s-1.565-3.25-3.49-3.25H17.5V24h3.01zM9 19H7.49c-1.2 0-1.99.884-1.99 1.75s.79 1.75 1.99 1.75H9V19zm-1.51-1.5C5.566 17.5 4 18.957 4 20.75S5.565 24 7.49 24h3.01v-6.5H7.49z" fill="currentColor"></path>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M7.75 15.466c0-3.382 2.903-5.716 6.25-5.716s6.25 2.334 6.25 5.716V18h-1.5v-2.534c0-2.384-2.051-4.216-4.75-4.216s-4.75 1.832-4.75 4.216V18h-1.5v-2.534z" fill="currentColor"></path>
+                </svg>
+              </div>
+              {{ item.read_time }} دقیقه
+            </div>
+            <div class="flex items-center gap-x-1">
+              <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M9.31 9.262l-6.198.947 4.49 4.602-1.04 6.382L12 18.186l5.439 3.007-1.041-6.382 4.49-4.602-6.198-.947L12 3.53 9.31 9.262zM8.292 7.9L0 9.167l6 6.15L4.584 24 12 19.9l7.417 4.1L18 15.317l6-6.15L15.708 7.9 12 0 8.292 7.9z"></path>
+              </svg>
+              {{ item.rating }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+
+  </div>

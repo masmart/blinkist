@@ -1,0 +1,66 @@
+{% if title == 'شروع و نشان شده‌ها' %}
+{% set page = 'bookmark' %}
+{% elif title == 'تمام شده‌ها' %}
+{% set page = 'finished' %}
+{% endif %}
+<div class="mb-12 m:mb-16">
+
+  <div class="flex flex-row mb-8 mx-4">
+    <div class="bg-pale-mint-grey w-12 h-12 flex items-center justify-center p-2 rounded ml-2">
+      {% if page == 'bookmark' %}
+      {% include 'components/icons/bookmark.html' %}
+      {% elif page == 'finished' %}
+      {% include 'components/icons/finished.html' %}
+      {% endif %}
+    </div>
+
+    <div class="grow">
+      <h3 class="text-midnight font-bold text-h35">
+        {{ title }}
+      </h3>
+
+      <p data-test-id="book-row-subtitle" class="text-p1 text-dark-grey">
+        {{ items.total }} عنوان
+      </p>
+    </div>
+
+    <a data-test-id="saved-link" href="{% if page == 'bookmark' %}library/bookmark{% elif page == 'finished' %}library/finished{% endif %}" class="flex gap-2 items-center  cursor-pointer text-blue hover:text-blue-1">
+      نمایش همه
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4">
+        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="currentColor"></path>
+      </svg>
+    </a>
+  </div>
+
+  <div>
+    <div class="w-full overflow-hidden flex">
+
+      <button data-test-id="slideRight" aria-label="slide right" type="button" disabled="disabled" class="hidden text-blue disabled:text-light-grey m:block">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 -rotate-90">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 14.879l-7.94-7.94a1.5 1.5 0 10-2.12 2.122l9 9a1.5 1.5 0 002.12 0l9-9a1.5 1.5 0 00-2.12-2.122L12 14.88z" fill="currentColor"></path>
+          <mask id="a" maskUnits="userSpaceOnUse" x="1" y="6" width="22" height="13">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 14.879l-7.94-7.94a1.5 1.5 0 10-2.12 2.122l9 9a1.5 1.5 0 002.12 0l9-9a1.5 1.5 0 00-2.12-2.122L12 14.88z" fill="#fff"></path>
+          </mask>
+        </svg>
+      </button>
+
+      <div class="pb-8 -mb-8 relative overflow-x-auto flex flex-row gap-8 snap-x snap-mandatory !gap-4 m:mx-2">
+
+        {% for item in items %}
+        {% include 'components/items/horizontal_book_item.html' %}
+        {% endfor %}
+
+      </div>
+
+      <button data-test-id="slideLeft" aria-label="slide left" type="button" class="hidden text-blue disabled:text-light-grey m:block">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 rotate-90">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 14.879l-7.94-7.94a1.5 1.5 0 10-2.12 2.122l9 9a1.5 1.5 0 002.12 0l9-9a1.5 1.5 0 00-2.12-2.122L12 14.88z" fill="currentColor"></path>
+          <mask id="a" maskUnits="userSpaceOnUse" x="1" y="6" width="22" height="13">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 14.879l-7.94-7.94a1.5 1.5 0 10-2.12 2.122l9 9a1.5 1.5 0 002.12 0l9-9a1.5 1.5 0 00-2.12-2.122L12 14.88z" fill="#fff"></path>
+          </mask>
+        </svg>
+      </button>
+
+    </div>
+  </div>
+</div>

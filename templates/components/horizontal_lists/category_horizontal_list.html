@@ -1,0 +1,36 @@
+<div class="mb-12 m:mb-16">
+	<div class="mb-6 mx-4">
+		<h3 class="text-midnight mb-2 font-bold text-h35">
+			دسته‌بندی‌ها
+		</h3>
+
+		<p class="text-p1 text-dark-grey">
+			در ۲۲ دسته‌بندی کاوش کنید
+		</p>
+	</div>
+
+	<div class="m:hidden">
+		<div class="w-full overflow-hidden">
+			<div class="pb-8 -mb-8 overflow-x-auto overflow-y-hidden flex">
+				<div class="flex flex-row min-w-[92rem] gap-4 flex-wrap mx-4">
+
+					{% for item in items %}
+					{% include 'components/items/category_mobile_item.html' %}
+					{% endfor %}
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="hidden m:flex">
+		<div class="flex flex-row gap-4 flex-wrap mx-4">
+			{% with staggered=True %}
+				{% for item in items %}
+					{% include 'components/items/category_desktop_item.html' %}
+				{% endfor %}
+			{% endwith %}
+
+		</div>
+	</div>
+</div>

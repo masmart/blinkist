@@ -1,0 +1,20 @@
+{% extends 'base/dashboard/base.html' %}
+
+{% block title %}کتابچ - کاوش{% endblock %}
+
+{% block content %}
+<section class="flex flex-col w-full pt-6 m:pt-16 flex w-full max-w-[80rem] mx-auto m:px-12">
+{% with title='recommended', items=recommended %}
+{% include 'components/horizontal_lists/book_horizontal_list.html' %}
+{% endwith %}
+{% with items=categories %}
+{% include 'components/horizontal_lists/category_horizontal_list.html' %}
+{% endwith %}
+{% with title='latest', items=latest %}
+{% include 'components/horizontal_lists/book_horizontal_list.html' %}
+{% endwith %}
+{% with collections=collections %}
+{% include 'components/horizontal_lists/collection_horizontal_list.html' %}
+{% endwith %}
+</section>
+{% endblock %}
