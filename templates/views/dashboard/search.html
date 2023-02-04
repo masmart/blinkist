@@ -1,0 +1,99 @@
+{% extends 'base/dashboard/base.html' %}
+
+{% block title %}کتابچ - جست‌و‌جو برای "{{ keyword }}"{% endblock %}
+
+{% block content %}
+<section class="flex flex-col w-full pt-6 m:pt-16  flex w-full max-w-[80rem] mx-auto m:px-12  ">
+    <div class="flex flex-row items-center mb-8 mx-4">
+        <div class="bg-pale-mint-grey w-12 h-12 flex items-center justify-center p-2 rounded ml-2">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-midnight">
+                <path d="M22.1 21.4l-5.8-5.8c1.2-1.4 1.9-3.2 1.9-5.2 0-4.5-3.7-8.2-8.2-8.2-4.5 0-8.2 3.7-8.2 8.2 0 4.5 3.7 8.2 8.2 8.2 2 0 3.8-.7 5.2-1.9l5.8 5.8 1.1-1.1zm-18.7-11a6.7 6.7 0 1113.4.001 6.7 6.7 0 01-13.4 0z" fill="currentColor"></path>
+            </svg>
+        </div>
+
+        <div class="grow">
+            <h3 class="text-midnight font-bold text-h35">
+                نتایج جست‌و‌جو
+            </h3>
+        </div>
+    </div>
+
+    <div class="w-full overflow-hidden">
+        <div class=" pb-8 -mb-8 overflow-x-auto overflow-y-hidden flex">
+            <div class="flex flex-row gap-2 mb-8 m:mb-4 mx-4">
+                <button type="button" name="button" class="rounded-3xl px-4 py-2 bg-pale-mint-grey text-midnight">
+                    همه
+                </button>
+
+                <button type="button" name="button" class="rounded-3xl px-4 py-2 border-2 border-midnight bg-midnight text-white">
+                    کتاب‌ها
+                </button>
+                <button type="button" name="button" class="rounded-3xl px-4 py-2 border-2 border-midnight bg-midnight text-white">
+                    پادکست‌ها
+                </button>
+                <button type="button" name="button" class="rounded-3xl px-4 py-2 border-2 border-midnight bg-midnight text-white">
+                    مجموعه‌ها
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-row items-center justify-end pb-6 mx-4">
+        <button class="relative flex flex-row gap-1 items-center">
+          <span class="text-mid-grey">به‌ترتیب</span>
+      
+          <span class="text-dark-grey">
+            مرتبط‌ترین
+          </span>
+      
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 rotate-270">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 14.879l-7.94-7.94a1.5 1.5 0 10-2.12 2.122l9 9a1.5 1.5 0 002.12 0l9-9a1.5 1.5 0 00-2.12-2.122L12 14.88z" fill="currentColor"></path>
+            <mask id="a" maskUnits="userSpaceOnUse" x="1" y="6" width="22" height="13">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 14.879l-7.94-7.94a1.5 1.5 0 10-2.12 2.122l9 9a1.5 1.5 0 002.12 0l9-9a1.5 1.5 0 00-2.12-2.122L12 14.88z" fill="#fff"></path>
+            </mask>
+          </svg>
+      
+          <div class="absolute top-8 right-0 border-2 border-lightest-grey rounded-b bg-white flex flex-col items-stretch z-30">
+            <a class="px-4 py-2 first:pt-4 last:pb-4 hover:text-blue text-left">
+              حروف الفبا
+            </a>
+            <a class="px-4 py-2 first:pt-4 last:pb-4 hover:text-blue text-left">
+              جدیدترین
+            </a>
+            <a class="px-4 py-2 first:pt-4 last:pb-4 hover:text-blue text-left">
+              مرتبط‌ترین
+            </a>
+          </div>
+        </button>
+      </div>
+
+    <div class="mb-16 mx-4">
+
+        {% if result == False %}
+            <div class="flex flex-col items-center w-full mt-6 m:mt-16">
+                <div class="m:w-2/3">
+                <div class="rounded-2xl bg-pale-mint-grey px-4 py-6 flex flex-col items-center">
+                    <div class="text-deep-black mb-2 font-bold text-h5">
+                    جست‌و‌جوی شما نتیجه‌ای نداشت
+                    </div>
+            
+                    <div class="text-dark-grey mb-2 text-base text-center">
+                    پیشنهاد می‌کنیم برای پیدا کردن کتاب مورد علاقه‌ی خود به صفحه‌ی <a href="{{ url_for('dashboard_bp.explore_view') }}" class="font-bold text-blue">کاوش</a> بروید.
+                    </div>
+                </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="w-full overflow-hidden">
+                <div class=" pb-8 -mb-8 overflow-x-auto overflow-y-hidden  grid lg:grid-cols-[repeat(4,auto)] lg:gap-12 lg:grid-flow-row lg:justify-start">
+
+                    {% for item in books %}
+                    {% include 'components/items/vertical_book_item.html' %}
+                    {% endfor %}
+
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

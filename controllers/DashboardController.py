@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, request, abort
 from flask_login import current_user, login_required
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import desc, asc
+from sqlalchemy import desc, asc, or_
 from datetime import datetime
 from random import randrange
 
@@ -69,6 +69,21 @@ def finished_view():
     pagination = int(books.total / 20)
 
     return render_template('views/dashboard/serp.html', view=view, items=books, pagination=pagination, root_dir=root_dir)
+
+@login_required
+def search_view():
+
+    keyword = request.args.get('q')
+
+    if not keyword or len(keyword) < 3:
+        return render_template('views/dashboard/search.html', keyword=keyword, result=False)
+
+    books = Books.query.filter(or_(Books.title.like('%' + keyword + '%'), Books.original_title.ilike('%' + keyword + '%'))).order_by(desc('total_rating')).limit(40).all()
+
+    if len(books) == 0:
+        return render_template('views/dashboard/search.html', keyword=keyword, result=False)
+    
+    return render_template('views/dashboard/search.html', keyword=keyword, books=books)
 
 def get_last_reads(items):
 
