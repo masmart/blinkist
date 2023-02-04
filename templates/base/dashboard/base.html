@@ -46,20 +46,19 @@
                     </svg>
                 </button>
 
-                <div data-test-id="mobile-search" class="m:relative m:h-full w-full flex items-center bg-white z-30 m:w-auto">
+                <div data-test-id="mobile-search" class="m:relative m:h-full w-full flex items-center bg-white z-30 m:w-auto mobile-search-parent">
                     <div class="relative w-full px-4">
                         <span class="absolute h-10 left-6 pr-2 top-[2px] border-r-2 border-lightest-grey flex items-center">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-midnight">
-                                <path d="M22.1 21.4l-5.8-5.8c1.2-1.4 1.9-3.2 1.9-5.2 0-4.5-3.7-8.2-8.2-8.2-4.5 0-8.2 3.7-8.2 8.2 0 4.5 3.7 8.2 8.2 8.2 2 0 3.8-.7 5.2-1.9l5.8 5.8 1.1-1.1zm-18.7-11a6.7 6.7 0 1113.4.001 6.7 6.7 0 01-13.4 0z" fill="currentColor">
-                                </path>
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-midnight mobile-search-icon">
+                                <path d="M22.1 21.4l-5.8-5.8c1.2-1.4 1.9-3.2 1.9-5.2 0-4.5-3.7-8.2-8.2-8.2-4.5 0-8.2 3.7-8.2 8.2 0 4.5 3.7 8.2 8.2 8.2 2 0 3.8-.7 5.2-1.9l5.8 5.8 1.1-1.1zm-18.7-11a6.7 6.7 0 1113.4.001 6.7 6.7 0 01-13.4 0z" fill="currentColor"></path>
                             </svg>
                         </span>
 
-                        <input refs="search" type="text" placeholder="کتاب، نویسنده یا پادکست" role="search" class="px-6 py-2 bg-pale-mint-grey m:w-[22rem] border-2 border-lightest-grey rounded-lg text-deep-black text-base m:text-sm w-full m:placeholder:text-mid-grey placeholder:text-pale-mint-grey">
+                        <input refs="search" type="text" placeholder="کتاب، نویسنده یا پادکست" role="search" class="px-6 py-2 bg-pale-mint-grey m:w-[22rem] border-2 border-lightest-grey rounded-lg text-deep-black text-base m:text-sm w-full m:placeholder:text-mid-grey placeholder:text-pale-mint-grey mobile-search-input">
                     </div>
 
-                    <div class="w-screen m:w-[38rem] p-4 border-2 border-lightest-grey rounded-b bg-white absolute top-18 left-0 m:left-auto right-4 z-30" style="display:none;">
-                        <div class="flex flex-col divide-y divide-lightest-grey">
+                    <div class="hidden w-screen m:w-[38rem] p-4 border-2 border-lightest-grey rounded-b bg-white absolute top-18 left-0 m:left-auto right-4 z-30 mobile-result-parent" style="top: 45px;right: 0px;">
+                        <div class="flex flex-col divide-y divide-lightest-grey mobile-results">
 
                             <!---->
                         </div>
@@ -88,7 +87,7 @@
                                         </svg>
                                     </span>
 
-                                    <input refs="search" type="text" placeholder="کتاب، نویسنده یا پادکست" role="search" class="px-6 py-2 bg-pale-mint-grey m:w-[22rem] border-2 border-lightest-grey rounded-lg text-deep-black text-base m:text-sm w-full m:placeholder:text-mid-grey placeholder:text-pale-mint-grey search-box">
+                                    <input refs="search" type="text" placeholder="کتاب، نویسنده یا پادکست" role="search" class="px-6 py-2 bg-pale-mint-grey m:w-[22rem] border-2 border-lightest-grey rounded-lg text-deep-black text-base m:text-sm w-full m:placeholder:text-mid-grey placeholder:text-pale-mint-grey desktop-search-input">
 
                                 </div>
 
@@ -201,15 +200,40 @@
 
     <script>
         $(document).ready(function () {
+
             let debauced;
-            $('.search-box').on('keydown', function (e) {
+
+            $('.desktop-search-input').on('keydown', function (e) {
                 clearTimeout(debauced)
                 debauced = setTimeout(search,300)
+            })
+
+            $('.mobile-search-input').focus(function () {
+                $('.mobile-search-parent').addClass('absolute top-0 left-0 w-screen h-18')
+                $('.mobile-search-parent').removeAttr('fill')
+                $('.mobile-search-icon').empty()
+                $('.mobile-search-icon').append(`<path d="M22.1 21.4l-5.8-5.8c1.2-1.4 1.9-3.2 1.9-5.2 0-4.5-3.7-8.2-8.2-8.2-4.5 0-8.2 3.7-8.2 8.2 0 4.5 3.7 8.2 8.2 8.2 2 0 3.8-.7 5.2-1.9l5.8 5.8 1.1-1.1zm-18.7-11a6.7 6.7 0 1113.4.001 6.7 6.7 0 01-13.4 0z" fill="currentColor"></path>`)
+                if ($('.mobile-search-input').val().length > 2) {
+                    mobile_search()
+                }
+            })
+
+            $('.mobile-search-input').blur(function () {
+                $('.mobile-search-parent').removeClass('absolute top-0 left-0 w-screen h-18')
+                $('.mobile-search-parent').attr('fill', 'none')
+                $('.mobile-search-icon').empty()
+                $('.mobile-search-icon').append(`<path d="M19.3 20.7l-6.8-6.8-6.8 6.8-1.4-1.4 6.8-6.8-6.8-6.8 1.4-1.4 6.8 6.8 6.8-6.8 1.4 1.4-6.8 6.8 6.8 6.8z" fill="currentColor"></path>`)
+                $('.mobile-result-parent').addClass("hidden");
+            })
+
+            $('.mobile-search-input').on('keydown', function (e) {
+                clearTimeout(debauced)
+                debauced = setTimeout(mobile_search,300)
             })
         })
 
         function search() {
-            const query = $('.search-box').val();
+            const query = $('.desktop-search-input').val();
             if (query.length > 2) {
                 fetch('/api/search?q=' + query)
                     .then(response => response.json())
@@ -250,16 +274,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                </a>
-                                `)
+                                </a>`)
                             }
                             $('.results').append(`
                             <div class="pt-4">
                                 <a href="/dashboard/search?q=${query}" class="text-blue text-sm">
                                     مشاهده تمام نتایج
                                 </a>
-                            </div>
-                            `)
+                            </div>`)
                         } else {
                             $('.results').empty()
                             $('.result-parent').addClass("hidden");
@@ -268,6 +290,67 @@
             } else {
                 $('.results').empty()
                 $('.result-parent').addClass("hidden");
+            }
+        }
+
+        function mobile_search() {
+            const query = $('.mobile-search-input').val();
+            if (query.length > 2) {
+                fetch('/api/search?q=' + query)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.length > 0) {
+                            $('.mobile-results').empty()
+                            $('.mobile-result-parent').removeClass("hidden");
+                            for (let i = 0; i < data.length; i++) {
+                                console.log(data[i]['title'])
+                                $('.mobile-results').append(`
+                                <a href="${data[i]['url']}" aria-label="${data[i]['title']}" class="flex rounded font-cera-pro p-4 flex-row w-full px-2 lg:hover:bg-pale-mint-grey hover:cursor-pointer" is-premium-user="true" data-test-id="mini-result-card">
+                                    <img src="${data[i]['image']}" alt="${data[i]['title']}" loading="lazy" class="object-contain flex-shrink-0 rounded w-20 h-20">
+                                    <div class="w-full flex flex-col relative ml-4">
+                                    <div class="text-midnight line-clamp-2 font-bold text-h5" data-test-id="title" title="${data[i]['title']}">
+                                        ${data[i]['title']}
+                                    </div>
+                                    <div data-test-id="subtitle" title="${data[i]['author']}" class="text-mid-grey text-caption line-clamp-2 mt-1">
+                                        ${data[i]['author']}
+                                    </div>
+                                    <div class="text-mid-grey text-caption mt-2">
+                                        <div class="flex gap-x-2">
+                                        <div class="flex gap-x-1 items-center">
+                                            <div class="rounded p-1 bg-green-8">
+                                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0h14.5v10.5H13v-9H1.5v16h7V19H0V0z" fill="currentColor"></path>
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M11.25 6h-8V4.5h8V6zM11.25 9h-8V7.5h8V9zM7.25 12h-4v-1.5h4V12zM19 22.5h1.51c1.2 0 1.99-.884 1.99-1.75S21.71 19 20.51 19H19v3.5zm1.51 1.5c1.925 0 3.49-1.457 3.49-3.25s-1.565-3.25-3.49-3.25H17.5V24h3.01zM9 19H7.49c-1.2 0-1.99.884-1.99 1.75s.79 1.75 1.99 1.75H9V19zm-1.51-1.5C5.566 17.5 4 18.957 4 20.75S5.565 24 7.49 24h3.01v-6.5H7.49z" fill="currentColor"></path>
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.75 15.466c0-3.382 2.903-5.716 6.25-5.716s6.25 2.334 6.25 5.716V18h-1.5v-2.534c0-2.384-2.051-4.216-4.75-4.216s-4.75 1.832-4.75 4.216V18h-1.5v-2.534z" fill="currentColor"></path>
+                                            </svg>
+                                            </div>
+                                            ${data[i]['read_time']} دقیقه
+                                        </div>
+                                        <div class="flex items-center gap-x-1">
+                                            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M9.31 9.262l-6.198.947 4.49 4.602-1.04 6.382L12 18.186l5.439 3.007-1.041-6.382 4.49-4.602-6.198-.947L12 3.53 9.31 9.262zM8.292 7.9L0 9.167l6 6.15L4.584 24 12 19.9l7.417 4.1L18 15.317l6-6.15L15.708 7.9 12 0 8.292 7.9z"></path>
+                                            </svg>
+                                            ${data[i]['rating']}
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </a>`)
+                            }
+                            $('.mobile-results').append(`
+                            <div class="pt-4">
+                                <a href="/dashboard/search?q=${query}" class="text-blue text-sm">
+                                    مشاهده تمام نتایج
+                                </a>
+                            </div>`)
+                        } else {
+                            $('.mobile-results').empty()
+                            $('.mobile-result-parent').addClass("hidden");
+                        }
+                    })
+            } else {
+                $('.mobile-results').empty()
+                $('.mobile-result-parent').addClass("hidden");
             }
         }
     </script>
