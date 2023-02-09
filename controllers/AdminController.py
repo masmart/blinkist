@@ -36,7 +36,9 @@ class IdeasView(ModelView):
     page_size = 20
     can_delete = False
     column_exclude_list=['created_at', 'updated_at', 'deleted_at']
-    column_searchable_list=['title', 'books.title', 'books.original_title']
+    form_create_rules = ['idea_book', 'title', 'text', 'order']
+    form_edit_rules = ['idea_book', 'title', 'text', 'order']
+    column_searchable_list=['title', 'idea_book.title', 'idea_book.original_title']
 
     def on_model_change(self, form, model, is_created):
         now = datetime.now()
