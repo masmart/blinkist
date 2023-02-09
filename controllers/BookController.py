@@ -34,6 +34,21 @@ def bookmark_view(book_slug):
 
     return redirect(location=url_for('book_bp.book_view', book_slug=book_slug))
 
+@login_required
+def player_view():
+
+    return render_template('views/book/player.html')
+
+@login_required
+def original_mobile_view():
+    
+        return render_template('views/book/original_mobile.html')
+
+@login_required
+def original_desktop_view():
+    
+        return render_template('views/book/original_desktop.html')
+
 def bookmark():
 
     user_id = request.form.get('user_id')

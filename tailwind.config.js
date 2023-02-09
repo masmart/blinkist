@@ -1,13 +1,19 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./templates/**/*.{html,js}",
-  "./templates/views/user/**/*.{html,js}"
+  "./templates/views/user/**/*.{html,js}",
+  "./static/js/**/*.{html,js}",
 ],
   theme: {
     extend: {
+      fontSize: {
+        'r0': '0.8rem',
+        'r1': '1rem',
+        'r2': '1.25rem',
+      },
       screens: {
         m: '768px',
-        l: '976px',
+        l: '960px',
         xl: '1440px',
       },
       colors: {

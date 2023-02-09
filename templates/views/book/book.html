@@ -32,7 +32,7 @@
                   مطالعه
                 </a>
 
-                <a name="play-button" href="#" class="m:max-w-[9rem] basis-1/2 flex flex-row items-center justify-center gap-2 inline-block px-4 rounded border-none font-cera-pro font-medium text-base leading-5 text-center no-underline outline-none cursor-pointer disabled:cursor-not-allowed bg-midnight text-white hover:bg-deep-black hover:text-white py-3">
+                <a name="play-button" href="{{ url_for('book_bp.player_view') }}" class="m:max-w-[9rem] basis-1/2 flex flex-row items-center justify-center gap-2 inline-block px-4 rounded border-none font-cera-pro font-medium text-base leading-5 text-center no-underline outline-none cursor-pointer disabled:cursor-not-allowed bg-midnight text-white hover:bg-deep-black hover:text-white py-3">
                   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6">
                     <path d="M20.253 13.625v-3.142C20.253 5.805 16.596 2 12.104 2c-4.492 0-8.149 3.805-8.149 8.483v3.131C1.768 13.656 0 15.52 0 17.804 0 20.119 1.808 22 4.03 22h4.413v-8.39h-3.21v-3.127c0-3.944 3.082-7.153 6.871-7.153 3.79 0 6.872 3.209 6.872 7.153v3.129h-3.419V22h4.413c2.222 0 4.03-1.883 4.03-4.195-.002-2.213-1.657-4.027-3.747-4.18zm-18.975 4.18c0-1.554 1.195-2.82 2.677-2.86v5.72c-1.482-.04-2.677-1.306-2.677-2.86zm5.887-2.865v5.73h-1.93v-5.73h1.93zm9.67 0h2.14v5.73h-2.14v-5.73zm3.418 5.714v-5.698c1.385.148 2.467 1.37 2.467 2.849 0 1.481-1.082 2.7-2.466 2.85z" fill="currentColor">
                     </path>
@@ -110,7 +110,7 @@
                   مطالعه
                 </a>
                 {% if book.has_audio %}
-                <a name="play-button" href="https://www.blinkist.com/en/nc/reader/outsmarting-the-crowd-en?play=1" class="m:max-w-[9rem] basis-1/2 flex flex-row items-center justify-center gap-2 inline-block px-4 rounded border-none font-cera-pro font-medium text-base leading-5 text-center no-underline outline-none cursor-pointer disabled:cursor-not-allowed bg-midnight text-white hover:bg-deep-black hover:text-white py-3">
+                <a name="play-button" href="{{ url_for('book_bp.player_view') }}" class="m:max-w-[9rem] basis-1/2 flex flex-row items-center justify-center gap-2 inline-block px-4 rounded border-none font-cera-pro font-medium text-base leading-5 text-center no-underline outline-none cursor-pointer disabled:cursor-not-allowed bg-midnight text-white hover:bg-deep-black hover:text-white py-3">
                   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6">
                     <path d="M20.253 13.625v-3.142C20.253 5.805 16.596 2 12.104 2c-4.492 0-8.149 3.805-8.149 8.483v3.131C1.768 13.656 0 15.52 0 17.804 0 20.119 1.808 22 4.03 22h4.413v-8.39h-3.21v-3.127c0-3.944 3.082-7.153 6.871-7.153 3.79 0 6.872 3.209 6.872 7.153v3.129h-3.419V22h4.413c2.222 0 4.03-1.883 4.03-4.195-.002-2.213-1.657-4.027-3.747-4.18zm-18.975 4.18c0-1.554 1.195-2.82 2.677-2.86v5.72c-1.482-.04-2.677-1.306-2.677-2.86zm5.887-2.865v5.73h-1.93v-5.73h1.93zm9.67 0h2.14v5.73h-2.14v-5.73zm3.418 5.714v-5.698c1.385.148 2.467 1.37 2.467 2.849 0 1.481-1.082 2.7-2.466 2.85z" fill="currentColor">
                     </path>
