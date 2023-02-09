@@ -76,9 +76,8 @@ class CuratorView(ModelView):
 
 
 def init():
-
-    admin.name = 'کتابچ'
     
+    admin.name = 'کتابچ'
     with warnings.catch_warnings():
         warnings.filterwarnings('ignore', 'Fields missing from ruleset', UserWarning)
         admin.add_view(UserView(Users, db.session))
