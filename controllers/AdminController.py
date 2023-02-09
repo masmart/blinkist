@@ -32,6 +32,18 @@ class BookView(ModelView):
     column_searchable_list=['title', 'slug', 'original_title']
 
 
+class IdeasView(ModelView):
+    page_size = 20
+    can_delete = False
+    column_exclude_list=['created_at', 'updated_at', 'deleted_at']
+    column_searchable_list=['title', 'books.title', 'books.original_title']
+
+    def on_model_change(self, form, model, is_created):
+        now = datetime.now()
+        model.created_at = now
+        model.updated_at = now
+
+
 class CollectionView(ModelView):
     page_size = 20
     can_delete = False
@@ -64,15 +76,17 @@ class CuratorView(ModelView):
 
 
 def init():
+
     admin.name = 'کتابچ'
+    
     with warnings.catch_warnings():
         warnings.filterwarnings('ignore', 'Fields missing from ruleset', UserWarning)
         admin.add_view(UserView(Users, db.session))
         admin.add_view(BookView(Books, db.session))
         admin.add_view(CollectionView(Collections, db.session))
         admin.add_view(CuratorView(Curators, db.session))
-        
-    admin.add_view(ModelView(Ideas, db.session))
+        admin.add_view(IdeasView(Ideas, db.session))
+
     admin.add_view(ModelView(Audios, db.session))
     admin.add_view(ModelView(Categories, db.session))
     admin.add_view(ModelView(Topics, db.session))
