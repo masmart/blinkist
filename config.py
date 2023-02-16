@@ -21,3 +21,10 @@ SQLALCHEMY_TRACK_MODIFICATIONS=False
 
 admin = Admin()
 admin.template_mode = 'bootstrap4'
+
+MINIO_ENDPOINT = 'cdn.vicruite.com:9000'
+MINIO_ACCESS_KEY = '14ANWkj7dciMuISr'
+MINIO_SECRET_KEY = 'lMVQqAIysyJgL4MUfAPTMpYpAyRJEIM3'
+MINIO_AUDIO_BUCKET = 'audio'
+MINIO_BOOK_COVER_BUCKET = 'cover'
+MINIO_SECURE = True

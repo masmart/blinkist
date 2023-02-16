@@ -11,6 +11,7 @@ from routes.topic_bp import topic_bp
 from routes.user_bp import user_bp
 from routes.dashboard_bp import dashboard_bp
 from routes.api_bp import api_bp
+from routes.upload_bp import upload_bp
 
 import os
 
@@ -25,7 +26,7 @@ migrate = Migrate(app, db)
 admin.init_app(app)
 AdminController.init()
 
-from models import Author, Book, Category, Topic, User
+from models import Author, Book, Category, Topic, User, Object
 
 app.register_blueprint(author_bp, url_prefix='/author')
 app.register_blueprint(book_bp, url_prefix='/book')
@@ -35,6 +36,7 @@ app.register_blueprint(topic_bp, url_prefix='/topic')
 app.register_blueprint(user_bp, url_prefix='/user')
 app.register_blueprint(dashboard_bp, url_prefix='/dashboard')
 app.register_blueprint(api_bp, url_prefix='/api')
+app.register_blueprint(upload_bp, url_prefix='/upload')
 
 @app.route('/')
 def main():

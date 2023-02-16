@@ -9,6 +9,7 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
+	<title>{{ book.title }} - ایده {{ idea.order }} از {{ book.ideas }}</title>
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/dist/output.css') }}">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/player.css') }}">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -41,34 +42,34 @@
 					<div data-v-2a4c1570="">
 
 						<h5 data-v-2a4c1570="" data-test-id="currentChapterNumber" class="text-mid-grey">
-							ایده کلیدی ۴
+							{% if idea.order == 0 %}
+							پیش‌گفتار
+							{% else %}
+							ایده کلیدی {{ idea.order }}
+							{% endif %}
 						</h5>
 
 						<h2 data-v-2a4c1570="" class="reader-content__headline mt-4 m:mt-0 m:mb-8">
-							شکست بزرگ کاسیوس کلی در المپیک ۱۹۶۰ رم اتفاق افتاد، جایی که او طلا گرفت
+							 {{ idea.title }}
 						</h2>
 
 						<!---->
 
 						<div data-v-2a4c1570="" class="flex flex-col">
 
-							<span data-v-2a4c1570="" class="reader-content__text text-base">
-								<p>در سال ۱۹۶۰. کاسیوس کلی ۱۸ ساله بود و به عنوان یک بوکسور سبک وزن نامی برای خود دست و پا کرد. اما در آن سال، زمانی که برای عضویت در تیم بوکس المپیک ایالات متحده انتخاب شد، حرفه او پیشرفت زیادی کرد.</p>
-								<p>بازی‌های المپیک ۱۹۶۰ در رم برگزار شد، و شور و شوق پسرانه کلای به سرعت او را به محبوبیت هواداران تبدیل کرد - اگر دقیقاً یکی از علاقه‌مندان برای کسب طلا نباشد.</p>
-								<p>در حالی که او به‌عنوان بهترین بازیکن آمریکایی‌ها در نظر گرفته می‌شد، انتظار نمی‌رفت که تیم ایالات متحده مدعیانی مانند تونی مادیگان استرالیایی، زبیگنیو پیترژیکوفسکی لهستانی یا قهرمان المپیک، گنادی شاتکوف از روسیه را شکست دهد.</p>
-								<p> همه چیز شروع درخشانی داشت، با این حال، زمانی که کلی یک رقیب بلژیکی را در دور دوم مبارزه اول خود شکست داد. سپس، او با شکست دادن شاتکوف در حالی که به سختی عرق کرده بود، همه را شگفت زده کرد.</p>
-								<p>وقتی زمان مبارزه با تونی مادیگان در نیمه نهایی فرا رسید، اوضاع سخت تر شد. مادیگان توانست با کلی فاصله کامل را طی کند و قضاوت را به تصمیم گیری به اتفاق آرا به نفع کلی واگذار کرد، زیرا او از این دو بسیار تهاجمی تر بود.</p>
-								<p>سپس مسابقه نهایی مقابل پیترژیکوفسکی پیش آمد که مانند آموس جانسون بوکسور آمریکایی، آخرین مردی که در رینگ کلی را شکست داد، چپ دست بود.</p>
-								<p>اما کلی درس خود را از مبارزه با جانسون آموخته بود و این بار مطمئن شد که بازی خود را مطابق با حریف خود تغییر می دهد. این بار، کلی به سرعت و قدرت بازوی چپ خود برای پیروزی در مسابقه تکیه نکرد. در عوض، او موضع خود را حفظ کرد و بیشتر به سمت راست خود تکیه کرد.</p>
-								<p>در حالی که پیترژیکوفسکی در دو راند اول مشت های محکمی به زمین زد، کلای در حالی که در راند سوم تهاجمی خود را افزایش داد و صورت حریف خود را کبود و خون آلود کرد، بی حوصله ماند. تصمیم دوباره به اتفاق آرا بود و مدال طلا متعلق به کلی بود.</p>
-								<p>اکنون کاسیوس کلی، قهرمان المپیک، در مسیر سریع شهرت و ثروت بود.</p>
+							<span data-v-2a4c1570="" class="reader-content__text text-base leading-8">
+								{{ idea.text|safe }}
 							</span>
 
 							<!---->
 
 							<footer data-v-2a4c1570="" class="reader-content__footer mt-8 m:mb-36">
-								<button data-v-2a4c1570="" data-test-id="nextChapter" class="reader-content__next m:mb-12"></button>
-								<button data-v-2a4c1570="" data-test-id="previousChapter" class="reader-content__previous m:mb-12"></button>
+								{% if idea.order < book.ideas %}
+									<a data-v-2a4c1570="" href="{{ url_for('book_bp.reader_view', book_slug=book.slug, idea=idea.order+1) }}" class="reader-content__next m:mb-12"></a>
+								{% endif %}
+								{% if idea.order > 0 %}
+									<a data-v-2a4c1570="" href="{{ url_for('book_bp.reader_view', book_slug=book.slug, idea=idea.order-1) }}" class="reader-content__previous m:mb-12"></a>
+								{% endif %}
 							</footer>
 
 						</div>
@@ -80,7 +81,7 @@
 
 					<div data-v-440bade2="">
 						<!-- لوگو -->
-						<a data-v-440bade2="" href="/en/app/library">
+						<a data-v-440bade2="" href="{{ url_for('dashboard_bp.library_view') }}">
 							<div data-v-fde9837a="" data-v-440bade2="" class="blinkist-logo mr-6 mb-10">
 								<svg data-v-fde9837a="" height="34" viewBox="0 0 36 34" width="36" xmlns="http://www.w3.org/2000/svg" class="w-7 h-7">
 									<path data-v-fde9837a="" d="m25.2051102.0058957-7.6622492 7.79322777-7.66224914-7.79322777c-5.84848983 2.89331356-9.88061186 8.99241264-9.88061186 16.0516261 0 9.8543636 7.85411695 17.842739 17.542861 17.842739 9.6884543 0 17.5425712-7.9883754 17.5425712-17.842739 0-7.05921346-4.032122-13.15831254-9.880322-16.0516261" fill="#2cde80"></path>
@@ -142,7 +143,7 @@
 									<div class="relative m:fixed m:top-0 m:bg-black/50 m:w-full m:h-full">
 										<div class="m:flex m:flex-col m:absolute m:top-0 m:bottom-20 m:bg-pale-mint-grey m:max-w-md m:pt-4 key-ideas-popup">
 											<div data-test-id="keyIdeasPopup">
-												<a href="">
+												<a href="{{ url_for('dashboard_bp.library_view') }}">
 													<div data-v-fde9837a="" class="blinkist-logo hidden m:flex mr-6 mb-10">
 														<svg data-v-fde9837a="" height="34" viewBox="0 0 36 34" width="36" xmlns="http://www.w3.org/2000/svg" class="w-7 h-7">
 															<path data-v-fde9837a="" d="m25.2051102.0058957-7.6622492 7.79322777-7.66224914-7.79322777c-5.84848983 2.89331356-9.88061186 8.99241264-9.88061186 16.0516261 0 9.8543636 7.85411695 17.842739 17.542861 17.842739 9.6884543 0 17.5425712-7.9883754 17.5425712-17.842739 0-7.05921346-4.032122-13.15831254-9.880322-16.0516261" fill="#2cde80"></path>
@@ -198,83 +199,24 @@
 												<div class="hidden m:block m:absolute m:top-36 m:bg-gradient-to-b m:from-pale-mint-grey m:to-transparent m:h-8 m:left-0 m:right-0" style="display: none;"></div>
 
 												<div class="m:my-6">
-													<div class="flex pl-2 m:pl-0 py-4 w-full items-center text-midnight hover:text-blue hover:bg-white cursor-pointer" data-test-id="chapterLink">
-														<div class="font-bold mx-6 w-4 flex-shrink-0">
-															<div data-v-291650b6="" class="headline font-bold text-h35">
-
-															</div>
-														</div>
-
-														<div class="text-sm flex-grow mr-2">
-															مقدمه
-														</div>
-
-														<div class="ml-5 m:mx-8">
-															<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6  ml-auto transform -rotate-90">
-																<path d="M12.4545 11.1124L17.1459 15.7437C17.4921 16.0854 18.0533 16.0854 18.3994 15.7437C18.7456 15.402 18.7456 14.848 18.3994 14.5063L13.0813 9.25628C12.7351 8.91457 12.1739 8.91457 11.8278 9.25628L6.50958 14.5063C6.16343 14.848 6.16343 15.402 6.50958 15.7437C6.85572 16.0854 7.41694 16.0854 7.76308 15.7437L12.4545 11.1124Z" fill="currentColor"></path>
-															</svg>
-														</div>
-													</div>
-													<div class="flex pl-2 m:pl-0 py-4 w-full items-center text-midnight hover:text-blue hover:bg-white cursor-pointer" data-test-id="chapterLink">
-														<div class="font-bold mx-6 w-4 flex-shrink-0">
-															<div data-v-291650b6="" class="headline font-bold text-h35 ">
-																1
-															</div>
-														</div>
-
-														<div class="text-sm flex-grow mr-2">
-															محمد علی یک شجره خانوادگی مشکل‌دار داشت.
-														</div>
-
-														<div class="ml-5 m:mx-8">
-															<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6  ml-auto transform -rotate-90">
-																<path d="M12.4545 11.1124L17.1459 15.7437C17.4921 16.0854 18.0533 16.0854 18.3994 15.7437C18.7456 15.402 18.7456 14.848 18.3994 14.5063L13.0813 9.25628C12.7351 8.91457 12.1739 8.91457 11.8278 9.25628L6.50958 14.5063C6.16343 14.848 6.16343 15.402 6.50958 15.7437C6.85572 16.0854 7.41694 16.0854 7.76308 15.7437L12.4545 11.1124Z" fill="currentColor"></path>
-															</svg>
-														</div>
-													</div>
-													<div class="flex pl-2 m:pl-0 py-4 w-full items-center text-midnight hover:text-blue hover:bg-white cursor-pointer" data-test-id="chapterLink">
-														<div class="font-bold mx-6 w-4 flex-shrink-0">
-															<div data-v-291650b6="" class="headline font-bold text-h35 ">
-																2
-															</div>
-														</div>
-
-														<div class="text-sm flex-grow mr-2">
-															کاسیوس کلی کودکی نابالغ و سرسخت بود که تربیت نسبتاً خوشایندی را تجربه کرد.
-														</div>
-
-														<div class="ml-5 m:mx-8">
-															<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6  ml-auto transform -rotate-90">
-																<path d="M12.4545 11.1124L17.1459 15.7437C17.4921 16.0854 18.0533 16.0854 18.3994 15.7437C18.7456 15.402 18.7456 14.848 18.3994 14.5063L13.0813 9.25628C12.7351 8.91457 12.1739 8.91457 11.8278 9.25628L6.50958 14.5063C6.16343 14.848 6.16343 15.402 6.50958 15.7437C6.85572 16.0854 7.41694 16.0854 7.76308 15.7437L12.4545 11.1124Z" fill="currentColor"></path>
-															</svg>
-														</div>
-													</div>
-													<div class="flex pl-2 m:pl-0 py-4 w-full items-center text-midnight hover:text-blue hover:bg-white cursor-pointer" data-test-id="chapterLink">
-														<div class="font-bold mx-6 w-4 flex-shrink-0">
-															<div data-v-291650b6="" class="headline font-bold text-h35 ">
-																3
-															</div>
-														</div>
-
-														<div class="text-sm flex-grow mr-2">
-															کاسیوس کلی پس از از دست دادن دوچرخه خود در مسیر موفقیت در بوکس قرار گرفت.
-														</div>
-
-														<div class="ml-5 m:mx-8">
-															<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6  ml-auto transform -rotate-90">
-																<path d="M12.4545 11.1124L17.1459 15.7437C17.4921 16.0854 18.0533 16.0854 18.3994 15.7437C18.7456 15.402 18.7456 14.848 18.3994 14.5063L13.0813 9.25628C12.7351 8.91457 12.1739 8.91457 11.8278 9.25628L6.50958 14.5063C6.16343 14.848 6.16343 15.402 6.50958 15.7437C6.85572 16.0854 7.41694 16.0854 7.76308 15.7437L12.4545 11.1124Z" fill="currentColor"></path>
-															</svg>
-														</div>
-													</div>
+													{% for item in ideas %}
+													{% if item.order == idea.order %}
 													<div class="flex pl-2 m:pl-0 py-4 w-full items-center text-midnight hover:text-blue hover:bg-white cursor-pointer text-blue bg-white" data-test-id="chapterLink">
 														<div class="font-bold mx-6 w-4 flex-shrink-0">
 															<div data-v-291650b6="" class="headline font-bold text-h35 ">
-																4
+																{% if item.order == 0 %}
+																{% else %}
+																{{ item.order }}
+																{% endif %}
 															</div>
 														</div>
 
 														<div class="text-sm flex-grow mr-2">
-															شکست بزرگ کاسیوس کلی در المپیک ۱۹۶۰ رم اتفاق افتاد، جایی که او طلا گرفت.
+															{% if item.order == 0 %}
+															پیشگفتار
+															{% else %}
+															{{ item.title }}
+															{% endif %}
 														</div>
 
 														<div class="ml-5 m:mx-8">
@@ -283,15 +225,23 @@
 															</svg>
 														</div>
 													</div>
-													<div class="flex pl-2 m:pl-0 py-4 w-full items-center text-midnight hover:text-blue hover:bg-white cursor-pointer" data-test-id="chapterLink">
+													{% else %}
+													<a href="{{ url_for('book_bp.reader_view', book_slug=book.slug, idea=item.order) }}" class="flex pl-2 m:pl-0 py-4 w-full items-center text-midnight hover:text-blue hover:bg-white cursor-pointer" data-test-id="chapterLink">
 														<div class="font-bold mx-6 w-4 flex-shrink-0">
 															<div data-v-291650b6="" class="headline font-bold text-h35 ">
-																5
+																{% if item.order == 0 %}
+																{% else %}
+																{{ item.order }}
+																{% endif %}
 															</div>
 														</div>
 
 														<div class="text-sm flex-grow mr-2">
-															زمانی که کاسیوس کلی به امت اسلام پیوست، شروع به پرداختن به مسائل اجتماعی و سیاسی کرد.
+															{% if item.order == 0 %}
+															پیشگفتار
+															{% else %}
+															{{ item.title }}
+															{% endif %}
 														</div>
 
 														<div class="ml-5 m:mx-8">
@@ -299,109 +249,10 @@
 																<path d="M12.4545 11.1124L17.1459 15.7437C17.4921 16.0854 18.0533 16.0854 18.3994 15.7437C18.7456 15.402 18.7456 14.848 18.3994 14.5063L13.0813 9.25628C12.7351 8.91457 12.1739 8.91457 11.8278 9.25628L6.50958 14.5063C6.16343 14.848 6.16343 15.402 6.50958 15.7437C6.85572 16.0854 7.41694 16.0854 7.76308 15.7437L12.4545 11.1124Z" fill="currentColor"></path>
 															</svg>
 														</div>
-													</div>
-													<div class="flex pl-2 m:pl-0 py-4 w-full items-center text-midnight hover:text-blue hover:bg-white cursor-pointer" data-test-id="chapterLink">
-														<div class="font-bold mx-6 w-4 flex-shrink-0">
-															<div data-v-291650b6="" class="headline font-bold text-h35 ">
-																6
-															</div>
-														</div>
+													</a>
+													{% endif %}
+													{% endfor %}
 
-														<div class="text-sm flex-grow mr-2">
-															محمد علی پس از امتناع از خدمت سربازی از بوکس محروم شد.
-														</div>
-
-														<div class="ml-5 m:mx-8">
-															<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6  ml-auto transform -rotate-90">
-																<path d="M12.4545 11.1124L17.1459 15.7437C17.4921 16.0854 18.0533 16.0854 18.3994 15.7437C18.7456 15.402 18.7456 14.848 18.3994 14.5063L13.0813 9.25628C12.7351 8.91457 12.1739 8.91457 11.8278 9.25628L6.50958 14.5063C6.16343 14.848 6.16343 15.402 6.50958 15.7437C6.85572 16.0854 7.41694 16.0854 7.76308 15.7437L12.4545 11.1124Z" fill="currentColor"></path>
-															</svg>
-														</div>
-													</div>
-													<div class="flex pl-2 m:pl-0 py-4 w-full items-center text-midnight hover:text-blue hover:bg-white cursor-pointer" data-test-id="chapterLink">
-														<div class="font-bold mx-6 w-4 flex-shrink-0">
-															<div data-v-291650b6="" class="headline font-bold text-h35 ">
-																7
-															</div>
-														</div>
-
-														<div class="text-sm flex-grow mr-2">
-															محمد علی نیز مانند دیگران به دلیل دستورات شدید رهبر مذهبی خود تبعید شد.
-														</div>
-
-														<div class="ml-5 m:mx-8">
-															<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6  ml-auto transform -rotate-90">
-																<path d="M12.4545 11.1124L17.1459 15.7437C17.4921 16.0854 18.0533 16.0854 18.3994 15.7437C18.7456 15.402 18.7456 14.848 18.3994 14.5063L13.0813 9.25628C12.7351 8.91457 12.1739 8.91457 11.8278 9.25628L6.50958 14.5063C6.16343 14.848 6.16343 15.402 6.50958 15.7437C6.85572 16.0854 7.41694 16.0854 7.76308 15.7437L12.4545 11.1124Z" fill="currentColor"></path>
-															</svg>
-														</div>
-													</div>
-													<div class="flex pl-2 m:pl-0 py-4 w-full items-center text-midnight hover:text-blue hover:bg-white cursor-pointer" data-test-id="chapterLink">
-														<div class="font-bold mx-6 w-4 flex-shrink-0">
-															<div data-v-291650b6="" class="headline font-bold text-h35 ">
-																8
-															</div>
-														</div>
-
-														<div class="text-sm flex-grow mr-2">
-															محمد علی با جدال "مبارزه قرن" به صحنه مبارزات بوکس بازگشت و این اولین باخت حرفه‌ای او بود.
-														</div>
-
-														<div class="ml-5 m:mx-8">
-															<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6  ml-auto transform -rotate-90">
-																<path d="M12.4545 11.1124L17.1459 15.7437C17.4921 16.0854 18.0533 16.0854 18.3994 15.7437C18.7456 15.402 18.7456 14.848 18.3994 14.5063L13.0813 9.25628C12.7351 8.91457 12.1739 8.91457 11.8278 9.25628L6.50958 14.5063C6.16343 14.848 6.16343 15.402 6.50958 15.7437C6.85572 16.0854 7.41694 16.0854 7.76308 15.7437L12.4545 11.1124Z" fill="currentColor"></path>
-															</svg>
-														</div>
-													</div>
-													<div class="flex pl-2 m:pl-0 py-4 w-full items-center text-midnight hover:text-blue hover:bg-white cursor-pointer" data-test-id="chapterLink">
-														<div class="font-bold mx-6 w-4 flex-shrink-0">
-															<div data-v-291650b6="" class="headline font-bold text-h35 ">
-																9
-															</div>
-														</div>
-
-														<div class="text-sm flex-grow mr-2">
-															غرش در جنگل افسانه‌ای شد، در حالی که مسابقه مجدد مقابل لئون اسپینکس آخرین برد قهرمانی علی بود.
-														</div>
-
-														<div class="ml-5 m:mx-8">
-															<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6  ml-auto transform -rotate-90">
-																<path d="M12.4545 11.1124L17.1459 15.7437C17.4921 16.0854 18.0533 16.0854 18.3994 15.7437C18.7456 15.402 18.7456 14.848 18.3994 14.5063L13.0813 9.25628C12.7351 8.91457 12.1739 8.91457 11.8278 9.25628L6.50958 14.5063C6.16343 14.848 6.16343 15.402 6.50958 15.7437C6.85572 16.0854 7.41694 16.0854 7.76308 15.7437L12.4545 11.1124Z" fill="currentColor"></path>
-															</svg>
-														</div>
-													</div>
-													<div class="flex pl-2 m:pl-0 py-4 w-full items-center text-midnight hover:text-blue hover:bg-white cursor-pointer" data-test-id="chapterLink">
-														<div class="font-bold mx-6 w-4 flex-shrink-0">
-															<div data-v-291650b6="" class="headline font-bold text-h35 ">
-																10
-															</div>
-														</div>
-
-														<div class="text-sm flex-grow mr-2">
-															محمد علی پس از بوکس، همچنان به سرگرمی کردن دیگران و استفاده از شهرت خود برای اهداف خوب ادامه داد.
-														</div>
-
-														<div class="ml-5 m:mx-8">
-															<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6  ml-auto transform -rotate-90">
-																<path d="M12.4545 11.1124L17.1459 15.7437C17.4921 16.0854 18.0533 16.0854 18.3994 15.7437C18.7456 15.402 18.7456 14.848 18.3994 14.5063L13.0813 9.25628C12.7351 8.91457 12.1739 8.91457 11.8278 9.25628L6.50958 14.5063C6.16343 14.848 6.16343 15.402 6.50958 15.7437C6.85572 16.0854 7.41694 16.0854 7.76308 15.7437L12.4545 11.1124Z" fill="currentColor"></path>
-															</svg>
-														</div>
-													</div>
-													<div class="flex pl-2 m:pl-0 py-4 w-full items-center text-midnight hover:text-blue hover:bg-white cursor-pointer" data-test-id="chapterLink">
-														<div class="font-bold mx-6 w-4 flex-shrink-0">
-															<div data-v-291650b6="" class="headline font-bold text-h35 ">
-
-															</div>
-														</div>
-
-														<div class="text-sm flex-grow mr-2">
-															مؤخره
-														</div>
-
-														<div class="ml-5 m:mx-8">
-															<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6  ml-auto transform -rotate-90">
-																<path d="M12.4545 11.1124L17.1459 15.7437C17.4921 16.0854 18.0533 16.0854 18.3994 15.7437C18.7456 15.402 18.7456 14.848 18.3994 14.5063L13.0813 9.25628C12.7351 8.91457 12.1739 8.91457 11.8278 9.25628L6.50958 14.5063C6.16343 14.848 6.16343 15.402 6.50958 15.7437C6.85572 16.0854 7.41694 16.0854 7.76308 15.7437L12.4545 11.1124Z" fill="currentColor"></path>
-															</svg>
-														</div>
-													</div>
 												</div>
 
 												<div class="hidden m:block m:absolute m:bottom-0 m:bg-gradient-to-b m:from-transparent m:to-pale-mint-grey m:h-8 m:left-0 m:right-0">
@@ -535,7 +386,7 @@
 											<source data-v-0f6ffb86="" media="(max-width: 767px)" srcset="https://images.blinkist.io/images/books/5ac05e7eb238e10007c07cbc/1_1/1080.jpg 2x">
 											<source data-v-0f6ffb86="" media="(max-width: 1023px)" srcset="https://images.blinkist.io/images/books/5ac05e7eb238e10007c07cbc/1_1/470.jpg 2x">
 
-											<img data-v-0f6ffb86="" src="https://images.blinkist.io/images/books/5ac05e7eb238e10007c07cbc/1_1/470.jpg" srcset="https://images.blinkist.io/images/books/5ac05e7eb238e10007c07cbc/1_1/640.jpg 2x" alt="Ali" loading="lazy" class="pict__image book-cover__image">
+											<img data-v-0f6ffb86="" src="{{ book.cover_image }}" srcset="{{ book.cover_image }} 2x" alt="Ali" loading="lazy" class="pict__image book-cover__image">
 										</picture>
 
 										<!---->
@@ -547,9 +398,9 @@
 									<span data-v-32c95ec3="" class="reader-chapter-mobile__status">به گوش دادن ادامه دهید</span>
 
 									<div data-v-32c95ec3="" class="reader-chapter-mobile__counter">
-										<span data-v-32c95ec3="" class="reader-chapter-mobile__chapter">ایده کلیدی <span data-test-id="currentChapterNumber">4</span> از 10 </span>
+										<span data-v-32c95ec3="" class="reader-chapter-mobile__chapter">ایده کلیدی <span data-test-id="currentChapterNumber">{{ idea.order }}</span> از {{ book.ideas }} </span>
 
-										<span data-v-32c95ec3="" class="reader-chapter-mobile__title">علی</span>
+										<span data-v-32c95ec3="" class="reader-chapter-mobile__title">{{ book.title }}</span>
 									</div>
 								</div>
 							</div>
@@ -619,7 +470,7 @@
 				</div>
 			</div>
 
-			<div data-v-7ecb4e0a="" data-test-id="readerAudio" class="reader-audio z-20 desktop-player" audio-url="#">
+			<div data-v-7ecb4e0a="" data-test-id="readerAudio" class="reader-audio z-20 desktop-player w-full" audio-url="#">
 
 				<div data-v-7ecb4e0a="" class="reader-audio__container">
 					<!---->
@@ -636,7 +487,7 @@
 										<source data-v-0f6ffb86="" media="(max-width: 767px)" srcset="https://images.blinkist.io/images/books/5ac05e7eb238e10007c07cbc/1_1/1080.jpg 2x">
 										<source data-v-0f6ffb86="" media="(max-width: 1023px)" srcset="https://images.blinkist.io/images/books/5ac05e7eb238e10007c07cbc/1_1/470.jpg 2x">
 
-										<img data-v-0f6ffb86="" src="https://images.blinkist.io/images/books/5ac05e7eb238e10007c07cbc/1_1/470.jpg" srcset="https://images.blinkist.io/images/books/5ac05e7eb238e10007c07cbc/1_1/640.jpg 2x" alt="Ali" loading="lazy" class="pict__image book-cover__image">
+										<img data-v-0f6ffb86="" src="{{ book.cover_image }}" srcset="{{ book.cover_image }} 2x" alt="Ali" loading="lazy" class="pict__image book-cover__image">
 									</picture>
 
 									<!---->
@@ -645,10 +496,10 @@
 
 							<div data-v-d6e3f238="" class="reader-chapter-indicator__book-info">
 								<div data-v-d6e3f238="" class="reader-chapter-indicator__title">
-									علی
+									{{ book.title }}
 								</div>
 								<div data-v-d6e3f238="" class="reader-chapter-indicator__author">
-									نوشه جاناتان ایگ
+									نوشته {{ book.authors[0].name }}
 								</div>
 							</div>
 						</div>

@@ -2,12 +2,13 @@
 from flask import render_template, redirect, url_for, request, abort, jsonify
 from flask_login import current_user, login_required
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import desc, asc
 from datetime import datetime
 
 import sys
 
 from config import db
-from models.Book import Books
+from models.Book import Books, Ideas, Audios
 from models.User import Bookmarks
 from models.Category import Categories
 
@@ -35,19 +36,13 @@ def bookmark_view(book_slug):
     return redirect(location=url_for('book_bp.book_view', book_slug=book_slug))
 
 @login_required
-def player_view():
+def reader_view(book_slug=None, idea=0):
 
-    return render_template('views/book/player.html')
-
-@login_required
-def original_mobile_view():
+    book = Books.query.filter_by(slug=book_slug).first()
+    ideas = Ideas.query.filter_by(book_id=book.id).order_by(asc(Ideas.order)).all()
+    idea = Ideas.query.filter_by(book_id=book.id, order=idea).one()
     
-        return render_template('views/book/original_mobile.html')
-
-@login_required
-def original_desktop_view():
-    
-        return render_template('views/book/original_desktop.html')
+    return render_template('views/book/reader.html', book=book, ideas=ideas, idea=idea)
 
 def bookmark():
 
