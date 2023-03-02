@@ -1,11 +1,16 @@
+from flask import request, render_template, redirect, url_for
+from flask_paginate import Pagination, get_page_args
+from flask_wtf import FlaskForm
+from wtforms import StringField, IntegerField, BooleanField, DateField, FileField, SelectMultipleField, SubmitField
+from wtforms.validators import DataRequired, InputRequired
+from wtforms.widgets import TextArea
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
-from flask_ckeditor import CKEditor, CKEditorField
 from werkzeug.security import generate_password_hash
 from datetime import datetime
 import warnings
 
-from config import admin, db
+from config import admin, db, ckeditor
 
 from models.User import Users, Bookmarks
 from models.Author import Authors
@@ -75,8 +80,6 @@ class CuratorView(ModelView):
         model.updated_at = now
 
 
-
-
 def init():
     
     admin.name = 'کتابچ'
@@ -93,3 +96,64 @@ def init():
     admin.add_view(ModelView(Topics, db.session))
     admin.add_view(ModelView(Authors, db.session))
     admin.add_view(ModelView(Bookmarks, db.session))
+
+
+def dashboard_view():
+
+    return render_template(template_name_or_list='admin/dashboard.html')
+
+def books_view():
+
+    page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
+
+    books = Books.query.filter().order_by(Books.id.desc()).paginate(page=page, per_page=per_page, error_out=False)
+    pagination = Pagination(page=page, per_page=per_page, total=books.total)
+
+    return render_template(template_name_or_list='admin/books.html', books=books, page=page, per_page=per_page, pagination=pagination)
+
+def book_view():
+
+    book_id = request.args.get('id')
+
+    if book_id:
+        book = Books.query.filter_by(id=book_id).first()
+        categories = Categories.query.with_entities(Categories.id, Categories.name).all()
+        authors = Authors.query.with_entities(Authors.id, Authors.name).all()
+        ideas = Ideas.query.filter_by(book_id=book_id).all()
+        audios = Audios.query.filter_by(book_id=book_id).all()
+
+    return render_template(template_name_or_list='admin/book_view.html', book=book, categories=categories, ideas=ideas, audios=audios)
+
+def idea_add_view():
+
+    book_id = request.args.get('book_id')
+    book = Books.query.filter_by(id=book_id).first()
+
+    return render_template('admin/idea_add.html', book=book)
+
+def idea_edit_view():
+
+    book_id = request.args.get('book_id')
+    idea_id = request.args.get('id')
+
+    book = Books.query.filter_by(id=book_id).first()
+    idea = Ideas.query.filter_by(id=idea_id).first()
+
+    print(idea.title)
+
+    return render_template('admin/idea_edit.html', book=book, idea=idea)
+
+
+def category_view():
+
+    return render_template(template_name_or_list='admin/category.html')
+
+def author_view():
+
+    return render_template(template_name_or_list='admin/author.html')
+
+def report_view():
+
+    return render_template(template_name_or_list='admin/report.html')
+
+

@@ -15,4 +15,4 @@ class Categories(db.Model):
     original_name = db.Column(db.String(255), nullable=False)
 
     def __repr__(self):
-        return '<Categories %r>' % self.name
+        return self.name

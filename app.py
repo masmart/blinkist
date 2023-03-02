@@ -1,8 +1,10 @@
 from flask import Flask, render_template, url_for, send_from_directory, request
 from flask_migrate import Migrate
-from config import db, login_manager, admin
+from config import db, login_manager, ckeditor
+# from config import db, login_manager, admin
+# from controllers import AdminController
 
-from controllers import AdminController
+from routes.admin_bp import admin_bp
 from routes.author_bp import author_bp
 from routes.book_bp import book_bp
 from routes.collection_bp import collection_bp
@@ -22,12 +24,14 @@ login_manager.init_app(app)
 with app.app_context():
     login_manager.login_view = '/user/login'
 migrate = Migrate(app, db)
+ckeditor.init_app(app)
 
-admin.init_app(app)
-AdminController.init()
+# admin.init_app(app)
+# AdminController.init()
 
 from models import Author, Book, Category, Topic, User, Object
 
+app.register_blueprint(admin_bp, url_prefix='/admin')
 app.register_blueprint(author_bp, url_prefix='/author')
 app.register_blueprint(book_bp, url_prefix='/book')
 app.register_blueprint(collection_bp, url_prefix='/collection')

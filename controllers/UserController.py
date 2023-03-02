@@ -2,8 +2,8 @@
 from flask import render_template, redirect, url_for, request, abort
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
-from flask_wtf import FlaskForm
 from flask_login import login_user, logout_user, current_user, login_required
+from flask_wtf import FlaskForm
 from wtforms import EmailField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, InputRequired
 from datetime import datetime
