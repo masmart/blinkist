@@ -38,11 +38,13 @@ def bookmark_view(book_slug):
 @login_required
 def reader_view(book_slug=None, idea=0):
 
+
     book = Books.query.filter_by(slug=book_slug).first()
     ideas = Ideas.query.filter_by(book_id=book.id).order_by(asc(Ideas.order)).all()
     idea = Ideas.query.filter_by(book_id=book.id, order=idea).one()
+    idea_count = len(ideas) - 1
     
-    return render_template('views/book/reader.html', book=book, ideas=ideas, idea=idea)
+    return render_template('views/book/reader.html', book=book, ideas=ideas, idea=idea, idea_count=idea_count)
 
 def bookmark():
 

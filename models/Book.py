@@ -20,6 +20,7 @@ class Audios(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
+    idea_id = db.Column(db.Integer, db.ForeignKey('ideas.id'), nullable=False)
     file = db.Column(db.String(255), nullable=False)
     sample_file = db.Column(db.String(255), nullable=True)
     order = db.Column(db.Integer, nullable=False)
@@ -42,7 +43,7 @@ class Books(db.Model):
     published_at = db.Column(db.DateTime, nullable=False)
     rating = db.Column(db.Integer, nullable=True)
     total_rating = db.Column(db.Integer, nullable=True)
-    cover_image = db.Column(db.String(255), nullable=True)
+    cover_image = db.Column(db.String(2083), nullable=True)
     purchase_url = db.Column(db.String(255), nullable=True)
     slug = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False)

@@ -9,7 +9,7 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-	<title>{{ book.title }} - ایده {{ idea.order }} از {{ book.ideas }}</title>
+	<title>{{ book.title }} - ایده {{ idea.order }} از {{ idea_count }}</title>
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/dist/output.css') }}">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/player.css') }}">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -64,7 +64,7 @@
 							<!---->
 
 							<footer data-v-2a4c1570="" class="reader-content__footer mt-8 m:mb-36">
-								{% if idea.order < book.ideas %}
+								{% if idea.order < idea_count %}
 									<a data-v-2a4c1570="" href="{{ url_for('book_bp.reader_view', book_slug=book.slug, idea=idea.order+1) }}" class="reader-content__next m:mb-12"></a>
 								{% endif %}
 								{% if idea.order > 0 %}

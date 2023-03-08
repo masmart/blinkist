@@ -1,0 +1,282 @@
+{% extends 'base/admin/base.html' %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+<form class="space-y-6" action="{{ url_for('admin_bp.book_add_view') }}" method="POST" id="book" enctype="multipart/form-data">
+	<div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+		<div class="md:grid md:grid-cols-6 md:gap-6">
+
+			<div class="md:col-span-1">
+				<h3 class="text-lg font-medium leading-6 text-gray-900">مشخصات کتاب</h3>
+			</div>
+
+			<div class="mt-5 col-span-5">
+				<div class="">
+					<img id="book-cover" class="col-span-2 h-40 w-40 mb-4" src="#" alt="" />
+					<input type="file" id="book-cover-file" name="book-cover-file" class="hidden" />
+					<label for="book-cover-file" class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2">آپلود کاور</label>
+				</div>
+
+				<div class="grid grid-cols-6 gap-6 mt-5">
+
+					<div class="col-span-6 sm:col-span-3">
+						<label class="block text-sm font-medium text-gray-700">عنوان</label>
+						<input type="text" name="book-title" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue focus:ring-blue sm:text-sm" value="">
+					</div>
+
+					<div class="col-span-6 sm:col-span-3">
+						<label class="block text-sm font-medium text-gray-700">عنوان اصلی</label>
+						<input type="text" name="book-original-title" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue focus:ring-blue sm:text-sm" value="">
+					</div>
+
+					<div class="col-span-6">
+						<label class="block text-sm font-medium text-gray-700">دسته‌بندی</label>
+						<div>
+							<fieldset class="mt-2">
+								<div class="grid grid-cols-3 gap-3 sm:grid-cols-6">
+									{% for category in categories %}
+									<label class="border-transparent bg-pale-mint-grey text-midnight hover:ring-green hover:ring-2 hover:ring-offset-2 flex items-center text-center justify-center rounded-md border h-10 text-sm font-medium uppercase sm:flex-1 cursor-pointer focus:outline-none category-label">
+										<input type="radio" class="sr-only">
+										<span id="category-name" class="h-full w-full align-middle mt-5 category-name">{{ category.name }}</span>
+									</label>
+									{% endfor %}
+									<textarea name="book-category" style="display:none" id="hidden-category-name"></textarea>
+								</div>
+							</fieldset>
+						</div>
+					</div>
+
+					<div class="col-span-6">
+						<label class="block text-sm font-medium text-gray-700">زیرنویس</label>
+						<textarea name="tagline" row="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue focus:ring-blue sm:text-sm"></textarea>
+					</div>
+
+					<div class="col-span-6 sm:col-span-4">
+						<label class="block text-sm font-medium text-gray-700">نویسنده</label>
+						<div class="relative mt-1">
+							<input name="author" id="combobox" type="text" class="w-full rounded-md border border-gray-300 bg-white py-2 pr-3 pl-12 shadow-sm focus:border-blue focus:outline-none focus:ring-1 focus:ring-blue sm:text-sm author-combobox" role="combobox" aria-controls="options" aria-expanded="false" value="">
+							<button type="button" class="absolute inset-y-0 left-0 flex items-center rounded-r-md px-2 focus:outline-none">
+								<svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+									<path fill-rule="evenodd" d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z" clip-rule="evenodd" />
+								</svg>
+							</button>
+
+							<ul class="hidden absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm author-result" id="options" role="listbox">
+								<li class="relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 author-option" id="option-0" role="option" tabindex="-1">
+									<div class="flex">
+										<span class="truncate author-name"></span>
+										<span class="ml-2 truncate text-gray-500 author-original-name"></span>
+									</div>
+									<span class="absolute inset-y-0 right-0 flex items-center pr-4 text-midnight">
+										<svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+											<path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+										</svg>
+									</span>
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="col-span-6 sm:col-span-3">
+						<label class="block text-sm font-medium text-gray-700">زمان مطالعه</label>
+						<input name="read-time" type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue focus:ring-blue sm:text-sm" value="">
+					</div>
+
+					<div class="col-span-6">
+						<label class="block text-sm font-medium text-gray-700">توضیحات</label>
+						<div dir="ltr" id="standalone-container" class="mt-2">
+							<div id="toolbar-container">
+								<span class="ql-formats">
+									<select class="ql-font"></select>
+									<select class="ql-size"></select>
+								</span>
+								<span class="ql-formats">
+									<button class="ql-bold"></button>
+									<button class="ql-italic"></button>
+									<button class="ql-underline"></button>
+									<button class="ql-strike"></button>
+								</span>
+								<span class="ql-formats">
+									<select class="ql-color"></select>
+									<select class="ql-background"></select>
+								</span>
+								<span class="ql-formats">
+									<button class="ql-header" value="1"></button>
+									<button class="ql-header" value="2"></button>
+									<button class="ql-blockquote"></button>
+								</span>
+								<span class="ql-formats">
+									<button class="ql-list" value="ordered"></button>
+									<button class="ql-list" value="bullet"></button>
+								</span>
+								<span class="ql-formats">
+									<button class="ql-direction" value="rtl"></button>
+									<select class="ql-align"></select>
+								</span>
+								<span class="ql-formats">
+									<button class="ql-clean"></button>
+								</span>
+							</div>
+							<div id="editor-container">
+							</div>
+						</div>
+						<textarea name="book-description" style="display:none" id="hidden-description"></textarea>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="flex justify-end">
+		<button type="button" class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2" onclick="javascript:window.history.back();">لغو</button>
+		<button type="submit" class="mx-3 inline-flex justify-center rounded-md border border-transparent bg-midnight py-2 px-4 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2">ذخیره</button>
+	</div>
+</form>
+
+<script>
+	$(document).ready(function () {
+
+		quill.format('align', 'right');
+		quill.format('direction', 'rtl');
+
+		let book_toggle = $('.book-toggle-btn');
+		let book_span = $('.book-toggle-spn');
+		let audio_toggle = $('.audio-toggle-btn');
+		let audio_span = $('.audio-toggle-spn');
+
+		let debauced;
+
+		book_toggle.click(function () {
+
+			if (book_toggle.hasClass('active')) {
+				book_toggle.removeClass("bg-midnight").addClass("bg-gray-200").removeClass("active")
+				book_span.removeClass("translate-x-5").addClass("translate-x-0")
+			} else {
+				book_toggle.removeClass("bg-gray-200").addClass("bg-midnight").addClass("active")
+				book_span.removeClass("translate-x-0").addClass("translate-x-5")
+			}
+		});
+
+		audio_toggle.click(function () {
+
+			if (audio_toggle.hasClass('active')) {
+				audio_toggle.removeClass("bg-midnight").addClass("bg-gray-200").removeClass("active")
+				audio_span.removeClass("translate-x-5").addClass("translate-x-0")
+			} else {
+				audio_toggle.removeClass("bg-gray-200").addClass("bg-midnight").addClass("active")
+				audio_span.removeClass("translate-x-0").addClass("translate-x-5")
+			}
+		});
+
+		$('.author-combobox').on('keydown', function (e) {
+			clearTimeout(debauced)
+			debauced = setTimeout(author_search, 300)
+		});
+
+		$('.author-combobox').on('focus', function (e) {
+			clearTimeout(debauced)
+			debauced = setTimeout(author_search, 300)
+		});
+
+		function author_search() {
+
+			let search = $('.author-combobox').val()
+
+			if (search.length > 2) {
+				fetch('/api/search/author?q=' + search)
+					.then(response => response.json())
+					.then(data => {
+						if (data.length > 0) {
+							var name = data[0].name
+							var original_name = data[0].original_name
+							$('.author-result').removeClass("hidden");
+							$('.author-result').empty();
+							for (let i = 0; i < data.length; i++) {
+								$('.author-result').append(`
+								<li class="relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 author-option" id="option-0" role="option" tabindex="${i}">
+									<span class="absolute inset-y-0 right-0 flex items-center pr-4 text-midnight">
+									</span>
+									<div class="flex">
+										<span class="truncate author-name">${data[i]['name']}</span>
+										<span class="mr-2 truncate text-gray-500 author-original-name">${data[i]['original_name']}</span>
+									</div>
+								</li>
+								`);
+							}
+						} else {
+							$('.author-result').empty()
+							$('.author-result').addClass("hidden");
+						}
+					})
+			} else {
+				$('.author-result').empty()
+				$('.author-result').addClass("hidden");
+			}
+		}
+
+		$(document).on('click', '.author-option', function () {
+			$('.author-combobox').val($(this).find('.author-name').text())
+			$('.author-result').empty()
+			$('.author-result').addClass("hidden");
+		});
+
+		$(document).on('mouseenter', '.author-option', function () {
+			if (!$(this).hasClass("active")) {
+				$(this).removeClass("text-gray-900").addClass("bg-midnight text-white")
+			}
+		});
+
+		$(document).on('mouseleave', '.author-option', function () {
+			if (!$(this).hasClass("active")) {
+				$(this).removeClass("bg-midnight text-white").addClass("text-gray-900")
+			}
+		});
+
+		$('.author-combobox').on('blur', function (e) {
+			timeout = setTimeout(function () {
+				$('.author-result').empty()
+				$('.author-result').addClass("hidden");
+			}, 200);
+		});
+
+		quill.on('editor-change', function () { quill.enable(); });
+
+		$('#book').on("submit", function () {
+			var editorContent = $("#editor-container").html();
+			var textContent = $(editorContent).not("p").remove().end().html();
+			$('#hiddenArea').val(textContent);
+		});
+
+		$("#book-cover-file").change(function () {
+			const file = this.files[0];
+			if (file) {
+				let reader = new FileReader();
+				reader.onload = function (event) {
+					$("#book-cover")
+						.attr("src", event.target.result);
+				};
+				reader.readAsDataURL(file);
+			}
+		});
+
+		$(document).on('click', '.category-label', function() {
+
+			$('.category-label').not(this).removeClass('ring-2 ring-green ring-offset-2');
+			$(this).addClass('ring-2 ring-green ring-offset-2');
+		});
+
+		$(document).on('click', '.category-name', function() {
+
+			var categoryName = $(this).text();
+			$('#hidden-category-name').val(categoryName);
+			console.log($(this).html());
+		});
+
+	});
+
+</script>
+
+{% endblock %}

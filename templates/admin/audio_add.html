@@ -1,0 +1,137 @@
+{% extends 'base/admin/base.html' %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+<form class="space-y-6" action="#" method="POST">
+	<div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
+		<div class="md:grid md:grid-cols-6 md:gap-6">
+
+			<div class="md:col-span-1">
+				<h3 class="text-lg font-medium leading-6 text-gray-900">صوت‌های "{{ book.title }}"</h3>
+			</div>
+
+			<div class="mt-5 col-span-5">
+
+				<div class="grid grid-cols-6 gap-6 mt-5">
+
+					<div class="col-span-6">
+						<label class="block text-sm font-medium text-gray-700">عنوان ایده</label>
+						<div class="relative mt-1">
+							<input id="combobox" type="text" class="w-full rounded-md border border-gray-300 bg-white py-2 pr-3 pl-12 shadow-sm focus:border-blue focus:outline-none focus:ring-1 focus:ring-blue sm:text-sm idea-combobox" role="combobox" aria-controls="options" aria-expanded="false">
+							<button type="button" class="absolute inset-y-0 left-0 flex items-center rounded-r-md px-2 focus:outline-none">
+								<svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+									<path fill-rule="evenodd" d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z" clip-rule="evenodd" />
+								</svg>
+							</button>
+
+							<ul class="hidden absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm idea-result" id="options" role="listbox">
+								{% for idea in ideas %}
+								<li class="relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 idea-option" id="option-0" role="option" tabindex="-1">
+									<div class="flex">
+										<span class="truncate idea-title">{{ idea.title }}</span>
+									</div>
+									<!-- <span class="absolute inset-y-0 right-0 flex items-center pr-4 text-midnight">
+										<svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+											<path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+										</svg>
+									</span> -->
+								</li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+
+					<div class="col-span-6">
+						<label class="block text-sm font-medium leading-6 text-gray-900">صوت اصلی</label>
+						<div class="mt-2 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
+							<div class="space-y-1 text-center">
+								<svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+									<path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+								</svg>
+								<div class="flex text-sm text-gray-600">
+									<label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-medium text-blue focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-1 focus-within:ring-offset-2 hover:text-blue-1">
+										<span>بارگزاری فایل</span>
+										<input id="file-upload" name="file-upload" type="file" class="sr-only">
+									</label>
+									<p class="pr-1">یا درگ و دراپ</p>
+								</div>
+								<p class="text-xs text-gray-500">MP3 or M4A</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-span-6">
+						<label class="block text-sm font-medium leading-6 text-gray-900">صوت اصلی</label>
+						<div class="mt-2 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
+							<div class="space-y-1 text-center">
+								<svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+									<path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+								</svg>
+								<div class="flex text-sm text-gray-600">
+									<label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-medium text-blue focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-1 focus-within:ring-offset-2 hover:text-blue-1">
+										<span>بارگزاری فایل</span>
+										<input id="file-upload" name="file-upload" type="file" class="sr-only">
+									</label>
+									<p class="pr-1">یا درگ و دراپ</p>
+								</div>
+								<p class="text-xs text-gray-500">MP3 or M4A</p>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="flex justify-end">
+		<button type="button" class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2" onclick="javascript:window.history.back();">لغو</button>
+		<button type="submit" class="mx-3 inline-flex justify-center rounded-md border border-transparent bg-midnight py-2 px-4 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2">ذخیره</button>
+	</div>
+</form>
+
+<script>
+	$(document).ready(function () {
+
+		let debauced;
+
+		$('.idea-combobox').on('focus', function (e) {
+			clearTimeout(debauced)
+			debauced = setTimeout(idea_search, 100)
+		});
+
+		function idea_search() {
+
+			$('.idea-result').removeClass("hidden");
+		}
+
+		$(document).on('click', '.idea-option', function () {
+			$('.idea-combobox').val($(this).find('.idea-title').text())
+			$('.idea-result').addClass("hidden");
+		});
+
+		$(document).on('mouseenter', '.idea-option', function () {
+			if (!$(this).hasClass("active")) {
+				$(this).removeClass("text-gray-900").addClass("bg-midnight text-white")
+			}
+		});
+
+		$(document).on('mouseleave', '.idea-option', function () {
+			if (!$(this).hasClass("active")) {
+				$(this).removeClass("bg-midnight text-white").addClass("text-gray-900")
+			}
+		});
+
+		$('.idea-combobox').on('blur', function (e) {
+			timeout = setTimeout(function () {
+				$('.idea-result').addClass("hidden");
+			}, 200);
+		});
+
+	});
+
+</script>
+
+{% endblock %}

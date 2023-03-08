@@ -1,4 +1,4 @@
-from flask import request, render_template, url_for,send_file
+from flask import request, render_template, url_for, send_file
 from datetime import datetime
 from minio import Minio
 from config import MINIO_ENDPOINT, MINIO_ACCESS_KEY, MINIO_SECRET_KEY, MINIO_SECURE, MINIO_AUDIO_BUCKET, MINIO_BOOK_COVER_BUCKET, db
@@ -20,7 +20,6 @@ def upload_view():
         
     return render_template('views/upload/upload.html')
 
-
 def upload_file_view():
 
     if request.method == 'POST':
@@ -41,10 +40,28 @@ def upload_file_view():
 
             return render_template('views/upload/file.html', file=f'/upload/content/{file_name}', type=type)
 
+def upload_content(upload_file, bucket_name):
 
-def content_view(object_name):
+    if upload_file and bucket_name:
+        type = upload_file.content_type
+        file_extension = upload_file.filename.split('.')[-1]
+        file_name = f'{str(uuid.uuid4())}.{file_extension}'
+        while object_exists(bucket_name, file_name):
+            file_name = str(uuid.uuid4()) + file_extension
+        size = os.fstat(upload_file.fileno()).st_size
+        storage.put_object(bucket_name, file_name, upload_file, size)
+        now = datetime.now()
+        upload_object = Objects(name=upload_file.filename, object_name=file_name, bucket=bucket_name, type=type, created_at=now, updated_at=now, creator_ip=request.remote_addr, updater_ip=request.remote_addr)
+        db.session.add(upload_object)
+        db.session.commit()
 
-    return send_file(get_object(MINIO_AUDIO_BUCKET, object_name), as_attachment=True, mimetype='audio/mp3', download_name=object_name)
+        return storage.presigned_get_object(bucket_name, file_name)
+    
+    return False
+
+def get_object_url(object_name):
+
+    return storage.presigned_get_object(bucket_name, object_name)
 
 def bucket_exists(bucket_name):
 

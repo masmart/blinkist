@@ -3,7 +3,7 @@
 {% block header %}{% endblock %}
 
 {% block content %}
-<form class="space-y-6" action="#" method="POST">
+<form class="space-y-6" action="#" method="POST" id="idea">
 	<div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
 		<div class="md:grid md:grid-cols-6 md:gap-6">
 
@@ -17,7 +17,7 @@
 
 					<div class="col-span-6 sm:col-span-3">
 						<label class="block text-sm font-medium text-gray-700">عنوان</label>
-						<input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue focus:ring-blue sm:text-sm" value="">
+						<input name="idea-title" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue focus:ring-blue sm:text-sm" value="">
 					</div>
 
 					<div class="col-span-6">
@@ -58,8 +58,9 @@
 							<div id="editor-container">
 							</div>
 						</div>
+						<textarea name="idea-text" style="display:none" id="hiddenArea"></textarea>
 					</div>
-
+					
 				</div>
 			</div>
 
@@ -67,7 +68,7 @@
 	</div>
 
 	<div class="flex justify-end">
-		<button type="button" class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2">لغو</button>
+		<button type="button" class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2" onclick="javascript:window.history.back();">لغو</button>
 		<button type="submit" class="mx-3 inline-flex justify-center rounded-md border border-transparent bg-midnight py-2 px-4 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2">ذخیره</button>
 	</div>
 </form>
@@ -77,8 +78,15 @@
 
 		quill.format('align', 'right');
 		quill.format('direction', 'rtl');
-	});
 
+		quill.on('editor-change', function() { quill.enable(); });
+
+		$('#idea').on("submit",function() {
+			var editorContent = $("#editor-container").html();
+			var textContent = $(editorContent).not("p").remove().end().html();
+			$('#hiddenArea').val(textContent);
+		});
+	});
 </script>
 
 {% endblock %}
