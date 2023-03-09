@@ -11,4 +11,4 @@ class Authors(db.Model):
     deleted_at = db.Column(db.DateTime, nullable=True)
 
     def __repr__(self):
-        return '<Authors %r>' % self.name
+        return self.name

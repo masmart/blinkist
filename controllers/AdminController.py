@@ -1,14 +1,7 @@
 from flask import request, render_template, redirect, url_for
+from sqlalchemy import asc, desc, or_
 from flask_paginate import Pagination, get_page_args
-from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, BooleanField, DateField, FileField, SelectMultipleField, SubmitField
-from wtforms.validators import DataRequired, InputRequired
-from wtforms.widgets import TextArea
-from flask_admin import Admin
-from flask_admin.contrib.sqla import ModelView
-from werkzeug.security import generate_password_hash
 from datetime import datetime
-import warnings
 
 from config import admin, db, ckeditor, MINIO_AUDIO_BUCKET, MINIO_BOOK_COVER_BUCKET
 from controllers.UploadContoller import upload_content
@@ -21,93 +14,21 @@ from models.Category import Categories
 from models.Topic import Topics
 
 
-class UserView(ModelView):
-    page_size = 20
-    can_delete = False
-    column_exclude_list=['first_name', 'last_name', 'password', 'session_token', 'updated_at', 'updater_ip', 'deleted_at', 'deletor_ip']
-    column_searchable_list=['first_name', 'last_name', 'email', 'full_name']
-
-    def on_model_change(self, form, model, is_created):
-        model.password = generate_password_hash(model.password, method='SHA256')
-
-
-class BookView(ModelView):
-    page_size = 20
-    can_delete = False
-    column_exclude_list=['tagline', 'tagline_html', 'read_time', 'ideas', 'type', 'has_audio', 'description', 'rating', 'total_rating', 'cover_image', 'purchase_url', 'slug', 'updated_at', 'deleted_at']
-    column_searchable_list=['title', 'slug', 'original_title']
-
-
-class IdeasView(ModelView):
-    page_size = 20
-    can_delete = False
-    column_exclude_list=['created_at', 'updated_at', 'deleted_at']
-    form_create_rules = ['idea_book', 'title', 'text', 'order']
-    form_edit_rules = ['idea_book', 'title', 'text', 'order']
-    column_searchable_list=['title', 'idea_book.title', 'idea_book.original_title']
-
-    def on_model_change(self, form, model, is_created):
-        now = datetime.now()
-        model.created_at = now
-        model.updated_at = now
-
-
-class CollectionView(ModelView):
-    page_size = 20
-    can_delete = False
-    column_exclude_list=['tagline', 'cover_image', 'created_at', 'updated_at', 'deleted_at']
-    column_searchable_list=['name', 'original_name', 'curators.name', 'curators.users.full_name', 'curators.users.email']
-    form_create_rules = ['curators', 'categories', 'original_name', 'name', 'tagline', 'description', 'cover_image', 'books']
-    form_edit_rules = ['curators', 'categories', 'original_name', 'name', 'tagline', 'description', 'cover_image', 'books']
-
-    def on_model_change(self, form, model, is_created):
-        now = datetime.now()
-        model.slug = model.name.replace(' ', '-')
-        model.created_at = now
-        model.updated_at = now
-
-
-class CuratorView(ModelView):
-    page_size = 20
-    can_delete = False
-    column_exclude_list=['avatar', 'created_at', 'updated_at', 'deleted_at']
-    column_searchable_list=['name', 'users.full_name', 'users.email']
-    form_create_rules = ['name', 'avatar', 'users']
-    form_edit_rules = ['name', 'avatar', 'users']
-
-    def on_model_change(self, form, model, is_created):
-        now = datetime.now()
-        model.created_at = now
-        model.updated_at = now
-
-
-def init():
-    
-    admin.name = 'کتابچ'
-    with warnings.catch_warnings():
-        warnings.filterwarnings('ignore', 'Fields missing from ruleset', UserWarning)
-        admin.add_view(UserView(Users, db.session))
-        admin.add_view(BookView(Books, db.session))
-        admin.add_view(CollectionView(Collections, db.session))
-        admin.add_view(CuratorView(Curators, db.session))
-        admin.add_view(IdeasView(Ideas, db.session))
-
-    admin.add_view(ModelView(Audios, db.session))
-    admin.add_view(ModelView(Categories, db.session))
-    admin.add_view(ModelView(Topics, db.session))
-    admin.add_view(ModelView(Authors, db.session))
-    admin.add_view(ModelView(Bookmarks, db.session))
-
-
 def dashboard_view():
 
     return render_template(template_name_or_list='admin/dashboard.html')
 
 def books_view():
 
+    query = request.args.get('q')
+
     page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
 
-    books = Books.query.filter().order_by(Books.id.desc()).paginate(page=page, per_page=per_page, error_out=False)
+    if query:
+        books = Books.query.filter(or_(Books.title.like('%' + query + '%'), Books.original_title.ilike('%' + query + '%'))).order_by(Books.id.desc()).paginate(page=page, per_page=per_page, error_out=False)
+    else:
+        books = Books.query.filter().order_by(Books.id.desc()).paginate(page=page, per_page=per_page, error_out=False)
+
     pagination = Pagination(page=page, per_page=per_page, total=books.total)
 
     return render_template(template_name_or_list='admin/books.html', books=books, page=page, per_page=per_page, pagination=pagination)
@@ -310,13 +231,125 @@ def audio_edit_view():
 
     return render_template('admin/audio_edit.html', book=book, ideas=ideas, audio=audio)
 
-def category_view():
+def categories_view():
 
-    return render_template(template_name_or_list='admin/category.html')
+    page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
 
-def author_view():
+    categories = Categories.query.filter().order_by(Categories.id.desc()).paginate(page=page, per_page=per_page, error_out=False)
+        
+    pagination = Pagination(page=page, per_page=per_page, total=categories.total)
 
-    return render_template(template_name_or_list='admin/author.html')
+    return render_template('admin/categories.html', categories=categories, page=page, per_page=per_page, pagination=pagination)
+
+def category_add_view():
+
+    if request.method == 'POST':
+        name = request.form.get('name')
+        original_name = request.form.get('original-name')
+        description = request.form.get('description')
+        icon = request.form.get('icon')
+        slug = name.replace(' ', '-')
+        created_at = datetime.now()
+        updated_at = created_at
+
+        if not name or not original_name or not description or not icon:
+            return
+
+        new_category = Categories(name=name, original_name=original_name, description=description, icon=icon, slug=slug, created_at=created_at, updated_at=updated_at)
+        db.session.add(new_category)
+        db.session.commit()
+
+        return redirect(url_for('admin_bp.categories_view'))
+
+    return render_template('admin/category_add.html')
+
+def category_edit_view():
+
+    category_id = request.args.get('id')
+
+    category = Categories.query.filter_by(id=category_id).first()
+
+    if request.method == 'POST':
+        name = request.form.get('name')
+        original_name = request.form.get('original-name')
+        description = request.form.get('description')
+        icon = request.form.get('icon')
+        slug = name.replace(' ', '-')
+        updated_at = datetime.now()
+
+        if not name or not original_name or not description or not icon:
+            return render_template('admin/category_edit.html', category=category)
+
+        category.name = name
+        category.original_name = original_name
+        category.description = description
+        category.icon = icon
+        category.slug = slug
+        category.updated_at = updated_at
+
+        db.session.add(category)
+        db.session.commit()
+
+        return redirect(url_for('admin_bp.categories_view'))
+
+    return render_template('admin/category_edit.html', category=category)
+
+def authors_view():
+
+    page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
+
+    authors = Authors.query.filter().order_by(Authors.id.desc()).paginate(page=page, per_page=per_page, error_out=False)
+
+    pagination = Pagination(page=page, per_page=per_page, total=authors.total)
+
+    return render_template('admin/authors.html', authors=authors, page=page, per_page=per_page, pagination=pagination)
+
+def author_add_view():
+
+    if request.method == 'POST':
+        name = request.form.get('name')
+        original_name = request.form.get('original-name')
+        bio = request.form.get('bio')
+        created_at = datetime.now()
+        updated_at = created_at
+
+        if not name or not original_name or not bio:
+            return
+
+        new_author = Authors(name=name, original_name=original_name, bio=bio, created_at=created_at, updated_at=updated_at)
+        db.session.add(new_author)
+        db.session.commit()
+
+        return redirect(url_for('admin_bp.authors_view'))
+
+    return render_template('admin/author_add.html')
+
+def author_edit_view():
+
+    author_id = request.args.get('id')
+
+    author = Authors.query.filter_by(id=author_id).first()
+
+    if request.method == 'POST':
+        name = request.form.get('name')
+        original_name = request.form.get('original-name')
+        bio = request.form.get('bio')
+        updated_at = datetime.now()
+
+        if not name or not original_name or not bio:
+            return
+
+        author.name = name
+        author.original_name = original_name
+        author.bio = bio
+        author.updated_at = updated_at
+
+        db.session.add(author)
+        db.session.commit()
+
+        return redirect(url_for('admin_bp.authors_view'))
+
+    return render_template('admin/author_edit.html', author=author)
 
 def report_view():
 

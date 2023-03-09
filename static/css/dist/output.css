@@ -1357,6 +1357,14 @@ select {
   width: 6rem;
 }
 
+.w-36 {
+  width: 9rem;
+}
+
+.w-28 {
+  width: 7rem;
+}
+
 .min-w-0 {
   min-width: 0px;
 }

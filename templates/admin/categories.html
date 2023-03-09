@@ -2,10 +2,9 @@
 
 {% block header %}
 <div class="border-b border-gray-200 py-4 px-4 sm:flex sm:items-center sm:justify-between">
-    <h3 class="text-lg font-medium leading-6 text-dark-grey mr-16">کتاب‌ها</h3>
-    <input type="text" class="w-full rounded-md border-0 bg-gray-100 mx-16 px-4 py-2.5 text-gray-900 focus:ring-0 sm:text-sm" placeholder="جستجو براساس عنوان کتاب یا نام نویسنده" role="combobox" aria-expanded="false" aria-controls="options">
+    <h3 class="text-lg font-medium leading-6 text-dark-grey mr-16">دسته‌بندی‌ها</h3>
     <div class="mt-3 sm:mt-0 sm:ml-4">
-        <button type="button" onclick="window.location.href='{{ url_for('admin_bp.book_add_view') }}';"  class="inline-flex items-center rounded-md border w-24 border-transparent bg-midnight px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">ایجاد کتاب</button>
+        <button type="button" onclick="window.location.href='{{ url_for('admin_bp.category_add_view') }}';"  class="inline-flex items-center rounded-md border w-30 border-transparent bg-midnight px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">ایجاد دسته‌بندی</button>
     </div>
 </div>
 
@@ -14,26 +13,26 @@
 {% block content %}
 <div class="overflow-hidden bg-white shadow sm:rounded-md">
     <ul role="list" class="divide-y divide-gray-200">
-        {% for book in books %}
+        {% for category in categories %}
         <li>
-            <a href="{{ url_for('admin_bp.book_edit_view', id=book.id) }}" class="block hover:bg-light-pale-mint-grey">
+            <a href="{{ url_for('admin_bp.category_edit_view', id=category.id) }}" class="block hover:bg-light-pale-mint-grey">
                 <div class="flex items-center px-4 py-4 sm:px-6">
                     <div class="flex min-w-0 flex-1 items-center">
                         <div class="flex-shrink-0">
-                            <img class="h-12 w-12" src="{{ book.cover_image }}" alt="">
+                            <svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class=" w-6 h-6 ml-2 text-midnight flex-shrink-0">
+                                {{ category.icon|safe }}
+                              </svg>
                         </div>
                         <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
                             <div>
-                                <p class="truncate text-sm font-medium text-midnight">{{ book.title }}</p>
-                                <p class="mt-2 flex items-center text-sm text-mid-grey">{{ book.authors[0].name }}</p>
+                                <p class="truncate text-sm font-medium text-midnight">{{ category.name }}</p>
+                                <p class="mt-2 flex items-center text-sm text-mid-grey">{{ category.description }}</p>
                             </div>
                             <div class="hidden md:block">
                                 <div>
                                     <p class="text-sm text-dark-grey">
-                                        تعداد ایده: {{ book.idea_book|length }}
                                     </p>
                                     <p class="mt-2 flex text-sm text-dark-grey">
-                                        تعداد فایل: {{ book.audio_book|length }}
                                     </p>
                                 </div>
                             </div>
@@ -41,7 +40,7 @@
                     </div>
                     <div>
                         <!-- Heroicon name: mini/chevron-right -->
-                        <button type="button" onclick="window.location.href='{{ url_for('admin_bp.book_edit_view', id=book.id) }}';" class="inline-flex items-center rounded border border-transparent bg-blue-1 px-2.5 py-1.5 text-xs font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">ویرایش</button>
+                        <button type="button" onclick="window.location.href='{{ url_for('admin_bp.book_edit_view', id=category.id) }}';" class="inline-flex items-center rounded border border-transparent bg-blue-1 px-2.5 py-1.5 text-xs font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">ویرایش</button>
                         <button type="button" onclick="window.location.href='#';" class="inline-flex items-center rounded border border-transparent bg-error px-2.5 py-1.5 text-xs font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">حذف</button>
                     </div>
                 </div>
