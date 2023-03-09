@@ -167,7 +167,7 @@
 							افزودن صوت جدید
 						</a>
 						{% for audio in audios %}
-						<a href="#" class="flex flex-row mb-2 text-blue items-center gap-2 hover:text-blue-1">{{ audio.title }}</a>
+						<a href="{{ url_for('admin_bp.audio_edit_view', id=audio.id, book_id=book.id) }}" class="flex flex-row mb-2 text-blue items-center gap-2 hover:text-blue-1">{{ audio.idea.title }}</a>
 						{% endfor %}
 					</div>
 				</div>

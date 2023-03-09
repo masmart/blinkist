@@ -272,7 +272,43 @@ def audio_add_view():
     book = Books.query.filter_by(id=book_id).first()
     ideas = Ideas.query.filter_by(book_id=book_id).all()
 
+    if request.method == 'POST':
+        audio_title = request.form.get('audio-title')
+        audio_sample_file = request.files['audio-sample-file']
+        audio_file = request.files['audio-file']
+        audio_created_at = datetime.now()
+        audio_updated_at = audio_created_at
+
+        if not audio_title or not audio_sample_file or not audio_file:
+            return
+        
+        ideas = Ideas.query.filter_by(book_id=book_id, title=audio_title).one()
+
+        idea_id = ideas.id
+        audio_order = ideas.order
+
+        audio_sample = upload_content(audio_sample_file, MINIO_AUDIO_BUCKET)
+        audio = upload_content(audio_file, MINIO_AUDIO_BUCKET)
+
+        new_audio = Audios(book_id=book_id, file=audio, sample_file=audio_sample, order=audio_order, created_at=audio_created_at, updated_at=audio_updated_at, idea_id=idea_id)
+
+        db.session.add(new_audio)
+        db.session.commit()
+
+        return redirect(url_for('admin_bp.book_edit_view', id=book_id))
+
     return render_template('admin/audio_add.html', book=book, ideas=ideas)
+
+def audio_edit_view():
+
+    book_id = request.args.get('book_id')
+    audio_id = request.args.get('id')
+
+    book = Books.query.filter_by(id=book_id).first()
+    audio = Audios.query.filter_by(id=audio_id).first()
+    ideas = Ideas.query.filter_by(book_id=book_id).all()
+
+    return render_template('admin/audio_edit.html', book=book, ideas=ideas, audio=audio)
 
 def category_view():
 
