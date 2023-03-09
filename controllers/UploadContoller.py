@@ -26,19 +26,9 @@ def upload_file_view():
         uploaded_file = request.files['file']
         print(uploaded_file)
         if uploaded_file:
-            type = uploaded_file.content_type
-            file_extension = uploaded_file.filename.split('.')[-1]
-            file_name = f'{str(uuid.uuid4())}.{file_extension}'
-            while object_exists(MINIO_AUDIO_BUCKET, file_name):
-                file_name = str(uuid.uuid4()) + file_extension
-            size = os.fstat(uploaded_file.fileno()).st_size
-            storage.put_object(MINIO_AUDIO_BUCKET, file_name, uploaded_file, size)
-            now = datetime.now()
-            audio_object = Objects(name=uploaded_file.filename, object_name=file_name, bucket=MINIO_AUDIO_BUCKET, type=type, created_at=now, updated_at=now, creator_ip=request.remote_addr, updater_ip=request.remote_addr)
-            db.session.add(audio_object)
-            db.session.commit()
+            new_audio = upload_content(uploaded_file, MINIO_AUDIO_BUCKET)
 
-            return render_template('views/upload/file.html', file=f'/upload/content/{file_name}', type=type)
+            return render_template('views/upload/file.html', file=new_audio)
 
 def upload_content(upload_file, bucket_name):
 
