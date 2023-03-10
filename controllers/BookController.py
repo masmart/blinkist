@@ -16,6 +16,7 @@ from models.Category import Categories
 def book_view(book_slug):
 
     book = get_book_details_by_slug(book_slug)
+
     similar_books = get_similar_books_by_category(book.categories[0].id, 10)
     trending_books = get_trending_books_by_category(book.categories[0].id, 10)
     bookmark = check_bookmark(book.id, current_user.id)
