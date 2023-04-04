@@ -31,6 +31,7 @@ module.exports = {
         'border': '#6F787D',
         'green': {
           DEFAULT: '#6DDC89',
+          1: '#59B670',
           8:'#EAFDF1',
         },
         'blue': {

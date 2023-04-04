@@ -30,6 +30,8 @@ ckeditor.init_app(app)
 # AdminController.init()
 
 from models import Author, Book, Category, Topic, User, Object
+from models.Category import Categories
+from models.Book import Books
 
 app.register_blueprint(admin_bp, url_prefix='/admin')
 app.register_blueprint(author_bp, url_prefix='/author')
@@ -45,7 +47,11 @@ app.register_blueprint(upload_bp, url_prefix='/upload')
 @app.route('/')
 def main():
 
-    return render_template('views/main/main.html')
+    categories = Categories.query.all()
+    latest = Books.query.order_by(Books.id.asc()).limit(20).all()
+    top_four_for_today = Books.query.order_by(Books.published_at.asc()).limit(4).all()
+
+    return render_template('views/main/main.html', categories=categories, latest=latest, top_four_for_today=top_four_for_today)
 
 @app.route('/favicon.ico')
 def favicon():
