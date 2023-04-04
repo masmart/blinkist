@@ -589,7 +589,21 @@
 <script>
 	$(document).ready(function () {
 		$('.faq').click(function (e) {
-			console.log("fuck me");
+			e.preventDefault();
+			var faq = $(this).parent().parent().find('.answer');
+			var plus = $(this).parent().parent().find('.plus');
+			var minus = $(this).parent().parent().find('.minus');
+			if (faq.hasClass('hidden')) {
+				faq.removeClass('hidden');
+				plus.removeClass('hidden');
+				minus.addClass('hidden');
+				faq.fadeIn(200);
+			} else {
+				faq.fadeOut(200);
+				faq.addClass('hidden');
+				plus.addClass('hidden');
+				minus.removeClass('hidden');
+			}
 		});
 
 		$('.category').click(function (e) {
