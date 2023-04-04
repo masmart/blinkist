@@ -78,8 +78,15 @@
 									<path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
 								</svg>
 							</div>
-							<input id="search" name="search" class="block w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 text-dark-grey ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green sm:text-sm sm:leading-6" placeholder="جستجو" type="search">
+							<input id="search" name="search" class="block w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 text-dark-grey ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green sm:text-sm sm:leading-6 desktop-search-input" placeholder="جستجو" type="search">
 						</div>
+					</div>
+				</div>
+				<div class="hidden w-screen m:w-[37rem] p-4 border-2 border-lightest-grey rounded-b bg-white absolute top-18 left-0 m:left-auto left-4 z-30 result-parent">
+					<div class="flex flex-col divide-y divide-lightest-grey results">
+
+						<!-- Search result is here -->
+
 					</div>
 				</div>
 			</div>
@@ -588,6 +595,9 @@
 
 <script>
 	$(document).ready(function () {
+
+		let debauced;
+
 		$('.faq').click(function (e) {
 			e.preventDefault();
 			var faq = $(this).parent().parent().find('.answer');
@@ -615,6 +625,85 @@
 				categories.fadeIn(50);
 			}
 		});
+
+		$('.desktop-search-input').on('keydown', function (e) {
+			clearTimeout(debauced)
+			debauced = setTimeout(search, 300)
+		});
+
+		$('.desktop-search-input').focus(function () {
+			if ($('.desktop-search-input').val().length > 2) {
+				search()
+			}
+		});
+
+		$('.desktop-search-input').blur(function () {
+		        debauced = setTimeout(function () {
+		            $('.result-parent').addClass("hidden");
+		        }, 200)
+		});
+
+		function search() {
+			const query = $('.desktop-search-input').val();
+			if (query.length > 2) {
+				fetch('/api/search?q=' + query)
+					.then(response => response.json())
+					.then(data => {
+						if (data.length > 0) {
+							$('.results').empty()
+							$('.result-parent').removeClass("hidden");
+							for (let i = 0; i < data.length; i++) {
+								$('.results').append(`
+                                <a href="${data[i]['url']}" aria-label="${data[i]['title']}" class="flex rounded font-cera-pro p-4 flex-row w-full px-2 lg:hover:bg-pale-mint-grey hover:cursor-pointer" is-premium-user="true">
+                                    <img src="${data[i]['image']}" alt="${data[i]['title']}" loading="lazy" class="object-contain flex-shrink-0 rounded w-20 h-20">
+                                    <div class="w-full flex flex-col relative ml-4">
+                                        <div class="text-midnight line-clamp-2 font-bold text-h5" data-test-id="title" title="${data[i]['title']}">
+                                            ${data[i]['title']}
+                                        </div>
+                                        <div data-test-id="subtitle" title="${data[i]['author']}" class="text-mid-grey text-caption line-clamp-2 mt-1">
+                                            ${data[i]['author']}
+                                        </div>
+                                        <!---->
+                                        <div class="text-mid-grey text-caption mt-2">
+                                            <div class="flex gap-x-2">
+                                                <div class="flex gap-x-1 items-center">
+                                                    <div class="rounded p-1 bg-green-8">
+                                                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4">
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0h14.5v10.5H13v-9H1.5v16h7V19H0V0z" fill="currentColor"></path>
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M11.25 6h-8V4.5h8V6zM11.25 9h-8V7.5h8V9zM7.25 12h-4v-1.5h4V12zM19 22.5h1.51c1.2 0 1.99-.884 1.99-1.75S21.71 19 20.51 19H19v3.5zm1.51 1.5c1.925 0 3.49-1.457 3.49-3.25s-1.565-3.25-3.49-3.25H17.5V24h3.01zM9 19H7.49c-1.2 0-1.99.884-1.99 1.75s.79 1.75 1.99 1.75H9V19zm-1.51-1.5C5.566 17.5 4 18.957 4 20.75S5.565 24 7.49 24h3.01v-6.5H7.49z" fill="currentColor"></path>
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M7.75 15.466c0-3.382 2.903-5.716 6.25-5.716s6.25 2.334 6.25 5.716V18h-1.5v-2.534c0-2.384-2.051-4.216-4.75-4.216s-4.75 1.832-4.75 4.216V18h-1.5v-2.534z" fill="currentColor"></path>
+                                                        </svg>
+                                                    </div>
+                                                    ${data[i]['read_time']} دقیقه
+                                                </div>
+                                                <div class="flex items-center gap-x-1">
+                                                    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4">
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M9.31 9.262l-6.198.947 4.49 4.602-1.04 6.382L12 18.186l5.439 3.007-1.041-6.382 4.49-4.602-6.198-.947L12 3.53 9.31 9.262zM8.292 7.9L0 9.167l6 6.15L4.584 24 12 19.9l7.417 4.1L18 15.317l6-6.15L15.708 7.9 12 0 8.292 7.9z"></path>
+                                                    </svg>
+                                                    ${data[i]['rating']}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>`)
+							}
+							$('.results').append(`
+                            <div class="pt-4">
+                                <a href="/dashboard/search?q=${query}" class="text-blue text-sm">
+                                    مشاهده تمام نتایج
+                                </a>
+                            </div>`)
+						} else {
+							$('.results').empty()
+							$('.result-parent').addClass("hidden");
+						}
+					})
+			} else {
+				$('.results').empty()
+				$('.result-parent').addClass("hidden");
+			}
+		}
+
 	});
 
 	$(document).mouseup(function (e) {
@@ -626,4 +715,5 @@
 	});
 
 </script>
+
 {% endblock %}
