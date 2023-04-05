@@ -19,9 +19,15 @@ def book_view(book_slug):
 
     similar_books = get_similar_books_by_category(book.categories[0].id, 10)
     trending_books = get_trending_books_by_category(book.categories[0].id, 10)
-    bookmark = check_bookmark(book.id, current_user.id)
 
-    return render_template('views/book/book.html', book=book, similar_books=similar_books, trending_books=trending_books, bookmark=bookmark)
+    if current_user.is_authenticated:
+        bookmark = check_bookmark(book.id, current_user.id)
+        return render_template('views/book/book.html', book=book, similar_books=similar_books, trending_books=trending_books, bookmark=bookmark)
+    else:
+        top_links = Books.query.order_by(Books.id.desc()).limit(6).all()
+        categories = Categories.query.all()
+        ideas = Ideas.query.filter_by(book_id=book.id).order_by(asc(Ideas.order)).all()
+        return render_template('views/main/book.html', book=book, ideas=ideas, similar_books=similar_books, trending_books=trending_books, top_links=top_links, categories=categories)
 
 @login_required
 def bookmark_view(book_slug):

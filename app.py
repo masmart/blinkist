@@ -47,12 +47,18 @@ app.register_blueprint(upload_bp, url_prefix='/upload')
 @app.route('/')
 def main():
 
+    # if current_user.is_authenticated:
+    #     print(current_user)
+    # else:
+    #     print('not authenticated')
+
+    top_links = Books.query.order_by(Books.id.desc()).limit(6).all()
     categories = Categories.query.all()
+    
     latest = Books.query.order_by(Books.id.asc()).limit(20).all()
     top_four_for_today = Books.query.order_by(Books.published_at.asc()).limit(4).all()
-    top_links = Books.query.order_by(Books.id.desc()).limit(6).all()
 
-    return render_template('views/main/main.html', categories=categories, latest=latest, top_four_for_today=top_four_for_today, top_links=top_links)
+    return render_template('views/main/main.html', top_links=top_links, categories=categories, latest=latest, top_four_for_today=top_four_for_today)
 
 @app.route('/favicon.ico')
 def favicon():

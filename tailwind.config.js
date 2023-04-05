@@ -38,6 +38,7 @@ module.exports = {
           DEFAULT: '#2367E9',
           1: '#113778',
           2: '#1D53B7',
+          5: '#89B5F9',
         },
         'raspberry': '#EC5462',
         'pale-mint-grey': '#F2F6F4',
@@ -48,8 +49,10 @@ module.exports = {
         'background': {
           'yellow': '#FDF3DA',
           'blue': '#DAE9FD',
+          'purple': '#E8E3FD',
         },
         'light-pale-mint-grey': '#F8FAF9',
+        'summer-yellow-6': '#F9DC92',
       },
       fontSize: {
         sm: '0.8rem',
