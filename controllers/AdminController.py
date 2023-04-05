@@ -3,7 +3,7 @@ from sqlalchemy import asc, desc, or_
 from flask_paginate import Pagination, get_page_args
 from datetime import datetime
 
-from config import admin, db, ckeditor, MINIO_AUDIO_BUCKET, MINIO_BOOK_COVER_BUCKET
+from config import admin, db, MINIO_AUDIO_BUCKET, MINIO_BOOK_COVER_BUCKET
 from controllers.UploadContoller import upload_content
 
 from models.User import Users, Bookmarks

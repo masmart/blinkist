@@ -17,24 +17,11 @@
 			</div>
 
 			<div class="flex md:absolute md:inset-y-0 md:left-0 lg:static xl:col-span-1">
+				{% for item in top_links %}
 				<div class="flex flex-shrink-0 items-center">
-					<a href="#" class="text-mid-grey text-xs ml-4">ابزارها</a>
+					<a href="/book/{{ item.slug }}" class="text-mid-grey text-xs ml-4">{{ item.title }}</a>
 				</div>
-				<div class="flex flex-shrink-0 items-center">
-					<a href="#" class="text-mid-grey text-xs ml-4">زن مقدس</a>
-				</div>
-				<div class="flex flex-shrink-0 items-center">
-					<a href="#" class="text-mid-grey text-xs ml-4">مانند یک جادوگر بورس معامله کنید</a>
-				</div>
-				<div class="flex flex-shrink-0 items-center">
-					<a href="#" class="text-mid-grey text-xs ml-4">مرد دریا!</a>
-				</div>
-				<div class="flex flex-shrink-0 items-center">
-					<a href="#" class="text-mid-grey text-xs ml-4">بدون فیلتر</a>
-				</div>
-				<div class="flex flex-shrink-0 items-center">
-					<a href="#" class="text-mid-grey text-xs ml-4">پول هوشمند بچه‌های باهوش</a>
-				</div>
+				{% endfor %}
 			</div>
 
 		</div>

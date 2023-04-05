@@ -1,6 +1,7 @@
 from flask import Flask, render_template, url_for, send_from_directory, request
 from flask_migrate import Migrate
-from config import db, login_manager, ckeditor
+from config import db, login_manager
+
 # from config import db, login_manager, admin
 # from controllers import AdminController
 
@@ -24,7 +25,6 @@ login_manager.init_app(app)
 with app.app_context():
     login_manager.login_view = '/user/login'
 migrate = Migrate(app, db)
-ckeditor.init_app(app)
 
 # admin.init_app(app)
 # AdminController.init()
@@ -50,8 +50,9 @@ def main():
     categories = Categories.query.all()
     latest = Books.query.order_by(Books.id.asc()).limit(20).all()
     top_four_for_today = Books.query.order_by(Books.published_at.asc()).limit(4).all()
+    top_links = Books.query.order_by(Books.id.desc()).limit(6).all()
 
-    return render_template('views/main/main.html', categories=categories, latest=latest, top_four_for_today=top_four_for_today)
+    return render_template('views/main/main.html', categories=categories, latest=latest, top_four_for_today=top_four_for_today, top_links=top_links)
 
 @app.route('/favicon.ico')
 def favicon():

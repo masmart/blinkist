@@ -1,8 +1,7 @@
 """Flask configuration."""
 from os import environ, path
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
-from flask_ckeditor import CKEditor
+from flask_login import LoginManager, UserMixin
 from itsdangerous import URLSafeSerializer, SignatureExpired
 from flask_admin import Admin
 
@@ -15,7 +14,6 @@ APP_NAME = 'Blinkist'
 db = SQLAlchemy()
 login_manager = LoginManager()
 serializer = URLSafeSerializer(SECRET_KEY)
-ckeditor = CKEditor()
 basedir = path.abspath(path.dirname(__file__))
 
 SQLALCHEMY_DATABASE_URI='postgresql://mehrdad:1322@127.0.0.1:5432/blinkist'
