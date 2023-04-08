@@ -58,6 +58,10 @@ def book_edit_view():
         book_author = request.form.get('author')
         read_time = request.form.get('read-time')
         description = request.form.get('book-description')
+        wsr_1 = request.form.get('who-should-read-1')
+        wsr_2 = request.form.get('who-should-read-2')
+        wsr_3 = request.form.get('who-should-read-3')
+        best_quote = request.form.get('best-quote')
         updated_at = datetime.now()
 
         if not slug or not name or not original_name or not book_category or not book_author or not read_time or not description:
@@ -75,6 +79,10 @@ def book_edit_view():
         book.has_audio = False
         book.read_time = read_time
         book.description = description
+        book.who_should_read_1 = wsr_1
+        book.who_should_read_2 = wsr_2
+        book.who_should_read_3 = wsr_3
+        book.best_quote = best_quote
         book.author_id = book_author
         book.slug = slug
         book.updated_at = updated_at
@@ -105,6 +113,10 @@ def book_add_view():
         tagline = request.form.get('tagline')
         read_time = request.form.get('read-time')
         description = request.form.get('book-description')
+        wsr_1 = request.form.get('who-should-read-1')
+        wsr_2 = request.form.get('who-should-read-2')
+        wsr_3 = request.form.get('who-should-read-3')
+        best_quote = request.form.get('best-quote')
         book_author = request.form.get('author')
         slug = name.replace(' ', '-')
         created_at = datetime.now()
@@ -117,7 +129,7 @@ def book_add_view():
         category = Categories.query.filter_by(name=book_category).one()
 
         book_cover = upload_content(book_cover_file, MINIO_BOOK_COVER_BUCKET)
-        book = Books(title=name, original_title=original_name, tagline=tagline, tagline_html=tagline, read_time=read_time, ideas=0, type='book', has_audio=False, description=description, published_at=created_at, cover_image=book_cover, slug=slug, created_at=created_at, updated_at=updated_at)
+        book = Books(title=name, original_title=original_name, tagline=tagline, tagline_html=tagline, read_time=read_time, ideas=0, type='book', has_audio=False, description=description, who_should_read_1=wsr_1, who_should_read_2=wsr_2, who_should_read_3=wsr_3, best_quote=best_quote, published_at=created_at, cover_image=book_cover, slug=slug, created_at=created_at, updated_at=updated_at)
 
         db.session.add(book)
         db.session.commit()
@@ -144,6 +156,7 @@ def idea_add_view():
         idea = Ideas.query.filter_by(book_id=book_id).order_by(Ideas.id.desc()).first()
         idea_title = request.form.get('idea-title')
         idea_text = request.form.get('idea-text')
+        idea_sample_text = request.form.get('sample-idea-text')
         idea_order = idea.order + 1 if idea else 0
         idea_created_at = datetime.now()
         idea_updated_at = idea_created_at
@@ -151,7 +164,7 @@ def idea_add_view():
         if not idea_title or not idea_text:
             return 
         
-        new_idea = Ideas(title=idea_title, text=idea_text, order=idea_order, book_id=book_id, created_at=idea_created_at, updated_at=idea_updated_at)
+        new_idea = Ideas(title=idea_title, text=idea_text, sample_text=idea_sample_text, order=idea_order, book_id=book_id, created_at=idea_created_at, updated_at=idea_updated_at)
         db.session.add(new_idea)
         db.session.commit()
 
@@ -170,6 +183,7 @@ def idea_edit_view():
     if request.method == 'POST':
         idea_title = request.form.get('idea-title')
         idea_text = request.form.get('idea-text')
+        idea_sample_text = request.form.get('sample-idea-text')
         idea_updated_at = datetime.now()
 
         if not idea_title or not idea_text:
@@ -177,6 +191,7 @@ def idea_edit_view():
 
         idea.title = idea_title
         idea.text = idea_text
+        idea.sample_text = idea_sample_text
         idea.updated_at = idea_updated_at
 
         db.session.add(idea)

@@ -62,6 +62,48 @@
 						<textarea name="idea-text" style="display:none" id="hiddenArea"></textarea>
 					</div>
 
+					<div class="col-span-6">
+						<label class="block text-sm font-medium text-gray-700">متن نمونه</label>
+						<div dir="ltr" id="standalone-container" class="mt-2">
+							<div id="sample-toolbar-container">
+								<span class="ql-formats">
+									<select class="ql-font"></select>
+									<select class="ql-size"></select>
+								</span>
+								<span class="ql-formats">
+									<button class="ql-bold"></button>
+									<button class="ql-italic"></button>
+									<button class="ql-underline"></button>
+									<button class="ql-strike"></button>
+								</span>
+								<span class="ql-formats">
+									<select class="ql-color"></select>
+									<select class="ql-background"></select>
+								</span>
+								<span class="ql-formats">
+									<button class="ql-header" value="1"></button>
+									<button class="ql-header" value="2"></button>
+									<button class="ql-blockquote"></button>
+								</span>
+								<span class="ql-formats">
+									<button class="ql-list" value="ordered"></button>
+									<button class="ql-list" value="bullet"></button>
+								</span>
+								<span class="ql-formats">
+									<button class="ql-direction" value="rtl"></button>
+									<select class="ql-align"></select>
+								</span>
+								<span class="ql-formats">
+									<button class="ql-clean"></button>
+								</span>
+							</div>
+							<div id="sample-editor-container">
+								{{ idea.sample_text|safe }}
+							</div>
+						</div>
+						<textarea name="sample-idea-text" style="display:none" id="sampleHiddenArea"></textarea>
+					</div>
+
 				</div>
 			</div>
 
@@ -77,15 +119,25 @@
 <script>
 	$(document).ready(function () {
 
+		//idea quill editor
 		quill.format('align', 'right');
 		quill.format('direction', 'rtl');
+		quill.on('editor-change', function () { quill.enable(); });
 
-		quill.on('editor-change', function() { quill.enable(); });
+		//sample quill editor
+		sample_quill.format('align', 'right');
+		sample_quill.format('direction', 'rtl');
+		sample_quill.on('editor-change', function () { sample_quill.enable(); });
 
 		$('#idea').on("submit",function() {
 			var editorContent = $("#editor-container").html();
 			var textContent = $(editorContent).not("p").remove().end().html();
+
+			var sampleEditorContent = $("#sample-editor-container").html();
+			var sampleTextContent = $(sampleEditorContent).not("p").remove().end().html();
+
 			$('#hiddenArea').val(textContent);
+			$('#sampleHiddenArea').val(sampleTextContent);
 		});
 	});
 </script>
