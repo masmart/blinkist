@@ -1,0 +1,207 @@
+{% extends 'base/base.html' %}
+
+{% block title %}کتابچ - {{ category.name }}{% endblock %}
+
+{% block content %}
+<div>
+    <section class="pt-2 m:pb-16 pt-6 m:pt-16 mb-8 flex flex-col flex w-full max-w-[80rem] mx-auto m:px-12 px-4">
+
+        <div class="text-caption mb-6">
+            <div class="flex m:hidden items-center">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 ml-1.5 -rotate-90">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 14.879l-7.94-7.94a1.5 1.5 0 10-2.12 2.122l9 9a1.5 1.5 0 002.12 0l9-9a1.5 1.5 0 00-2.12-2.122L12 14.88z" fill="currentColor"></path>
+                    <mask id="a" maskUnits="userSpaceOnUse" x="1" y="6" width="22" height="13">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 14.879l-7.94-7.94a1.5 1.5 0 10-2.12 2.122l9 9a1.5 1.5 0 002.12 0l9-9a1.5 1.5 0 00-2.12-2.122L12 14.88z" fill="#fff"></path>
+                    </mask>
+                </svg>
+                <a data-test-id="b-link" href="/category" class=" cursor-pointer text-midnight">
+                    دسته‌بندی‌ها
+                </a>
+            </div>
+            <div class="hidden m:flex text-blue">
+                <div class="flex items-center">
+                    <!---->
+                    <a data-test-id="b-link" href="/category" class=" cursor-pointer text-blue hover:text-blue-1">
+                        دسته‌بندی‌ها
+                    </a>
+                </div>
+                <div class="flex items-center">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 mx-1.5 rotate-90">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 14.879l-7.94-7.94a1.5 1.5 0 10-2.12 2.122l9 9a1.5 1.5 0 002.12 0l9-9a1.5 1.5 0 00-2.12-2.122L12 14.88z" fill="currentColor"></path>
+                        <mask id="a" maskUnits="userSpaceOnUse" x="1" y="6" width="22" height="13">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 14.879l-7.94-7.94a1.5 1.5 0 10-2.12 2.122l9 9a1.5 1.5 0 002.12 0l9-9a1.5 1.5 0 00-2.12-2.122L12 14.88z" fill="#fff"></path>
+                        </mask>
+                    </svg>
+                    <div class="text-blue-1">
+                        {{ category.name }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h1 class="flex items-center text-midnight mb-4 m:mb-6 font-bold text-h3 m:text-h2">
+            <svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-4 flex-shrink-0">
+                {{ category.icon | safe }}
+            </svg>
+            {{ category.name }}
+        </h1>
+
+        <p class="text-dark-grey text-p1">{{ category.description }}</p>
+    </section>
+
+    <section class="flex flex-col mb-12 m:mb-16  flex w-full max-w-[80rem] mx-auto m:px-12  ">
+        <h2 class="mb-4 m:mb-6 mx-4 m:mx-0 text-midnight font-bold text-h35">
+            موضوعات
+        </h2>
+
+        <div class="w-full overflow-hidden">
+            <div class=" pb-8 -mb-8 overflow-x-auto overflow-y-hidden flex gap-4 m:flex-wrap">
+                <button data-test-id="topic-chip-work-culture-en" disabled="disabled" class="font-cera-pro text-midnight flex w-max items-center py-3 border-2 border-solid rounded first:ml-4 last:mr-4 m:first:ml-0 m:last:mr-0 px-3 cursor-default m:hover:border-white border-white bg-pale-mint-grey">
+                    <!---->
+                    <span class="block whitespace-nowrap"> Work Culture </span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section apply-mobile-padding="true" class="flex flex-col mb-12 m:mb-16  flex w-full max-w-[80rem] mx-auto m:px-12  ">
+        <h2 class="mb-2 text-midnight px-4 m:px-0 font-bold text-h35">
+            <span>محبوب‌ها</span>
+        </h2>
+
+        <div class="mb-6 m:mb-8 text-dark-grey px-4 m:px-0">آنچه در دسته‌بندی {{ category.name }} مجبوب است</div>
+
+        <div class="w-full overflow-hidden">
+            <div class=" pb-8 -mb-8 overflow-x-auto overflow-y-hidden  grid lg:grid-cols-[repeat(4,auto)] lg:gap-12 lg:grid-flow-row lg:justify-start  grid-flow-col gap-x-12 auto-cols-auto justify-start snap-x snap-mandatory lg:snap-none scroll-pl-4  ">
+
+                {% for item in popular %}
+                {% include 'components/items/vertical_book_item.html' %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section apply-mobile-padding="true" class="flex flex-col mb-12 m:mb-16  flex w-full max-w-[80rem] mx-auto m:px-12  ">
+        <h2 class="mb-2 text-midnight px-4 m:px-0 font-bold text-h35">
+            <span>جدیدترین‌ها</span>
+        </h2>
+
+        <div class="mb-6 m:mb-8 text-dark-grey px-4 m:px-0">جدیدترین عناوین در دسته‌بندی {{ category.name }}</div>
+
+        <div class="w-full overflow-hidden">
+            <div class=" pb-8 -mb-8 overflow-x-auto overflow-y-hidden  grid lg:grid-cols-[repeat(4,auto)] lg:gap-12 lg:grid-flow-row lg:justify-start  grid-flow-col gap-x-12 auto-cols-auto justify-start snap-x snap-mandatory lg:snap-none scroll-pl-4  ">
+
+                {% for item in newest %}
+                {% include 'components/items/vertical_book_item.html' %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <div data-test-id="signup-banner-section" class="mb-12 m:mb-16">
+        <section class=" flex w-full max-w-[80rem] mx-auto m:px-12  ">
+            <div locale="en" class="w-full bg-background-yellow m:flex m:rounded l:max-h-64">
+                <img src="https://static.blinkist.com/wcl/signup-banner/mobile-en.png" alt="اسکرین شات از کتابچ انتخاب شده، شورت‌کست‌ها و مجموعه‌ها - در دسترس در کتابچ." loading="lazy" class="object-contain object-cover w-full m:hidden">
+                <div class="flex flex-col w-full pt-6 pb-12 px-8 m:justify-center l:pl-12 l:px-6 l:py-0">
+                    <div class="text-center mb-6 text-midnight m:text-left font-bold text-h3">
+                        ایده‌های قدرتمند را در ۱۵ دقیقه با کتابچ یادبگیرید!
+                    </div>
+                    <a data-test-id="signup-banner-link" href="/en/onboarding/welcome-wizard" class="w-full m:max-w-74 inline-block px-4 rounded border-none font-cera-pro font-medium text-base leading-5 text-center no-underline outline-none cursor-pointer disabled:cursor-not-allowed bg-green text-midnight hover:bg-green-2 hover:text-midnight py-3">
+                        ثبت‌نام رایگان در کتابچ
+                    </a>
+                </div>
+                <img src="https://static.blinkist.com/wcl/signup-banner/desktop-2x-en.png" alt="اسکرین شات از کتابچ انتخاب شده، شورت‌کست‌ها و مجموعه‌ها - در دسترس در کتابچ." loading="lazy" class="object-contain hidden m:block object-cover w-3/5 flex-shrink-0">
+            </div>
+        </section>
+    </div>
+
+    <section apply-mobile-padding="true" class="flex flex-col mb-12 m:mb-16  flex w-full max-w-[80rem] mx-auto m:px-12  ">
+        <h2 class="mb-2 text-midnight px-4 m:px-0 font-bold text-h35">
+            <span>مجموعه‌ها</span>
+        </h2>
+
+        <div class="mb-6 m:mb-8 text-dark-grey px-4 m:px-0">برگزیده‌های ما</div>
+
+        <div class="w-full overflow-hidden">
+            <div class=" pb-8 -mb-8 overflow-x-auto overflow-y-hidden  grid lg:grid-cols-[repeat(4,auto)] lg:gap-12 lg:grid-flow-row lg:justify-start  grid-flow-col gap-x-12 auto-cols-auto justify-start snap-x snap-mandatory lg:snap-none scroll-pl-4  ">
+                {% for collection in collections %}
+                {% include 'components/items/collection_item.html' %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <div data-test-id="trial-explainer">
+        <section class=" flex w-full max-w-[80rem] mx-auto m:px-12 px-4 ">
+            <div class="text-midnight py-12 m:py-16">
+                <h2 class="mb-4 text-center font-bold text-h3 m:text-h2"> یک سرمایه گذاری کوچک، یک فرصت رشد باورنکردنی </h2>
+                <div class="text-center mb-6 m:mb-12 m:text-p0"> دسترسی به <span class="bg-background-purple">بیش از ۵۵۰۰ کتاب و پادکست غیرداستانی</span></div>
+                <div class="flex flex-col m:flex-row m:items-start mb-6 m:mb-12">
+                    <div class="grid grid-cols-[auto,1fr] gap-0 m:grid-cols-1 w-full">
+                        <div class="relative flex flex-col w-4 mr-5 items-center justify-between row-span-2 m:rows-span-1 m:order-1 m:w-full m:h-4 m:mr-0 m:my-2 m:flex-row">
+                            <div class="w-4 h-4 z-10 bg-blue rounded-full flex items-center justify-center flex-shrink-0">
+                                <!---->
+                            </div>
+                            <!---->
+                            <div class=" absolute h-full mx-auto m:mx-0 m:w-full bg-blue w-1 m:h-1"></div>
+                        </div>
+                        <div class="text-blue text-h4 font-bold w-full -mt-1 m:order-0 m:text-h3 m:mt-0"> امروز </div>
+                        <div class="text-dark-grey text-base w-full mb-5 m:order-2 m:pl-6 m:mb-0"> شروع به لذت بردن از کل کتابخانه کتابچ و نمایش کنید. </div>
+                    </div>
+                    <div class="grid grid-cols-[auto,1fr] gap-0 m:grid-cols-1 w-full">
+                        <div class="relative flex flex-col w-4 mr-5 items-center justify-between row-span-2 m:rows-span-1 m:order-1 m:w-full m:h-4 m:mr-0 m:my-2 m:flex-row">
+                            <div class="w-4 h-4 z-10 bg-blue rounded-full flex items-center justify-center flex-shrink-0">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 text-white">
+                                    <path d="M20.605 15.372v-4.096a8.54 8.54 0 00-1.432-4.783 8.698 8.698 0 00-3.875-3.197 1.633 1.633 0 000-.34 3.318 3.318 0 00-1.105-2.11A3.397 3.397 0 0011.946 0c-.829 0-1.628.301-2.247.847a3.319 3.319 0 00-1.105 2.11c-.01.12-.01.24 0 .36a8.737 8.737 0 00-3.786 3.22 8.581 8.581 0 00-1.392 4.739v3.777a3.437 3.437 0 01-.972 2.458A3.523 3.523 0 010 18.576V20.7h7.82a4.239 4.239 0 001.51 2.375c.762.6 1.707.926 2.68.926.974 0 1.92-.327 2.68-.926a4.239 4.239 0 001.51-2.375H24v-2.123a3.504 3.504 0 01-2.327-.951 3.42 3.42 0 01-1.068-2.253z" fill="currentColor"></path>
+                                </svg>
+                            </div>
+                            <!---->
+                            <div class=" absolute h-full mx-auto m:mx-0 m:w-full bg-blue w-1 m:h-1"></div>
+                        </div>
+                        <div class="text-blue text-h4 font-bold w-full -mt-1 m:order-0 m:text-h3 m:mt-0"> روز ۵ </div>
+                        <div class="text-dark-grey text-base w-full mb-5 m:order-2 m:pl-6 m:mb-0"> ما برای شما یک <strong>یادآوری پایان مهلت سرویس</strong> روی ایمیل ارسال خواهیم کرد </div>
+                    </div>
+                    <div class="grid grid-cols-[auto,1fr] gap-0 m:grid-cols-1 w-full">
+                        <div class="relative flex flex-col w-4 mr-5 items-center justify-between row-span-2 m:rows-span-1 m:order-1 m:w-full m:h-4 m:mr-0 m:my-2 m:flex-row">
+                            <div class="w-4 h-4 z-10 bg-blue rounded-full flex items-center justify-center flex-shrink-0">
+                                <!---->
+                            </div>
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-blue-5 self-end z-10 -mb-1 m:mb-0 m:-ml-1 m:rotate-90">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 14.879l-7.94-7.94a1.5 1.5 0 10-2.12 2.122l9 9a1.5 1.5 0 002.12 0l9-9a1.5 1.5 0 00-2.12-2.122L12 14.88z" fill="currentColor"></path>
+                                <mask id="a" maskUnits="userSpaceOnUse" x="1" y="6" width="22" height="13">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 14.879l-7.94-7.94a1.5 1.5 0 10-2.12 2.122l9 9a1.5 1.5 0 002.12 0l9-9a1.5 1.5 0 00-2.12-2.122L12 14.88z" fill="#fff"></path>
+                                </mask>
+                            </svg>
+                            <div class=" absolute h-full mx-auto m:mx-0 m:w-full bg-blue-5 w-0.5 m:h-0.5"></div>
+                        </div>
+                        <div class="text-blue text-h4 font-bold w-full -mt-1 m:order-0 m:text-h3 m:mt-0"> روز ۷ </div>
+                        <div class="text-dark-grey text-base w-full mb-5 m:order-2 m:pl-6 m:mb-0"> مهلت تست تمام می‌شود. </div>
+                    </div>
+                </div>
+                <div class="w-full p-6 m:px-12 bg-background-blue m:flex items-center rounded" data-test-id="trial-explainer-info-box">
+                    <p class="text-dark-grey mb-6 w-full m:ml-8 m:mb-0">از دسترسی نامحدود به مدت ۷ روز لذت ببرید. آن را دوست داشته باشید و فقط برای خودتان سرمایه‌گذاری کنید. <strong>
+                            <span class="currency-symbol currency-symbol--gbp"></span>۲۵ هزار تومان</strong> در ماه.</strong>
+                    </p>
+                    <a data-test-id="info-box-cta-button" href="/en/onboarding/welcome-wizard" class="w-full m:max-w-74 m:flex-shrink inline-block px-4 rounded border-none font-medium text-base leading-5 text-center no-underline outline-none cursor-pointer disabled:cursor-not-allowed bg-green text-midnight hover:bg-green-2 hover:text-midnight py-3"> ثبت‌نام رایگان در کتابچ </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <section apply-mobile-padding="true" class="flex flex-col mb-12 m:mb-16  flex w-full max-w-[80rem] mx-auto m:px-12  ">
+        <h2 class="mb-2 text-midnight px-4 m:px-0 font-bold text-h35">
+            <span>عناوین پایه در {{ category.name }}</span>
+        </h2>
+
+        <div class="mb-6 m:mb-8 text-dark-grey px-4 m:px-0">عنواینی که باید در {{ category.name }} بدانید</div>
+
+        <div class="w-full overflow-hidden">
+            <div class=" pb-8 -mb-8 overflow-x-auto overflow-y-hidden  grid lg:grid-cols-[repeat(4,auto)] lg:gap-12 lg:grid-flow-row lg:justify-start  grid-flow-col gap-x-12 auto-cols-auto justify-start snap-x snap-mandatory lg:snap-none scroll-pl-4  ">
+                {% for item in classics %}
+                {% include 'components/items/vertical_book_item.html' %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

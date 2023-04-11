@@ -268,16 +268,6 @@
 			}
 		});
 
-		$('.category').click(function (e) {
-			e.preventDefault();
-			var categories = $('.categories');
-			if (categories.is(':visible')) {
-				categories.fadeOut(50);
-			} else {
-				categories.fadeIn(50);
-			}
-		});
-
 		$('.desktop-search-input').on('keydown', function (e) {
 			clearTimeout(debauced)
 			debauced = setTimeout(search, 300)

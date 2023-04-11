@@ -3,7 +3,7 @@
 {% block title %}کتابچ{% endblock %}
 
 {% block content %}
-<div>
+<div id="content">
     <div data-test-id="book-hero-section" class="bg-pale-mint-grey text-midnight pb-12 l:pb-16 relative">
         <div class="w-full h-72 absolute m:hidden" style="background-color:#d1bcf6;"></div>
 
@@ -13,36 +13,36 @@
                 <!-- Breadcrumb -->
                 <div class="text-blue text-caption mb-6">
                     <div class="flex m:hidden items-center">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 mr-1.5 rotate-90">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 ml-1.5 -rotate-90">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M12 14.879l-7.94-7.94a1.5 1.5 0 10-2.12 2.122l9 9a1.5 1.5 0 002.12 0l9-9a1.5 1.5 0 00-2.12-2.122L12 14.88z" fill="currentColor"></path>
                             <mask id="a" maskUnits="userSpaceOnUse" x="1" y="6" width="22" height="13">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M12 14.879l-7.94-7.94a1.5 1.5 0 10-2.12 2.122l9 9a1.5 1.5 0 002.12 0l9-9a1.5 1.5 0 00-2.12-2.122L12 14.88z" fill="#fff"></path>
                             </mask>
                         </svg>
-                        <a data-test-id="b-link" href="/en/content/categories/personal-growth-and-self-improvement-en" class=" cursor-pointer text-blue hover:text-blue-1">Personal Development</a>
+                        <a data-test-id="b-link" href="/category/{{ book.categories[0].slug }}" class=" cursor-pointer text-blue hover:text-blue-1">{{ book.categories[0].name }}</a>
                     </div>
                     <div class="hidden m:flex">
                         <div class="flex items-center">
                             <!---->
-                            <a data-test-id="b-link" href="/en/content/categories" class=" cursor-pointer text-blue hover:text-blue-1"> Categories </a>
+                            <a data-test-id="b-link" href="/category/" class=" cursor-pointer text-blue hover:text-blue-1"> دسته‌بندی‌ها </a>
                         </div>
                         <div class="flex items-center">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 mx-1.5 -rotate-90">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 mx-1.5 rotate-90">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M12 14.879l-7.94-7.94a1.5 1.5 0 10-2.12 2.122l9 9a1.5 1.5 0 002.12 0l9-9a1.5 1.5 0 00-2.12-2.122L12 14.88z" fill="currentColor"></path>
                                 <mask id="a" maskUnits="userSpaceOnUse" x="1" y="6" width="22" height="13">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M12 14.879l-7.94-7.94a1.5 1.5 0 10-2.12 2.122l9 9a1.5 1.5 0 002.12 0l9-9a1.5 1.5 0 00-2.12-2.122L12 14.88z" fill="#fff"></path>
                                 </mask>
                             </svg>
-                            <a data-test-id="b-link" href="/en/content/categories/personal-growth-and-self-improvement-en" class=" cursor-pointer text-blue hover:text-blue-1"> Personal Development </a>
+                            <a data-test-id="b-link" href="/category/{{ book.categories[0].slug }}" class=" cursor-pointer text-blue hover:text-blue-1"> {{ book.categories[0].name }} </a>
                         </div>
                         <div class="flex items-center">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 mx-1.5 -rotate-90">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 mx-1.5 rotate-90">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M12 14.879l-7.94-7.94a1.5 1.5 0 10-2.12 2.122l9 9a1.5 1.5 0 002.12 0l9-9a1.5 1.5 0 00-2.12-2.122L12 14.88z" fill="currentColor"></path>
                                 <mask id="a" maskUnits="userSpaceOnUse" x="1" y="6" width="22" height="13">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M12 14.879l-7.94-7.94a1.5 1.5 0 10-2.12 2.122l9 9a1.5 1.5 0 002.12 0l9-9a1.5 1.5 0 00-2.12-2.122L12 14.88z" fill="#fff"></path>
                                 </mask>
                             </svg>
-                            <div class="text-blue-1"> Born to Win </div>
+                            <div class="text-blue-1"> {{ book.title }} </div>
                         </div>
                     </div>
                 </div>
@@ -151,20 +151,20 @@
             <div class="border-y border-lightest-grey py-4 m:hidden mb-8">
                 <div class="grid grid-cols-2 gap-y-4 gap-x-8 w-fit">
                     <div class="flex">
-                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2">
+                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-2">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M9.31 9.262l-6.198.947 4.49 4.602-1.04 6.382L12 18.186l5.439 3.007-1.041-6.382 4.49-4.602-6.198-.947L12 3.53 9.31 9.262zM8.292 7.9L0 9.167l6 6.15L4.584 24 12 19.9l7.417 4.1L18 15.317l6-6.15L15.708 7.9 12 0 8.292 7.9z"></path>
                         </svg>
                         <span class="text-caption"> {{ book.rating }} ({{ book.total_rating }} امتیاز) </span>
                     </div>
                     <div class="flex">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-2">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22.61C6.15 22.61 1.39 17.85 1.39 12 1.39 6.149 6.15 1.39 12 1.39S22.61 6.148 22.61 12c0 5.85-4.76 10.61-10.61 10.61zM12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z" fill="currentColor"></path>
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M12 13.027a1.028 1.028 0 010-2.054 1.028 1.028 0 010 2.054zM14.416 12A2.419 2.419 0 0012 9.584c-.215 0-.422.03-.62.084L8.151 4.336l-1.189.719 3.234 5.342c-.38.427-.613.988-.613 1.603A2.42 2.42 0 0012 14.416c.719 0 1.364-.318 1.807-.818l3.572 1.647.582-1.261-3.571-1.647c.015-.11.026-.222.026-.337zM11.305 3.73h1.39V2.316h-1.39V3.73zM20.27 12.695h1.414v-1.39H20.27v1.39zM11.305 21.684h1.39V20.27h-1.39v1.414zM2.316 12.695H3.73v-1.39H2.316v1.39z" fill="currentColor"></path>
                         </svg>
                         <span class="text-caption"> {{ book.read_time }} دقیقه </span>
                     </div>
                     <div class="flex">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-2">
                             <g fill="currentColor">
                                 <path d="M12.6 3.8c-1.3-.1-2.5.1-3.7.6-1.1.5-2.1 1.3-2.9 2.3-.8 1-1.2 2.2-1.4 3.4-.2 1.2-.1 2.5.3 3.7.4 1.2 1.1 2.2 2 3.1V21.6h2c.1.6.5 1.1.9 1.6.6.6 1.4.9 2.2.9.8 0 1.6-.3 2.2-.9.5-.4.8-1 .9-1.6h2.3v-4.8c.7-.7 1.2-1.5 1.6-2.4.4-1 .6-2 .6-3.1 0-1.9-.7-3.7-2-5.1-1.3-1.4-3.1-2.3-5-2.4zm.6 18.2c-.3.3-.7.5-1.2.5-.4 0-.9-.2-1.2-.5-.1-.1-.3-.3-.3-.5h3c-.1.2-.2.4-.3.5zm2.7-1.9H8.4v-1.3h7.5v1.3zm2.2-8.8c0 .9-.2 1.7-.5 2.5s-.8 1.5-1.5 2.1l-.3.3.1.4v.6H8.4v-1l-.4-.4c-.7-.7-1.3-1.5-1.6-2.5-.3-1-.4-2-.3-3 .1-1 .5-1.9 1.1-2.7.6-.8 1.4-1.4 2.4-1.8.9-.4 1.9-.6 2.9-.5 1.5.1 2.9.8 4 1.9 1 1.1 1.6 2.6 1.6 4.1zM12.5 0H11v2.6h1.5V0zM4.978 1.68L3.914 2.738l1.834 1.844 1.064-1.058L4.978 1.68zM19.022 1.689l-1.833 1.843 1.063 1.058 1.834-1.843-1.064-1.058z"></path>
                                 <path d="M13.7 9.9c0-1-.8-1.7-1.7-1.7-.9 0-1.7.8-1.7 1.7 0 .5.2 1 .6 1.3l-.8 2.7h3.8l-.7-2.7c.3-.4.5-.8.5-1.3z"></path>
@@ -173,7 +173,7 @@
                         <span class="text-caption"> {{ book.ideas }} ایده کلیدی </span>
                     </div>
                     <div class="flex">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-2">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0h14.5v10.5H13v-9H1.5v16h7V19H0V0z" fill="currentColor"></path>
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M11.25 6h-8V4.5h8V6zM11.25 9h-8V7.5h8V9zM7.25 12h-4v-1.5h4V12zM19 22.5h1.51c1.2 0 1.99-.884 1.99-1.75S21.71 19 20.51 19H19v3.5zm1.51 1.5c1.925 0 3.49-1.457 3.49-3.25s-1.565-3.25-3.49-3.25H17.5V24h3.01zM9 19H7.49c-1.2 0-1.99.884-1.99 1.75s.79 1.75 1.99 1.75H9V19zm-1.51-1.5C5.566 17.5 4 18.957 4 20.75S5.565 24 7.49 24h3.01v-6.5H7.49z" fill="currentColor"></path>
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M7.75 15.466c0-3.382 2.903-5.716 6.25-5.716s6.25 2.334 6.25 5.716V18h-1.5v-2.534c0-2.384-2.051-4.216-4.75-4.216s-4.75 1.832-4.75 4.216V18h-1.5v-2.534z" fill="currentColor"></path>
@@ -325,11 +325,11 @@
                         {% for idea in ideas %}
                         <li class="border-b border-light-grey last-of-type:border-none">
                             <button data-test-id="chapter-list-item" data-test-chapter-index="0" class="py-4 flex items-center outline-none">
-                                <div class="text-h3 font-bold text-midnight mr-4">
+                                <div class="text-h3 font-bold text-midnight ml-4">
                                     {{ idea.order+1 }}
                                 </div>
 
-                                <h3 class="text-mid-grey text-h6 text-left">
+                                <h3 class="text-mid-grey text-h6 text-right">
                                     {{ idea.title }}
                                 </h3>
                             </button>
@@ -346,21 +346,21 @@
             <div class="text-midnight text-center mb-6 font-bold text-h3 m:text-h2"> در زمان کوتاه یک دنیا یاد بگیر </div>
             <div class="w-full flex flex-col m:flex-row gap-6 l:gap-8">
                 <div class="flex m:flex-col items-center w-full">
-                    <img src="https://static.blinkist.com/wcl/feature-section/key_ideas.svg" alt="Read or listen" loading="lazy" class="object-contain w-16 h-16 mr-6 m:mr-0 m:mb-6 flex-shrink-0">
+                    <img src="https://static.blinkist.com/wcl/feature-section/key_ideas.svg" alt="Read or listen" loading="lazy" class="object-contain w-16 h-16 ml-6 m:mr-0 m:mb-6 flex-shrink-0">
                     <div class="flex flex-col m:contents m:text-center">
                         <div class="text-midnight font-bold m:mb-2 m:text-h3 relative"> گوش کن یا مطالعه کن <!----></div>
                         <div class="text-dark-grey m:text-xl"> ایده‌های کلیدی را از کتاب‌های پرفروش غیرداستانی در چند دقیقه مطالعه کنید، نه چند ساعت. </div>
                     </div>
                 </div>
                 <div class="flex m:flex-col items-center w-full">
-                    <img src="https://static.blinkist.com/wcl/feature-section/bulb.svg" alt="Find your next read" loading="lazy" class="object-contain w-16 h-16 mr-6 m:mr-0 m:mb-6 flex-shrink-0">
+                    <img src="https://static.blinkist.com/wcl/feature-section/bulb.svg" alt="Find your next read" loading="lazy" class="object-contain w-16 h-16 ml-6 m:mr-0 m:mb-6 flex-shrink-0">
                     <div class="flex flex-col m:contents m:text-center">
                         <div class="text-midnight font-bold m:mb-2 m:text-h3 relative"> کتاب بعدی را پیدا کنید <!----></div>
                         <div class="text-dark-grey m:text-xl"> فهرست‌های کتاب را که توسط کارشناسان شخصی‌شده تنظیم شده است، مطالعه کنید </div>
                     </div>
                 </div>
                 <div class="flex m:flex-col items-center w-full">
-                    <img src="https://static.blinkist.com/wcl/feature-section/shortcast.svg" alt="Shortcasts" loading="lazy" class="object-contain w-16 h-16 mr-6 m:mr-0 m:mb-6 flex-shrink-0">
+                    <img src="https://static.blinkist.com/wcl/feature-section/shortcast.svg" alt="Shortcasts" loading="lazy" class="object-contain w-16 h-16 ml-6 m:mr-0 m:mb-6 flex-shrink-0">
                     <div class="flex flex-col m:contents m:text-center">
                         <div class="text-midnight font-bold m:mb-2 m:text-h3 relative"> پادکست کوتاه <sup class="absolute text-sm text-raspberry uppercase font-bold ml-1 mt-1"> جدید </sup></div>
                         <div class="text-dark-grey m:text-xl"> ما با سازندگان پادکست همکاری کرده‌ایم تا اطلاعات کلیدی از پادکست‌ها را به شما ارائه دهیم. </div>
@@ -375,7 +375,7 @@
 
         <div class="pt-8 m:py-8 max-w-4xl mx-auto">
             <div class="rounded-2xl px-4 m:px-6 py-8 m:mx-44 relative" style="background-color:#d1bcf6;">
-                <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="w-18 m:w-36 text-midnight absolute -top-10 m:-top-12 -left-0.5 m:-left-44">
+                <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="w-18 md:w-36 text-midnight absolute -top-10 md:-top-12 -left-0.5 md:-left-44">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M10.005 4.907c-3.707 1.027-6.12 3.173-6.72 6.907-.163 1.016.065.249.755-.267 2.254-1.683 6.686-1.087 7.3 2.757 1.238 6.807-7.29 7.985-9.814 4.226A6.912 6.912 0 01.41 15.516c-.608-4.871 1.894-9.21 6.288-11.248.813-.377 1.67-.672 2.592-.889.462-.093.797.158.952.582.131.362.176.761-.237.946zm12.217 0c-3.707 1.027-6.12 3.173-6.72 6.907-.163 1.016.066.249.756-.267 2.254-1.683 6.685-1.087 7.3 2.757 1.238 6.807-7.29 7.985-9.814 4.226a6.913 6.913 0 01-1.116-3.014c-.608-4.871 1.893-9.21 6.288-11.248.813-.377 1.67-.672 2.592-.889.462-.093.797.158.952.582.13.362.175.761-.238.946z" fill="#03314B"></path>
                 </svg>
                 <div class="m:flex m:justify-between">
@@ -431,7 +431,7 @@
             <div class=" pb-8 -mb-8 overflow-x-auto overflow-y-hidden flex flex-col">
                 <div class="flex flex-row m:flex-wrap px-4 l:px-0 gap-x-4 gap-y-2 mb-4">
                     {% for category in book.categories %}
-                    <a data-test-id="category-chip-{{ category.slug }}" href="/category/{{ category.slug }}" class="text-midnight flex w-max items-center py-3 border-2 border-solid rounded last:mr-4 px-4 cursor-pointer m:hover:border-green border-white bg-pale-mint-grey">
+                    <a data-test-id="category-chip-{{ category.slug }}" href="/category/{{ category.slug }}" class="text-midnight flex w-max items-center py-3 border-2 border-solid rounded last:ml-4 px-4 cursor-pointer m:hover:border-green border-white bg-pale-mint-grey">
                         <svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class=" w-6 h-6 ml-2 text-midnight flex-shrink-0  ">
                             {{ category.icon|safe }}
                         </svg>
@@ -507,7 +507,7 @@
                         <div class="bg-background-yellow p-4 rounded grid grid-cols-[min-content_auto] grid-rows-[min-content_auto] gap-y-2 m:gap-x-2 mb-8">
                             <!---->
                             <div class="flex flex-col m:flex-row m:items-center col-span-2">
-                                <div class="flex flex-col align-bottom justify-end mb-2 m:mr-2 m:mb-0 font-medium text-midnight justify-start"> Sven O. </div>
+                                <div class="flex flex-col align-bottom justify-end mb-2 m:ml-2 m:mb-0 font-medium text-midnight justify-start"> Sven O. </div>
                                 <div class="m:items-start flex items-center justify-start">
                                     <div class="relative text-blue inline-block mr-1">
                                         <div class="relative" style="width:0.75rem;height:0.75rem;">
@@ -566,7 +566,7 @@
                         <div class="bg-background-yellow p-4 rounded grid grid-cols-[min-content_auto] grid-rows-[min-content_auto] gap-y-2 m:gap-x-2 mb-8">
                             <!---->
                             <div class="flex flex-col m:flex-row m:items-center col-span-2">
-                                <div class="flex flex-col align-bottom justify-end mb-2 m:mr-2 m:mb-0 font-medium text-midnight justify-start"> Thi Viet Quynh N. </div>
+                                <div class="flex flex-col align-bottom justify-end mb-2 m:ml-2 m:mb-0 font-medium text-midnight justify-start"> Thi Viet Quynh N. </div>
                                 <div class="m:items-start flex items-center justify-start">
                                     <div class="relative text-blue inline-block mr-1">
                                         <div class="relative" style="width:0.75rem;height:0.75rem;">
@@ -625,7 +625,7 @@
                         <div class="bg-background-yellow p-4 rounded grid grid-cols-[min-content_auto] grid-rows-[min-content_auto] gap-y-2 m:gap-x-2 mb-8">
                             <!---->
                             <div class="flex flex-col m:flex-row m:items-center col-span-2">
-                                <div class="flex flex-col align-bottom justify-end mb-2 m:mr-2 m:mb-0 font-medium text-midnight justify-start"> Jonathan A. </div>
+                                <div class="flex flex-col align-bottom justify-end mb-2 m:ml-2 m:mb-0 font-medium text-midnight justify-start"> Jonathan A. </div>
                                 <div class="m:items-start flex items-center justify-start">
                                     <div class="relative text-blue inline-block mr-1">
                                         <div class="relative" style="width:0.75rem;height:0.75rem;">
@@ -686,7 +686,7 @@
                         <div class="bg-background-yellow p-4 rounded grid grid-cols-[min-content_auto] grid-rows-[min-content_auto] gap-y-2 m:gap-x-2 mb-8">
                             <!---->
                             <div class="flex flex-col m:flex-row m:items-center col-span-2">
-                                <div class="flex flex-col align-bottom justify-end mb-2 m:mr-2 m:mb-0 font-medium text-midnight justify-start"> Renee D. </div>
+                                <div class="flex flex-col align-bottom justify-end mb-2 m:ml-2 m:mb-0 font-medium text-midnight justify-start"> Renee D. </div>
                                 <div class="m:items-start flex items-center justify-start">
                                     <div class="relative text-blue inline-block mr-1">
                                         <div class="relative" style="width:0.75rem;height:0.75rem;">
@@ -837,7 +837,7 @@
                     </div>
                 </div>
                 <div class="flex justify-center w-full">
-                    <button type="button" data-test-id="start-trial-button" href="" class="w-96 rounded border-none font-medium text-base leading-5 text-center items-center justify-center no-underline outline-none disabled:bg-light-grey cursor-pointer disabled:cursor-not-allowed px-4 bg-green text-midnight hover:bg-green-2 hover:text-midnight disabled:text-white py-3">Start your free trial</button>
+                    <button type="button" data-test-id="start-trial-button" href="" class="w-96 rounded border-none font-medium text-base leading-5 text-center items-center justify-center no-underline outline-none disabled:bg-light-grey cursor-pointer disabled:cursor-not-allowed px-4 bg-green text-midnight hover:bg-green-2 hover:text-midnight disabled:text-white py-3">ثبت‌نام رایگان در کتابچ</button>
                 </div>
             </div>
         </div>
@@ -1003,4 +1003,10 @@
         </section>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('#content').persiaNumber('fa');
+    });
+</script>
 {% endblock %}

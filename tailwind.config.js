@@ -12,9 +12,11 @@ module.exports = {
         'r2': '1.25rem',
       },
       screens: {
-        m: '768px',
-        l: '960px',
-        xl: '1440px',
+        'xs': '320px',
+        's': '576px',
+        'm': '768px',
+        'l': '960px',
+        'xl': '1440px',
       },
       colors: {
         'primary': '#6DDC89',

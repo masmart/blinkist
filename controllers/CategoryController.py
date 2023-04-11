@@ -1,6 +1,7 @@
 
 from flask import render_template, redirect, url_for, request, abort
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import current_user, login_required
 from sqlalchemy import desc, asc
 
 import sys
@@ -26,5 +27,11 @@ def category_view(category_slug):
     classics = Books.query.join(book_categories).join(Categories).filter(Categories.slug == category_slug).order_by(desc(Books.total_rating)).limit(20).all()
     collections = Collections.query.join(Collections.categories).filter(Categories.slug == category_slug).order_by(Collections.created_at.asc()).limit(10).all()
 
-    return render_template('views/category/category.html', category=category, popular=popular, classics=classics, root_dir=root_dir, collections=collections)
+    if current_user.is_authenticated:
+        return render_template('views/category/category.html', category=category, popular=popular, classics=classics, root_dir=root_dir, collections=collections)
+    else:
+        top_links = Books.query.order_by(Books.id.desc()).limit(6).all()
+        categories = Categories.query.all()
+        newest = Books.query.join(book_categories).join(Categories).filter(Categories.slug == category_slug).order_by(desc(Books.id)).limit(8).all()
+        return render_template('views/main/category.html', category=category, popular=popular, newest=newest, classics=classics, root_dir=root_dir, collections=collections, categories=categories, top_links=top_links)
 
