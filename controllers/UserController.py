@@ -8,9 +8,10 @@ from wtforms import EmailField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, InputRequired
 from datetime import datetime
 from random import randrange
+from secrets import token_urlsafe
 import sys
 
-from config import db, login_manager, serializer
+from config import db, login_manager
 from models.User import Users
 from models.Book import Books
 from models.Category import Categories
@@ -58,7 +59,7 @@ def register(email, password):
         return False
     
     hashed_password = generate_password_hash(password, method='SHA256')
-    session_token = serializer.dumps([email, password])
+    session_token = token_urlsafe(32)
     created_at = datetime.now()
     creator_ip = request.remote_addr
     updated_at = created_at
@@ -88,7 +89,7 @@ def login(email, password):
     
         if user:
             if check_password_hash(user.password, password):
-                user.session_token = serializer.dumps([email, password])
+                user.session_token = token_urlsafe(32)
                 db.session.commit()
                 login_user(user, remember=True)
                 return True
