@@ -150,7 +150,7 @@ ALTER TABLE "public"."alembic_version" OWNER TO "mehrdad";
 -- Records of alembic_version
 -- ----------------------------
 BEGIN;
-INSERT INTO "public"."alembic_version" ("version_num") VALUES ('b62f32d45004');
+INSERT INTO "public"."alembic_version" ("version_num") VALUES ('8c63bb15cb3f');
 COMMIT;
 
 -- ----------------------------
@@ -5747,6 +5747,10 @@ CREATE TABLE "public"."books" (
   "published_at" timestamp(6) NOT NULL,
   "rating" int4,
   "total_rating" int4,
+  "who_should_read_1" varchar(255) COLLATE "pg_catalog"."default",
+  "who_should_read_2" varchar(255) COLLATE "pg_catalog"."default",
+  "who_should_read_3" varchar(255) COLLATE "pg_catalog"."default",
+  "best_quote" varchar(255) COLLATE "pg_catalog"."default",
   "cover_image" varchar(255) COLLATE "pg_catalog"."default",
   "purchase_url" varchar(255) COLLATE "pg_catalog"."default",
   "slug" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
@@ -7790,6 +7794,7 @@ CREATE TABLE "public"."ideas" (
   "book_id" int4 NOT NULL,
   "title" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
   "text" text COLLATE "pg_catalog"."default" NOT NULL,
+  "sample_text" text COLLATE "pg_catalog"."default",
   "order" int4 NOT NULL,
   "created_at" timestamp(6) NOT NULL,
   "updated_at" timestamp(6) NOT NULL,
@@ -7868,9 +7873,6 @@ ALTER TABLE "public"."users" OWNER TO "mehrdad";
 -- Records of users
 -- ----------------------------
 BEGIN;
-INSERT INTO "public"."users" ("id", "full_name", "first_name", "last_name", "email", "password", "created_at", "creator_ip", "updated_at", "updater_ip", "deleted_at", "deletor_ip", "session_token") VALUES (2, 'مهرداد جیریایی', 'مهرداد', 'جیریایی', 'mehrdad.jiryaee@gmail.com', 'SHA256$f8NOgkjEcyzDMXlC$9c2baef4ab64442e3e84c3bf3c553997b6e8af41103b33b4ac4ea46ef226aee4', '2023-01-30 13:06:26.157811', '127.0.0.1', '2023-01-30 13:06:26.157811', '127.0.0.1', NULL, NULL, 'WyJtZWhyZGFkLmppcnlhZWVAZ21haWwuY29tIiwiSEB2aWoxMzIyIl0.7xqr5SttotNB6XY4lVYA7gLkYsk');
-INSERT INTO "public"."users" ("id", "full_name", "first_name", "last_name", "email", "password", "created_at", "creator_ip", "updated_at", "updater_ip", "deleted_at", "deletor_ip", "session_token") VALUES (3, 'امید جیریایی', 'امید', 'جیریایی', 'o.jiryaee@outlook.com', 'SHA256$w9ijoZVJhfaTHJpH$406f8376fb5f22eec7e26e9c150f800338cc60d8ccd5f3bc0bfb673877574fe2', '2023-01-31 16:26:28', '127.0.0.1', '2023-01-31 16:26:28', '127.0.0.1', NULL, NULL, 'WyJvbWlkQGdtYWlsLmNvbSIsIkhAdmlqMTMyMiJd.JHllJp1MPFejDKD9zdrHW-OCINY');
-INSERT INTO "public"."users" ("id", "full_name", "first_name", "last_name", "email", "password", "created_at", "creator_ip", "updated_at", "updater_ip", "deleted_at", "deletor_ip", "session_token") VALUES (4, NULL, NULL, NULL, 'm_j@samsson.net', 'SHA256$Qrxl2bfLuqpbnRIu$990b0b044850355a6a48dc82b9420126b5095d4822fbc140dba2529265c2c58c', '2023-02-03 12:23:00', '127.0.0.1', '2023-02-03 12:23:00', '127.0.0.1', NULL, NULL, NULL);
 COMMIT;
 
 -- ----------------------------

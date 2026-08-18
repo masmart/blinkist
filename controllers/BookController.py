@@ -4,6 +4,7 @@ from flask_login import current_user, login_required
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import desc, asc
 from datetime import datetime
+import logging
 
 import sys
 
@@ -12,13 +13,18 @@ from models.Book import Books, Ideas, Audios
 from models.User import Bookmarks
 from models.Category import Categories
 
+logger = logging.getLogger(__name__)
+
 
 def book_view(book_slug):
 
     book = get_book_details_by_slug(book_slug)
+    if book is None:
+        abort(404)
 
-    similar_books = get_similar_books_by_category(book.categories[0].id, 10)
-    trending_books = get_trending_books_by_category(book.categories[0].id, 10)
+    category_id = book.categories[0].id if book.categories else None
+    similar_books = get_similar_books_by_category(category_id, 10) if category_id else []
+    trending_books = get_trending_books_by_category(category_id, 10) if category_id else []
 
     if current_user.is_authenticated:
         bookmark = check_bookmark(book.id, current_user.id)
@@ -46,25 +52,29 @@ def bookmark_view(book_slug):
 def reader_view(book_slug=None, idea=0):
 
 
-    book = Books.query.filter_by(slug=book_slug).first()
+    book = Books.query.filter_by(slug=book_slug).first_or_404()
     ideas = Ideas.query.filter_by(book_id=book.id).order_by(asc(Ideas.order)).all()
-    idea = Ideas.query.filter_by(book_id=book.id, order=idea).one()
+    idea = Ideas.query.filter_by(book_id=book.id, order=idea).one_or_none()
+    if idea is None:
+        abort(404)
     idea_count = len(ideas) - 1
     
     return render_template('views/book/reader.html', book=book, ideas=ideas, idea=idea, idea_count=idea_count)
 
+@login_required
 def bookmark():
 
-    user_id = request.form.get('user_id')
-    book_id = request.form.get('book_id')
+    user_id = current_user.id
+    book_id = request.values.get('book_id')
 
     if not user_id or not book_id:
         abort(404)
 
     if request.method == 'POST':
-        add_bookmark(user_id, book_id)
+        if not check_bookmark(book_id, user_id):
+            add_bookmark(user_id, book_id)
     elif request.method == 'DELETE':
-        delete_bookmark(user_id, book_id)
+        remove_bookmark(user_id, book_id)
     elif request.method == 'GET':
         if check_bookmark(book_id, user_id):
             return jsonify({'status': 'success', 'bookmark': 1}, 200)
@@ -119,7 +129,9 @@ def remove_bookmark(user_id, book_id):
         bookmark.deleted_at = now
         bookmark.deletor_ip = ip
         db.session.commit()
-    except:
+    except Exception:
+        db.session.rollback()
+        logger.exception('Failed to remove bookmark')
         return False
 
     return True
@@ -128,4 +140,6 @@ def book_slug_to_id(slug):
 
     book = Books.query.filter_by(slug=slug).first()
 
+    if book is None:
+        abort(404)
     return book.id

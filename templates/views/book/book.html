@@ -214,8 +214,9 @@
   $('[name="addToLibrary"]').click(function (e) {
     e.preventDefault();
     $.ajax({
-      type: "GET",
+      type: "POST",
       url: "/book/bookmark/{{ book.slug }}",
+      headers: {"X-CSRFToken": "{{ csrf_token() }}"},
       success: function (result) {
         $('[name="addToLibrary"]').addClass("hidden");
         $('[name="removeFromLibrary"]').removeClass("hidden");
@@ -228,8 +229,9 @@
   $('[name="removeFromLibrary"]').click(function (e) {
     e.preventDefault();
     $.ajax({
-      type: "GET",
+      type: "POST",
       url: "/book/bookmark/{{ book.slug }}",
+      headers: {"X-CSRFToken": "{{ csrf_token() }}"},
       success: function (result) {
         $('[name="removeFromLibrary"]').addClass("hidden");
         $('[name="addToLibrary"]').removeClass("hidden");

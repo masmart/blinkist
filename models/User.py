@@ -28,7 +28,6 @@ class Users(UserMixin, db.Model):
             return self.email
 
     def get_id(self):
-        print(str(self.session_token))
         return str(self.session_token)
 
 @login_manager.user_loader
