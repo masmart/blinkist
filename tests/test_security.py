@@ -17,9 +17,11 @@ def test_admin_requires_authentication(client):
 
 def test_upload_requires_authentication(client):
     response = client.get('/upload/')
-    assert response.status_code == 401
+    assert response.status_code == 302
+    assert response.headers['Location'].startswith('/user/login')
 
 
 def test_bookmark_requires_authentication(client):
     response = client.post('/book/bookmark', data={'book_id': '1'})
-    assert response.status_code == 401
+    assert response.status_code == 302
+    assert response.headers['Location'].startswith('/user/login')
