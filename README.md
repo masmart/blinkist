@@ -1,63 +1,155 @@
-# Blinkist
+<div align="center">
+  <img src="static/images/logo.png" alt="Blinkist logo" width="180">
 
-A Flask application backed by PostgreSQL, with Tailwind CSS and optional MinIO object storage.
+  # Blinkist فارسی
 
-## Requirements
+  **خلاصه‌ی کتاب‌های ارزشمند؛ کوتاه، خواندنی و همیشه در دسترس.**
+
+  یک وب‌اپلیکیشن فارسی برای کشف، مطالعه و ذخیره‌ی خلاصه‌ی کتاب‌ها؛ ساخته‌شده با Flask و PostgreSQL.
+
+  ![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
+  ![Flask](https://img.shields.io/badge/Flask-2.2-000000?logo=flask&logoColor=white)
+  ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15%2B-4169E1?logo=postgresql&logoColor=white)
+  ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-06B6D4?logo=tailwindcss&logoColor=white)
+</div>
+
+---
+
+## درباره‌ی پروژه
+
+Blinkist فارسی تجربه‌ای ساده و راست‌به‌چپ برای مرور ایده‌های مهم کتاب‌ها فراهم می‌کند. کاربران می‌توانند کتاب‌ها را بر اساس دسته‌بندی و نویسنده پیدا کنند، خلاصه‌ها را بخوانند و کتاب‌های موردعلاقه‌شان را در کتابخانه شخصی ذخیره کنند. پروژه همچنین یک پنل مدیریت محافظت‌شده برای مدیریت محتوا دارد.
+
+## امکانات
+
+- 📚 نمایش تازه‌ترین کتاب‌ها، دسته‌بندی‌ها و پیشنهادهای روز
+- 🔎 جست‌وجوی کتاب و نویسنده
+- 💡 مطالعه‌ی ایده‌ها و خلاصه‌ی هر کتاب در نمای Reader
+- 🔖 نشان‌کردن کتاب‌ها و نگهداری آن‌ها در کتابخانه‌ی شخصی
+- 👤 ثبت‌نام، ورود و داشبورد کاربری
+- ✍️ مدیریت کتاب‌ها، نویسندگان، دسته‌بندی‌ها، ایده‌ها و فایل‌های صوتی
+- 🗂️ ذخیره‌سازی اختیاری فایل‌ها روی MinIO
+- 🛡️ محافظت CSRF، کنترل دسترسی ادمین و اعتبارسنجی آپلودها
+- 🇮🇷 رابط فارسی و راست‌به‌چپ
+
+## فناوری‌ها
+
+| بخش | ابزارها |
+| --- | --- |
+| Backend | Python، Flask، SQLAlchemy |
+| Database | PostgreSQL، Alembic / Flask-Migrate |
+| Frontend | Jinja2، Tailwind CSS، JavaScript |
+| Authentication | Flask-Login |
+| Object storage | MinIO (اختیاری) |
+| Tests | Pytest |
+
+## راه‌اندازی سریع در Windows
+
+### پیش‌نیازها
 
 - Python 3.11
-- PostgreSQL 15 or newer
-- Node.js 18 or newer (only needed when rebuilding CSS)
+- PostgreSQL 15 یا جدیدتر
+- Node.js 18 یا جدیدتر؛ فقط برای بازسازی فایل‌های CSS
 
-## Local setup
+### ۱. ساخت محیط مجازی
 
-1. Create and activate a virtual environment:
+```powershell
+py -3.11 -m venv .venv
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\.venv\Scripts\Activate.ps1
+```
 
-   ```powershell
-   py -3.11 -m venv .venv
-   .\.venv\Scripts\Activate.ps1
-   ```
+### ۲. نصب وابستگی‌ها
 
-2. Install dependencies:
+```powershell
+python -m pip install -r requirements.txt
+npm install
+```
 
-   ```powershell
-   python -m pip install -r requirements.txt
-   npm install
-   ```
+### ۳. تنظیم متغیرهای محیطی
 
-3. Copy `.env.example` to `.env`, replace every placeholder, and load those variables into your shell. At minimum, configure `SECRET_KEY`, `DATABASE_URL`, and `ADMIN_EMAILS`.
+فایل نمونه را کپی کنید و مقادیر آن را با اطلاعات محیط خودتان جایگزین کنید:
 
-4. Create an empty PostgreSQL database, import the sanitized seed dump, and apply migrations:
+```powershell
+Copy-Item .env.example .env
+```
 
-   ```powershell
-   $env:PGCLIENTENCODING = "UTF8"
-   psql -h 127.0.0.1 -U <user> -d blinkist -f public.sql
-   python -m flask --app app db upgrade
-   ```
+برای اجرای سریع در همان پنجره‌ی PowerShell، حداقل این مقادیر را تنظیم کنید:
 
-5. Start the application:
+```powershell
+$env:SECRET_KEY = "یک-رشته-تصادفی-و-طولانی"
+$env:DATABASE_URL = "postgresql://USER:PASSWORD@127.0.0.1:5432/blinkist"
+$env:ADMIN_EMAILS = "admin@example.com"
+```
 
-   ```powershell
-   python app.py
-   ```
+> اگر رمز دیتابیس دارای `@`، `#`، `%` یا `:` است، آن را URL-encode کنید. هیچ رمز یا کلید واقعی را در Git ثبت نکنید.
 
-   Open <http://127.0.0.1:5000>.
+### ۴. آماده‌سازی دیتابیس
 
-## Development
+ابتدا دیتابیس خالی `blinkist` را بسازید، سپس داده‌های اولیه و migrationها را اعمال کنید:
 
-Rebuild Tailwind CSS while editing templates:
+```powershell
+$env:PGCLIENTENCODING = "UTF8"
+psql -h 127.0.0.1 -U USER -d blinkist -f public.sql
+python -m flask --app app db upgrade
+```
+
+### ۵. اجرای برنامه
+
+```powershell
+python app.py
+```
+
+حالا مرورگر را روی [http://127.0.0.1:5000](http://127.0.0.1:5000) باز کنید. 🎉
+
+## توسعه و تست
+
+برای بازسازی خودکار Tailwind هنگام ویرایش قالب‌ها:
 
 ```powershell
 npm run watch-css
 ```
 
-Run the test suite:
+برای اجرای تست‌ها:
 
 ```powershell
-python -m pytest
+python -m pytest -v
 ```
 
-## Security
+خروجی مورد انتظار نسخه‌ی فعلی:
 
-- Never commit `.env`, database credentials, storage credentials, or production database exports.
-- Admin access is restricted to authenticated email addresses listed in `ADMIN_EMAILS`.
-- Rotate any credential that has previously appeared in Git history.
+```text
+3 passed
+```
+
+## ساختار پروژه
+
+```text
+blinkist/
+├── app.py              # نقطه‌ی ورود برنامه
+├── config.py           # تنظیمات و اتصال سرویس‌ها
+├── controllers/        # منطق درخواست‌ها
+├── models/             # مدل‌های دیتابیس
+├── routes/             # مسیرها و Blueprintها
+├── templates/          # رابط کاربری Jinja2
+├── static/             # CSS، JavaScript، فونت و تصاویر
+├── migrations/         # نسخه‌بندی ساختار دیتابیس
+└── tests/              # تست‌های خودکار
+```
+
+## نکات امنیتی
+
+- فایل `.env`، رمز دیتابیس و کلیدهای MinIO را commit نکنید.
+- دسترسی پنل مدیریت فقط برای ایمیل‌های موجود در `ADMIN_EMAILS` فعال است.
+- برای محیط production از یک WSGI server مناسب استفاده کنید؛ سرور داخلی Flask فقط برای توسعه است.
+- هر کلیدی که قبلاً وارد تاریخچه‌ی Git شده باید تعویض شود؛ حذف آن از فایل فعلی کافی نیست.
+
+## مشارکت
+
+پیشنهادها و بهبودها خوش‌آمدند. برای تغییرات بزرگ، ابتدا یک Issue باز کنید و هدف تغییر را توضیح دهید؛ سپس یک branch مجزا بسازید و Pull Request بفرستید.
+
+---
+
+<div align="center">
+  ساخته‌شده برای دوست‌داران کتاب و یادگیری 📖
+</div>
+
