@@ -7,7 +7,7 @@ class Collections(db.Model):
     curator_id = db.Column(db.Integer, db.ForeignKey('curators.id'), nullable=False)
     curators = db.relationship("Curators", backref=db.backref("collections", lazy=True))
     name = db.Column(db.String(255), nullable=False)
-    slug = db.Column(db.String(255), nullable=False)
+    slug = db.Column(db.String(255), nullable=False, unique=True, index=True)
     tagline = db.Column(db.String(255), nullable=False)
     description = db.Column(db.Text, nullable=False)
     cover_image = db.Column(db.String(255), nullable=False)

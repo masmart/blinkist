@@ -4,7 +4,7 @@ from config import db
 class Ideas(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False, index=True)
     title = db.Column(db.String(255), nullable=False)
     text = db.Column(db.Text(), nullable=False)
     sample_text = db.Column(db.Text(), nullable=True)
@@ -20,7 +20,7 @@ class Ideas(db.Model):
 class Audios(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False, index=True)
     idea_id = db.Column(db.Integer, db.ForeignKey('ideas.id'), nullable=False)
     idea = db.relationship("Ideas", backref=db.backref("audios", lazy=True))
     file = db.Column(db.String(2083), nullable=False)
@@ -51,7 +51,7 @@ class Books(db.Model):
     best_quote = db.Column(db.String(255), nullable=True)
     cover_image = db.Column(db.String(2083), nullable=True)
     purchase_url = db.Column(db.String(255), nullable=True)
-    slug = db.Column(db.String(255), nullable=False)
+    slug = db.Column(db.String(255), nullable=False, unique=True, index=True)
     created_at = db.Column(db.DateTime, nullable=False)
     updated_at = db.Column(db.DateTime, nullable=False)
     deleted_at = db.Column(db.DateTime, nullable=True)

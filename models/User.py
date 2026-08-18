@@ -36,9 +36,19 @@ def user_loader(session_token):
 
 class Bookmarks(db.Model):
 
+    __table_args__ = (
+        db.Index(
+            'uq_active_bookmark_user_book',
+            'user_id',
+            'book_id',
+            unique=True,
+            postgresql_where=db.text('deleted_at IS NULL'),
+        ),
+    )
+
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False, index=True)
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False, index=True)
     created_at = db.Column(db.DateTime, nullable=False)
     creator_ip = db.Column(db.String(15), nullable=False)
     updated_at = db.Column(db.DateTime, nullable=False)
