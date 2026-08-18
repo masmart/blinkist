@@ -19,9 +19,12 @@ logger = logging.getLogger(__name__)
 def book_view(book_slug):
 
     book = get_book_details_by_slug(book_slug)
+    if book is None:
+        abort(404)
 
-    similar_books = get_similar_books_by_category(book.categories[0].id, 10)
-    trending_books = get_trending_books_by_category(book.categories[0].id, 10)
+    category_id = book.categories[0].id if book.categories else None
+    similar_books = get_similar_books_by_category(category_id, 10) if category_id else []
+    trending_books = get_trending_books_by_category(category_id, 10) if category_id else []
 
     if current_user.is_authenticated:
         bookmark = check_bookmark(book.id, current_user.id)
@@ -49,9 +52,11 @@ def bookmark_view(book_slug):
 def reader_view(book_slug=None, idea=0):
 
 
-    book = Books.query.filter_by(slug=book_slug).first()
+    book = Books.query.filter_by(slug=book_slug).first_or_404()
     ideas = Ideas.query.filter_by(book_id=book.id).order_by(asc(Ideas.order)).all()
-    idea = Ideas.query.filter_by(book_id=book.id, order=idea).one()
+    idea = Ideas.query.filter_by(book_id=book.id, order=idea).one_or_none()
+    if idea is None:
+        abort(404)
     idea_count = len(ideas) - 1
     
     return render_template('views/book/reader.html', book=book, ideas=ideas, idea=idea, idea_count=idea_count)
@@ -135,4 +140,6 @@ def book_slug_to_id(slug):
 
     book = Books.query.filter_by(slug=slug).first()
 
+    if book is None:
+        abort(404)
     return book.id

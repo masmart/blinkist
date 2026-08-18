@@ -25,7 +25,7 @@ def search():
     for book in books:
         book_dict = {}
         book_dict['title'] = book.title
-        book_dict['author'] = book.authors[0].name
+        book_dict['author'] = book.authors[0].name if book.authors else None
         book_dict['image'] = book.cover_image
         book_dict['read_time'] = book.read_time
         book_dict['rating'] = book.rating
@@ -47,7 +47,12 @@ def search_author():
     search_result = []
 
     if book_title:
-        book_author = Books.query.filter_by(title=book_title).first().authors[0]
+        selected_book = Books.query.filter_by(title=book_title).first()
+        book_author = selected_book.authors[0] if selected_book and selected_book.authors else None
+    else:
+        book_author = None
+
+    if book_author:
         author_dict = {}
         author_dict['name'] = book_author.name
         author_dict['original_name'] = book_author.original_name
@@ -55,7 +60,7 @@ def search_author():
         search_result.append(author_dict)
 
     for author in authors:
-        if book_title and author.original_name == book_author.original_name:
+        if book_author and author.original_name == book_author.original_name:
             continue
         author_dict = {}
         author_dict['name'] = author.name
