@@ -132,8 +132,7 @@ def book_add_view():
         book = Books(title=name, original_title=original_name, tagline=tagline, tagline_html=tagline, read_time=read_time, ideas=0, type='book', has_audio=False, description=description, who_should_read_1=wsr_1, who_should_read_2=wsr_2, who_should_read_3=wsr_3, best_quote=best_quote, published_at=created_at, cover_image=book_cover, slug=slug, created_at=created_at, updated_at=updated_at)
 
         db.session.add(book)
-        db.session.commit()
-        db.session.refresh(book)
+        db.session.flush()
 
         book_author = book_authors.insert().values(book_id=book.id, author_id=author.id)
         book_category = book_categories.insert().values(book_id=book.id, category_id=category.id)

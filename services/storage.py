@@ -6,6 +6,7 @@ from minio import Minio
 from werkzeug.utils import secure_filename
 from config import db
 from models.Object import Objects
+from services.unit_of_work import transaction
 
 
 class StorageService:
@@ -35,8 +36,12 @@ class StorageService:
         self.client.put_object(bucket, object_name, uploaded_file, size)
         now = datetime.now()
         stored = Objects(name=safe_name, object_name=object_name, bucket=bucket, type=uploaded_file.content_type, created_at=now, updated_at=now, creator_ip=client_ip, updater_ip=client_ip)
-        db.session.add(stored)
-        db.session.commit()
+        try:
+            with transaction() as session:
+                session.add(stored)
+        except Exception:
+            self.client.remove_object(bucket, object_name)
+            raise
         return self.client.presigned_get_object(bucket, object_name)
 
     def get_url(self, object_name):
