@@ -53,18 +53,20 @@ def reader_view(book_slug=None, idea=0):
     
     return render_template('views/book/reader.html', book=book, ideas=ideas, idea=idea, idea_count=idea_count)
 
+@login_required
 def bookmark():
 
-    user_id = request.form.get('user_id')
-    book_id = request.form.get('book_id')
+    user_id = current_user.id
+    book_id = request.values.get('book_id')
 
     if not user_id or not book_id:
         abort(404)
 
     if request.method == 'POST':
-        add_bookmark(user_id, book_id)
+        if not check_bookmark(book_id, user_id):
+            add_bookmark(user_id, book_id)
     elif request.method == 'DELETE':
-        delete_bookmark(user_id, book_id)
+        remove_bookmark(user_id, book_id)
     elif request.method == 'GET':
         if check_bookmark(book_id, user_id):
             return jsonify({'status': 'success', 'bookmark': 1}, 200)
