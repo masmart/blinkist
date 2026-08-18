@@ -5,7 +5,7 @@ from app import create_app
 
 @pytest.fixture()
 def client():
-    app = create_app('testing')
+    app = create_app('testing', {'SQLALCHEMY_DATABASE_URI': 'sqlite://'})
     with app.test_client() as test_client:
         yield test_client
 
