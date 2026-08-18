@@ -59,9 +59,11 @@ def upload_content(upload_file, bucket_name):
     
     return False
 
+@login_required
 def get_object_url(object_name):
 
-    return storage.presigned_get_object(bucket_name, object_name)
+    stored_object = Objects.query.filter_by(object_name=object_name).first_or_404()
+    return storage.presigned_get_object(stored_object.bucket, stored_object.object_name)
 
 def bucket_exists(bucket_name):
 
