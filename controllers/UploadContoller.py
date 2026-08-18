@@ -1,4 +1,6 @@
-from flask import request, render_template, url_for, send_file
+from flask import abort, request, render_template
+from flask_login import login_required
+from werkzeug.utils import secure_filename
 from datetime import datetime
 from minio import Minio
 from config import MINIO_ENDPOINT, MINIO_ACCESS_KEY, MINIO_SECRET_KEY, MINIO_SECURE, MINIO_AUDIO_BUCKET, MINIO_BOOK_COVER_BUCKET, db
@@ -9,7 +11,10 @@ import uuid
 
 
 storage = Minio(MINIO_ENDPOINT, access_key=MINIO_ACCESS_KEY, secret_key=MINIO_SECRET_KEY, secure=MINIO_SECURE)
+MAX_UPLOAD_BYTES = 25 * 1024 * 1024
+ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'webp', 'mp3', 'm4a', 'wav'}
 
+@login_required
 def upload_view():
 
     if not bucket_exists(MINIO_AUDIO_BUCKET):
@@ -20,11 +25,13 @@ def upload_view():
         
     return render_template('views/upload/upload.html')
 
+@login_required
 def upload_file_view():
 
     if request.method == 'POST':
-        uploaded_file = request.files['file']
-        print(uploaded_file)
+        if request.content_length and request.content_length > MAX_UPLOAD_BYTES:
+            abort(413)
+        uploaded_file = request.files.get('file')
         if uploaded_file:
             new_audio = upload_content(uploaded_file, MINIO_AUDIO_BUCKET)
 
@@ -33,8 +40,11 @@ def upload_file_view():
 def upload_content(upload_file, bucket_name):
 
     if upload_file and bucket_name:
+        safe_name = secure_filename(upload_file.filename or '')
+        file_extension = safe_name.rsplit('.', 1)[-1].lower() if '.' in safe_name else ''
+        if file_extension not in ALLOWED_EXTENSIONS:
+            abort(400, description='Unsupported file type')
         type = upload_file.content_type
-        file_extension = upload_file.filename.split('.')[-1]
         file_name = f'{str(uuid.uuid4())}.{file_extension}'
         while object_exists(bucket_name, file_name):
             file_name = str(uuid.uuid4()) + file_extension
