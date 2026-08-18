@@ -150,7 +150,7 @@ ALTER TABLE "public"."alembic_version" OWNER TO "mehrdad";
 -- Records of alembic_version
 -- ----------------------------
 BEGIN;
-INSERT INTO "public"."alembic_version" ("version_num") VALUES ('b62f32d45004');
+INSERT INTO "public"."alembic_version" ("version_num") VALUES ('8c63bb15cb3f');
 COMMIT;
 
 -- ----------------------------
@@ -5747,6 +5747,10 @@ CREATE TABLE "public"."books" (
   "published_at" timestamp(6) NOT NULL,
   "rating" int4,
   "total_rating" int4,
+  "who_should_read_1" varchar(255) COLLATE "pg_catalog"."default",
+  "who_should_read_2" varchar(255) COLLATE "pg_catalog"."default",
+  "who_should_read_3" varchar(255) COLLATE "pg_catalog"."default",
+  "best_quote" varchar(255) COLLATE "pg_catalog"."default",
   "cover_image" varchar(255) COLLATE "pg_catalog"."default",
   "purchase_url" varchar(255) COLLATE "pg_catalog"."default",
   "slug" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
@@ -7790,6 +7794,7 @@ CREATE TABLE "public"."ideas" (
   "book_id" int4 NOT NULL,
   "title" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
   "text" text COLLATE "pg_catalog"."default" NOT NULL,
+  "sample_text" text COLLATE "pg_catalog"."default",
   "order" int4 NOT NULL,
   "created_at" timestamp(6) NOT NULL,
   "updated_at" timestamp(6) NOT NULL,
