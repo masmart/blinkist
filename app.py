@@ -1,5 +1,6 @@
 from flask import Flask, render_template, url_for, send_from_directory, request
 from flask_migrate import Migrate
+from flask_wtf.csrf import CSRFProtect
 from config import db, login_manager
 
 # from config import db, login_manager, admin
@@ -20,6 +21,7 @@ import os
 
 app = Flask('__name__')
 app.config.from_pyfile('config.py')
+csrf = CSRFProtect(app)
 db.init_app(app)
 login_manager.init_app(app)
 with app.app_context():
