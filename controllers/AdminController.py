@@ -132,8 +132,7 @@ def book_add_view():
         book = Books(title=name, original_title=original_name, tagline=tagline, tagline_html=tagline, read_time=read_time, ideas=0, type='book', has_audio=False, description=description, who_should_read_1=wsr_1, who_should_read_2=wsr_2, who_should_read_3=wsr_3, best_quote=best_quote, published_at=created_at, cover_image=book_cover, slug=slug, created_at=created_at, updated_at=updated_at)
 
         db.session.add(book)
-        db.session.commit()
-        db.session.refresh(book)
+        db.session.flush()
 
         book_author = book_authors.insert().values(book_id=book.id, author_id=author.id)
         book_category = book_categories.insert().values(book_id=book.id, category_id=category.id)
@@ -246,128 +245,18 @@ def audio_edit_view():
 
     return render_template('admin/audio_edit.html', book=book, ideas=ideas, audio=audio)
 
-def categories_view():
-
-    page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
-
-    categories = Categories.query.filter().order_by(Categories.id.desc()).paginate(page=page, per_page=per_page, error_out=False)
-        
-    pagination = Pagination(page=page, per_page=per_page, total=categories.total)
-
-    return render_template('admin/categories.html', categories=categories, page=page, per_page=per_page, pagination=pagination)
-
-def category_add_view():
-
-    if request.method == 'POST':
-        name = request.form.get('name')
-        original_name = request.form.get('original-name')
-        description = request.form.get('description')
-        icon = request.form.get('icon')
-        slug = name.replace(' ', '-')
-        created_at = datetime.now()
-        updated_at = created_at
-
-        if not name or not original_name or not description or not icon:
-            return
-
-        new_category = Categories(name=name, original_name=original_name, description=description, icon=icon, slug=slug, created_at=created_at, updated_at=updated_at)
-        db.session.add(new_category)
-        db.session.commit()
-
-        return redirect(url_for('admin_bp.categories_view'))
-
-    return render_template('admin/category_add.html')
-
-def category_edit_view():
-
-    category_id = request.args.get('id')
-
-    category = Categories.query.filter_by(id=category_id).first()
-
-    if request.method == 'POST':
-        name = request.form.get('name')
-        original_name = request.form.get('original-name')
-        description = request.form.get('description')
-        icon = request.form.get('icon')
-        slug = name.replace(' ', '-')
-        updated_at = datetime.now()
-
-        if not name or not original_name or not description or not icon:
-            return render_template('admin/category_edit.html', category=category)
-
-        category.name = name
-        category.original_name = original_name
-        category.description = description
-        category.icon = icon
-        category.slug = slug
-        category.updated_at = updated_at
-
-        db.session.add(category)
-        db.session.commit()
-
-        return redirect(url_for('admin_bp.categories_view'))
-
-    return render_template('admin/category_edit.html', category=category)
-
-def authors_view():
-
-    page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
-
-    authors = Authors.query.filter().order_by(Authors.id.desc()).paginate(page=page, per_page=per_page, error_out=False)
-
-    pagination = Pagination(page=page, per_page=per_page, total=authors.total)
-
-    return render_template('admin/authors.html', authors=authors, page=page, per_page=per_page, pagination=pagination)
-
-def author_add_view():
-
-    if request.method == 'POST':
-        name = request.form.get('name')
-        original_name = request.form.get('original-name')
-        bio = request.form.get('bio')
-        created_at = datetime.now()
-        updated_at = created_at
-
-        if not name or not original_name or not bio:
-            return
-
-        new_author = Authors(name=name, original_name=original_name, bio=bio, created_at=created_at, updated_at=updated_at)
-        db.session.add(new_author)
-        db.session.commit()
-
-        return redirect(url_for('admin_bp.authors_view'))
-
-    return render_template('admin/author_add.html')
-
-def author_edit_view():
-
-    author_id = request.args.get('id')
-
-    author = Authors.query.filter_by(id=author_id).first()
-
-    if request.method == 'POST':
-        name = request.form.get('name')
-        original_name = request.form.get('original-name')
-        bio = request.form.get('bio')
-        updated_at = datetime.now()
-
-        if not name or not original_name or not bio:
-            return
-
-        author.name = name
-        author.original_name = original_name
-        author.bio = bio
-        author.updated_at = updated_at
-
-        db.session.add(author)
-        db.session.commit()
-
-        return redirect(url_for('admin_bp.authors_view'))
-
-    return render_template('admin/author_edit.html', author=author)
-
 def report_view():
 
     return render_template(template_name_or_list='admin/report.html')
+
+
+from controllers.AdminTaxonomyController import (
+    author_add_view,
+    author_edit_view,
+    authors_view,
+    categories_view,
+    category_add_view,
+    category_edit_view,
+)
 
 

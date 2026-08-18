@@ -1,11 +1,11 @@
 import pytest
 
-from app import app
+from app import create_app
 
 
 @pytest.fixture()
 def client():
-    app.config.update(TESTING=True, WTF_CSRF_ENABLED=False)
+    app = create_app('testing', {'SQLALCHEMY_DATABASE_URI': 'sqlite://'})
     with app.test_client() as test_client:
         yield test_client
 

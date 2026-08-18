@@ -1,18 +1,16 @@
 from config import db
+from models.mixins import AuditMixin, SoftDeleteMixin, TimestampMixin
 
-class Objects(db.Model):
+class Objects(TimestampMixin, SoftDeleteMixin, AuditMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
-    object_name = db.Column(db.String(255), nullable=False)
+    object_name = db.Column(db.String(255), nullable=False, unique=True, index=True)
     bucket = db.Column(db.String(255), nullable=False)
     type = db.Column(db.String(255), nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False)
-    creator_ip = db.Column(db.String(15), nullable=False)
-    updated_at = db.Column(db.DateTime, nullable=False)
-    updater_ip = db.Column(db.String(15), nullable=False)
-    deleted_at = db.Column(db.DateTime, nullable=True)
-    deletor_ip = db.Column(db.String(15), nullable=True)
 
     def __repr__(self):
         return self.object_name
+
+
+StoredObject = Objects
