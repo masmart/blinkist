@@ -93,9 +93,6 @@ def login(email, password):
                 db.session.commit()
                 login_user(user, remember=True)
                 return True
-            else:
-                return 'Wrong password'
-        else:
-            return 'User not exist'
+        return False
 
 
