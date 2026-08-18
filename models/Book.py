@@ -1,7 +1,8 @@
 from config import db
+from models.mixins import SoftDeleteMixin, TimestampMixin
 
 
-class Ideas(db.Model):
+class Ideas(TimestampMixin, SoftDeleteMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False, index=True)
@@ -9,15 +10,12 @@ class Ideas(db.Model):
     text = db.Column(db.Text(), nullable=False)
     sample_text = db.Column(db.Text(), nullable=True)
     order = db.Column(db.Integer, nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False)
-    updated_at = db.Column(db.DateTime, nullable=False)
-    deleted_at = db.Column(db.DateTime, nullable=True)
 
     def __repr__(self):
         return '<Idea %r>' % self.title
 
 
-class Audios(db.Model):
+class Audios(TimestampMixin, SoftDeleteMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False, index=True)
@@ -26,12 +24,9 @@ class Audios(db.Model):
     file = db.Column(db.String(2083), nullable=False)
     sample_file = db.Column(db.String(2083), nullable=True)
     order = db.Column(db.Integer, nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False)
-    updated_at = db.Column(db.DateTime, nullable=False)
-    deleted_at = db.Column(db.DateTime, nullable=True)
 
     
-class Books(db.Model):
+class Books(TimestampMixin, SoftDeleteMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
@@ -52,9 +47,6 @@ class Books(db.Model):
     cover_image = db.Column(db.String(2083), nullable=True)
     purchase_url = db.Column(db.String(255), nullable=True)
     slug = db.Column(db.String(255), nullable=False, unique=True, index=True)
-    created_at = db.Column(db.DateTime, nullable=False)
-    updated_at = db.Column(db.DateTime, nullable=False)
-    deleted_at = db.Column(db.DateTime, nullable=True)
     original_title = db.Column(db.String(255), nullable=False)
     idea_book = db.relationship('Ideas', backref='idea_book', lazy=True, foreign_keys=[Ideas.book_id])
     audio_book = db.relationship('Audios', backref='audio_book', lazy=True, foreign_keys=[Audios.book_id])
@@ -82,3 +74,8 @@ book_topics = db.Table('book_topics',
     db.Column('book_id', db.Integer, db.ForeignKey('books.id'), primary_key=True),
     db.Column('topic_id', db.Integer, db.ForeignKey('topics.id'), primary_key=True)
 )
+
+
+Book = Books
+Idea = Ideas
+Audio = Audios

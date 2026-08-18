@@ -5,7 +5,7 @@ from models.Category import Categories
 
 class BookService:
     def get_by_slug(self, slug):
-        return Books.query.filter_by(slug=slug).first()
+        return Books.active().filter_by(slug=slug).first()
 
     def get_reader_content(self, slug, idea_order):
         book = self.get_by_slug(slug)

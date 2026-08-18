@@ -1,7 +1,8 @@
 from config import db
+from models.mixins import SoftDeleteMixin, TimestampMixin
 
 
-class Collections(db.Model):
+class Collections(TimestampMixin, SoftDeleteMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     curator_id = db.Column(db.Integer, db.ForeignKey('curators.id'), nullable=False)
@@ -11,9 +12,6 @@ class Collections(db.Model):
     tagline = db.Column(db.String(255), nullable=False)
     description = db.Column(db.Text, nullable=False)
     cover_image = db.Column(db.String(255), nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False)
-    updated_at = db.Column(db.DateTime, nullable=False)
-    deleted_at = db.Column(db.DateTime, nullable=True)
     original_name = db.Column(db.String(255), nullable=False)
 
     books = db.relationship("Books", secondary="collection_books", backref=db.backref("collections", lazy=True))
@@ -23,16 +21,13 @@ class Collections(db.Model):
         return self.name
 
 
-class Curators(db.Model):
+class Curators(TimestampMixin, SoftDeleteMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
     users = db.relationship("Users", backref=db.backref("curators", lazy=True))
     name = db.Column(db.String(255), nullable=False)
     avatar = db.Column(db.Text, nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False)
-    updated_at = db.Column(db.DateTime, nullable=False)
-    deleted_at = db.Column(db.DateTime, nullable=True)
 
     def __repr__(self):
         return self.name
@@ -47,3 +42,7 @@ collection_categories = db.Table('collection_categories',
     db.Column('collection_id', db.Integer, db.ForeignKey('collections.id'), primary_key=True),
     db.Column('category_id', db.Integer, db.ForeignKey('categories.id'), primary_key=True)
 )
+
+
+Collection = Collections
+Curator = Curators

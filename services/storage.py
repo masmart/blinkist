@@ -45,7 +45,7 @@ class StorageService:
         return self.client.presigned_get_object(bucket, object_name)
 
     def get_url(self, object_name):
-        stored = Objects.query.filter_by(object_name=object_name).first()
+        stored = Objects.active().filter_by(object_name=object_name).first()
         if stored is None:
             return None
         return self.client.presigned_get_object(stored.bucket, stored.object_name)
