@@ -5,9 +5,9 @@ from flask_login import LoginManager, UserMixin
 from itsdangerous import URLSafeSerializer, SignatureExpired
 from flask_admin import Admin
 
-TESTING = True
-DEBUG = True
-FLASK_ENV = 'development'
+TESTING = environ.get('TESTING', 'false').lower() == 'true'
+DEBUG = environ.get('DEBUG', 'false').lower() == 'true'
+FLASK_ENV = environ.get('FLASK_ENV', 'production')
 SECRET_KEY = environ.get('SECRET_KEY', 'dev-only-change-me')
 APP_NAME = 'Blinkist'
 
