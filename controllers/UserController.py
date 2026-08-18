@@ -9,12 +9,15 @@ from wtforms.validators import DataRequired, InputRequired
 from datetime import datetime
 from random import randrange
 from secrets import token_urlsafe
+import logging
 import sys
 
 from config import db, login_manager
 from models.User import Users
 from models.Book import Books
 from models.Category import Categories
+
+logger = logging.getLogger(__name__)
 
 class UserForm(FlaskForm):
 
@@ -71,7 +74,9 @@ def register(email, password):
         db.session.commit()
         login(email, password)
         return True
-    except:
+    except Exception:
+        db.session.rollback()
+        logger.exception('Failed to register user')
         return False
 
 def check_user(email):

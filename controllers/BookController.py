@@ -4,6 +4,7 @@ from flask_login import current_user, login_required
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import desc, asc
 from datetime import datetime
+import logging
 
 import sys
 
@@ -11,6 +12,8 @@ from config import db
 from models.Book import Books, Ideas, Audios
 from models.User import Bookmarks
 from models.Category import Categories
+
+logger = logging.getLogger(__name__)
 
 
 def book_view(book_slug):
@@ -121,7 +124,9 @@ def remove_bookmark(user_id, book_id):
         bookmark.deleted_at = now
         bookmark.deletor_ip = ip
         db.session.commit()
-    except:
+    except Exception:
+        db.session.rollback()
+        logger.exception('Failed to remove bookmark')
         return False
 
     return True

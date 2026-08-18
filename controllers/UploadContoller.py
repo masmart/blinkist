@@ -8,11 +8,13 @@ from models.Object import Objects
 
 import os
 import uuid
+import logging
 
 
 storage = Minio(MINIO_ENDPOINT, access_key=MINIO_ACCESS_KEY, secret_key=MINIO_SECRET_KEY, secure=MINIO_SECURE)
 MAX_UPLOAD_BYTES = 25 * 1024 * 1024
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'webp', 'mp3', 'm4a', 'wav'}
+logger = logging.getLogger(__name__)
 
 @login_required
 def upload_view():
@@ -70,7 +72,8 @@ def bucket_exists(bucket_name):
     try:
         if storage.bucket_exists(bucket_name):
             return True
-    except:
+    except Exception:
+        logger.exception('Failed to check MinIO bucket %s', bucket_name)
         return False
 
     return False
@@ -85,7 +88,8 @@ def object_exists(bucket_name, object_name):
     try:
         if storage.stat_object(bucket_name, object_name):
             return True
-    except:
+    except Exception:
+        logger.exception('Failed to check MinIO object %s/%s', bucket_name, object_name)
         return False
 
     return False
