@@ -85,13 +85,14 @@ $env:ADMIN_EMAILS = "admin@example.com"
 
 ### ۴. آماده‌سازی دیتابیس
 
-ابتدا دیتابیس خالی `blinkist` را بسازید، سپس داده‌های اولیه و migrationها را اعمال کنید:
+ابتدا دیتابیس خالی `blinkist` را بسازید. ساختار دیتابیس فقط از migrationها ایجاد می‌شود و دادهٔ نمونه اختیاری است:
 
 ```powershell
-$env:PGCLIENTENCODING = "UTF8"
-psql -h 127.0.0.1 -U USER -d blinkist -f public.sql
 python -m flask --app app db upgrade
+python -m seeds.seed
 ```
+
+فایل `public.sql` صرفاً snapshot قدیمی محتواست و دیگر برای ساخت یا ارتقای schema استفاده نمی‌شود.
 
 ### ۵. اجرای برنامه
 
@@ -152,4 +153,3 @@ blinkist/
 <div align="center">
   ساخته‌شده برای دوست‌داران کتاب و یادگیری 📖
 </div>
-
